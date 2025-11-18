@@ -2,7 +2,7 @@
     "Lua.workspace.library": [
         "../../Mods/Steamodded",
         "../../Mods/lovely/dump",
-        "./balatro-lsp-master",
+        "./balatro-lsp",
         "${addons}/love2d/module/library"
     ],
     "Lua.runtime.version": "LuaJIT",
