@@ -1,0 +1,14 @@
+{
+	"id": "nancy",
+	"name": "Negative Nancy",
+	"display_name": "Neg. Nancy",
+	"author": ["NeoKat"],
+	"description": "nancy moment",
+	"prefix": "nancy",
+	"main_file": "main.lua",
+	"priority": 0,
+	"badge_colour": "750075",
+	"badge_text_colour": "FFE6FF",
+	"version": "0.1.0",
+	"dependencies": ["Steamodded (>=1.*)"]
+}
