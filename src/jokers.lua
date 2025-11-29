@@ -1,4 +1,4 @@
--- Joker
+-- Junkie Joker
 SMODS.Joker {
     key = "junkiejoker",
     pos = { x = 0, y = 0 },
