@@ -1,3 +1,47 @@
+-- On the House
+SMODS.Joker {
+    key = "onthehouse",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    discovered = true,
+    config = { extra = { fullhouse = false }, },
+    loc_txt = {
+        name = "On the House",
+        text = {
+            "Once per round, create a",
+            "free {C:attention}D6 Tag{} if played hand",
+            "contains a {C:attention}Full House"
+        },
+    },
+    calculate = function(self, card, context)
+        if context.first_hand_drawn then
+            local eval = function() return card.ability.extra.fullhouse == false and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+            -- print("Started juicing!")
+        end
+        if context.before and next(context.poker_hands['Full House']) and card.ability.extra.fullhouse == false then
+            -- print("Played full house, var is true!")
+            card.ability.extra.fullhouse = true
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    card:juice_up(0.8, 0.8)
+                    add_tag(Tag('tag_d_six'))
+                    play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                    return true
+                end)
+            }))
+            return { message = "Rewarded!" }
+        end
+        if context.end_of_round and context.main_eval and context.game_over == false and card.ability.extra.fullhouse == true then
+            -- (Main eval prevents calculations in context.individual and context.repetitions at end of round)
+            -- print("Reset var to false!")
+            card.ability.extra.fullhouse = false
+        end
+    end
+}
+
 -- Window Shopping
 SMODS.Joker {
     key = "windowshopping",
@@ -5,6 +49,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
+    discovered = true,
     config = { extra = { times = 2 }, },
     loc_txt = {
         name = "Window Shopping",
