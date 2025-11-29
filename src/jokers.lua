@@ -34,8 +34,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Junkie Joker",
         text = {
-            "Earn {C:money}$#1#{} if played hand contains",
-            "exactly #2# {C:attention}unscored{} card"
+            "Earn {C:money}$#1#{} if played hand",
+            "contains exactly {C:attention}#2#",
+            "{C:attention}unscored{} card"
         },
     },
     loc_vars = function(self, info_queue, card)
