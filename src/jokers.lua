@@ -1,3 +1,27 @@
+-- Window Shopping
+SMODS.Joker {
+    key = "windowshopping",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    config = { extra = { times = 2 }, },
+        loc_txt = {
+        name = "Window Shopping",
+        text = {
+            "Adds {C:attention}double{} your current",
+            "{C:attention}hand size{} to Mult"
+        },
+    },
+    calculate = function(self, card, context)
+        -- When joker is scored
+        if context.joker_main then
+            -- Give hand size * 'times' var as mult
+            return { mult = G.hand.config.card_limit * card.ability.extra.times }
+        end
+    end
+}
+
 -- Junkie Joker
 SMODS.Joker {
     key = "junkiejoker",
