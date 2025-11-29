@@ -6,7 +6,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     config = { extra = { times = 2 }, },
-        loc_txt = {
+    loc_txt = {
         name = "Window Shopping",
         text = {
             "Adds {C:attention}double{} your current",
