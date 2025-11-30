@@ -15,26 +15,46 @@ SMODS.Joker {
             "contains a {C:attention}Full House"
         },
     },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'tag_d_six', set = 'Tag' }
+    end,
     calculate = function(self, card, context)
-        if context.first_hand_drawn then
+        -- When first hand is drawn
+        if context.first_hand_drawn and not context.blueprint then
+            -- Wiggle while fullhouse = false
             local eval = function() return card.ability.extra.fullhouse == false and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
             -- print("Started juicing!")
         end
+        -- When a hand containing full house is played
         if context.before and next(context.poker_hands['Full House']) and card.ability.extra.fullhouse == false then
+            -- Give tag
             -- print("Played full house, var is true!")
-            card.ability.extra.fullhouse = true
             G.E_MANAGER:add_event(Event({
                 func = (function()
-                    card:juice_up(0.8, 0.8)
                     add_tag(Tag('tag_d_six'))
                     play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
                     return true
                 end)
             }))
-            return { message = "Rewarded!" }
+            -- Set var to true after scoring for blueprint compat
+            return {
+                message = "Rewarded!",
+                func = function()
+                    -- This is for timing purposes, this goes after scoring
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card.ability.extra.fullhouse = true
+                            return true
+                        end
+                    }))
+                end
+            }
         end
-        if context.end_of_round and context.main_eval and context.game_over == false and card.ability.extra.fullhouse == true then
+        -- At end of round if var is true
+        if context.end_of_round and context.main_eval and context.game_over == false
+        and card.ability.extra.fullhouse == true and not context.blueprint then
+            -- Set var back to false
             -- (Main eval prevents calculations in context.individual and context.repetitions at end of round)
             -- print("Reset var to false!")
             card.ability.extra.fullhouse = false
