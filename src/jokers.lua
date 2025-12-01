@@ -32,7 +32,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         -- When entering the shop
         if context.starting_shop and not context.blueprint then
-            -- If the probability procs
+            -- If the probability procs after affected by the game
             if SMODS.pseudorandom_probability(card, 'nancy_soupbowl', 1, card.ability.extra.odds) then
                 -- Destroy card (with food effect)
                 SMODS.destroy_cards(card, nil, nil, true)
