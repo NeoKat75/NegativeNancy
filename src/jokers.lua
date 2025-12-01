@@ -1,3 +1,43 @@
+-- Soup Bowl
+SMODS.Joker {
+    key = "soupbowl",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = false,
+    eternal_compat = false,
+    cost = 6,
+    discovered = true,
+    config = { extra = { slots = 3, odds = 3 }, },
+    loc_txt = {
+        name = "Soup Bowl",
+        text = {
+            "{C:attention}+#1#{} consumable slots",
+            "{C:green}#2# in #3#{} chance this gets",
+            "eaten when entering {C:attention}shop"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_soupbowl')
+        return { vars = { card.ability.extra.slots, num, denom } }
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.slots
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+        G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slots
+	end,
+    calculate = function(self, card, context)
+        if context.starting_shop and not context.blueprint then
+            if SMODS.pseudorandom_probability(card, 'nancy_soupbowl', 1, card.ability.extra.odds) then
+                SMODS.destroy_cards(card, nil, nil, true)
+                return { message = localize('k_eaten_ex') }
+            else
+                return { message = localize('k_safe_ex') }
+            end
+        end
+    end
+}
+
 -- On the House
 SMODS.Joker {
     key = "onthehouse",
