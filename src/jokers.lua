@@ -23,11 +23,11 @@ SMODS.Joker {
     end,
     -- Add consumable slots when joker obtained
     add_to_deck = function(self, card, from_debuff)
-        G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.slots
+        G.consumeables:change_size(card.ability.extra.slots)
 	end,
     -- Remove consumable slots when joker removed
 	remove_from_deck = function(self, card, from_debuff)
-        G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slots
+        G.consumeables:change_size(-card.ability.extra.slots)
 	end,
     calculate = function(self, card, context)
         -- When entering the shop
