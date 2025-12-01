@@ -17,18 +17,24 @@ SMODS.Joker {
         },
     },
     loc_vars = function(self, info_queue, card)
+        -- Function that return the odds after the game affects them
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_soupbowl')
         return { vars = { card.ability.extra.slots, num, denom } }
     end,
+    -- Add consumable slots when joker obtained
     add_to_deck = function(self, card, from_debuff)
         G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.slots
 	end,
+    -- Remove consumable slots when joker removed
 	remove_from_deck = function(self, card, from_debuff)
         G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slots
 	end,
     calculate = function(self, card, context)
+        -- When entering the shop
         if context.starting_shop and not context.blueprint then
+            -- If the probability procs
             if SMODS.pseudorandom_probability(card, 'nancy_soupbowl', 1, card.ability.extra.odds) then
+                -- Destroy card (with food effect)
                 SMODS.destroy_cards(card, nil, nil, true)
                 return { message = localize('k_eaten_ex') }
             else
