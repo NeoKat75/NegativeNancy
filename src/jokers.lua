@@ -1,6 +1,32 @@
--- Soup Bowl
+-- Count Jokula
 SMODS.Joker {
-    key = "soupbowl",
+    key = "countjokula",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    discovered = true,
+    config = { extra = { xmult = 1, gain = 0.01, loss = 0.01 }, },
+    loc_txt = {
+        name = "Count Jokula",
+        text = {
+            "While in a round:",
+            "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
+            "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}played{}",
+            "{C:inactive}(Currently {X:mult,C:white}X#1# {C:inactive}(Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
+    end,
+    calculate = function(self, card, context)
+        
+    end
+}
+
+-- Snack Tray
+SMODS.Joker {
+    key = "snacktray",
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = false,
@@ -9,7 +35,7 @@ SMODS.Joker {
     discovered = true,
     config = { extra = { slots = 3, odds = 3 }, },
     loc_txt = {
-        name = "Soup Bowl",
+        name = "Snack Tray",
         text = {
             "{C:attention}+#1#{} consumable slots",
             "{C:green}#2# in #3#{} chance this gets",
@@ -18,7 +44,7 @@ SMODS.Joker {
     },
     loc_vars = function(self, info_queue, card)
         -- Function that return the odds after the game affects them
-        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_soupbowl')
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_snacktray')
         return { vars = { card.ability.extra.slots, num, denom } }
     end,
     -- Add consumable slots when joker obtained
@@ -33,7 +59,7 @@ SMODS.Joker {
         -- When entering the shop
         if context.starting_shop and not context.blueprint then
             -- If the probability procs after affected by the game
-            if SMODS.pseudorandom_probability(card, 'nancy_soupbowl', 1, card.ability.extra.odds) then
+            if SMODS.pseudorandom_probability(card, 'nancy_snacktray', 1, card.ability.extra.odds) then
                 -- Destroy card (with food effect)
                 SMODS.destroy_cards(card, nil, nil, true)
                 return { message = localize('k_eaten_ex') }
