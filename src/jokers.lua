@@ -13,14 +13,40 @@ SMODS.Joker {
             "While in a round:",
             "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
             "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}played{}",
-            "{C:inactive}(Currently {X:mult,C:white}X#1# {C:inactive}(Mult)"
+            "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
         },
     },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
     end,
     calculate = function(self, card, context)
-        
+        -- After a hand is drawn
+        if context.hand_drawn and not context.blueprint then
+            -- Scale xmult up by amount of cards drawn * 'gain'
+            card.ability.extra.xmult = card.ability.extra.xmult + #context.hand_drawn * card.ability.extra.gain
+            return { message = localize('k_upgrade_ex'), colour = G.C.UI_MULT }
+        end
+        -- Before a hand is played and if xmult > 1
+        if context.press_play and card.ability.extra.xmult > 1 and not context.blueprint then
+            -- For timing purposes so played cards can be accessed
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.3,
+                func = function()
+                    -- Scale xmult down by amount of cards played * 'loss'
+                    card.ability.extra.xmult = card.ability.extra.xmult - #G.play.cards * card.ability.extra.loss
+                    -- Makes sure xmult is at least 1
+                    if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
+                    return true
+                end
+            }))
+            return { message = "Downgrade!", colour = G.C.UI_MULT }
+        end
+        -- When joker is scored
+        if context.joker_main then
+            -- Give 'xmult' as xmult
+            return { xmult = card.ability.extra.xmult }
+        end
     end
 }
 
@@ -111,7 +137,7 @@ SMODS.Joker {
             }))
             -- Set var to true after scoring for blueprint compat
             return {
-                message = "Rewarded!",
+                message = "+1 D6 Tag",
                 func = function()
                     -- This is for timing purposes, this goes after scoring
                     G.E_MANAGER:add_event(Event({
