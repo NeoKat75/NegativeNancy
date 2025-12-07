@@ -6,11 +6,12 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 2,
     discovered = true,
-    config = {},
+    config = { extra = { "I'm helping!", "My groceries...", "Don't sell me!", "Am I doing it?", "Yippee!",
+                       "Yippee?", "X4 Chips!!!", "+naneinf", "Ship it!", "Pokerissimo!", "Big number!" }, },
     loc_txt = {
         name = "Useful Joker",
         text = {
-            "This Joker gains {X:chips,C:white}X1{} Chips",
+            "This Joker gains {X:chips,C:white}X0.5{} Chips",
             "when {C:attention}pigs fly{}",
             "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
         },
@@ -20,8 +21,11 @@ SMODS.Joker {
        card.ability.extra_value = math.ceil(self.cost / 2)
        card:set_cost()
 	end,
+    -- Returns a random message from config.extra with a random jimbo sound byte (voice1-voice11)
     calculate = function(self, card, context)
-        
+        if context.joker_main then
+            return { message = card.ability.extra[math.random(#card.ability.extra)], sound = "voice"..math.random(11) }
+        end
     end
 }
 
