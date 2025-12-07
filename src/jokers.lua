@@ -15,7 +15,7 @@ SMODS.Joker {
             "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
         },
     },
-    -- Add half of the cost to sell value so cost = sell value
+    -- Add half of the cost to sell value to equalize them (initial sell value is rounded down so we round up to compensate)
     add_to_deck = function(self, card, from_debuff)
        card.ability.extra_value = math.ceil(self.cost / 2)
        card:set_cost()
