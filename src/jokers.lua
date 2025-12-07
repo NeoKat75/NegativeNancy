@@ -1,3 +1,30 @@
+-- Useful Joker
+SMODS.Joker {
+    key = "usefuljoker",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 2,
+    discovered = true,
+    config = {},
+    loc_txt = {
+        name = "Useful Joker",
+        text = {
+            "This Joker gains {X:chips,C:white}X1{} Chips",
+            "when {C:attention}pigs fly{}",
+            "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
+        },
+    },
+    -- Add half of the cost to sell value so cost = sell value
+    add_to_deck = function(self, card, from_debuff)
+       card.ability.extra_value = math.ceil(self.cost / 2)
+       card:set_cost()
+	end,
+    calculate = function(self, card, context)
+        
+    end
+}
+
 -- Count Jokula
 SMODS.Joker {
     key = "countjokula",
@@ -24,7 +51,7 @@ SMODS.Joker {
         if context.hand_drawn and not context.blueprint then
             -- Scale xmult up by amount of cards drawn * 'gain'
             card.ability.extra.xmult = card.ability.extra.xmult + #context.hand_drawn * card.ability.extra.gain
-            return { message = localize('k_upgrade_ex'), colour = G.C.UI_MULT }
+            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } }, colour = G.C.UI_MULT }
         end
         -- Before a hand is played and if xmult > 1
         if context.press_play and card.ability.extra.xmult > 1 and not context.blueprint then
