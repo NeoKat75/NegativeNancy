@@ -13,7 +13,8 @@ SMODS.Joker {
                        "You got this!", "Let's go!!", "Breathe...", "Go time!", "I'll help!"; -- when starting blind
                        "Go Bulls!!", "Take that!", "We did it!", "I did it!!", "Calculated!"; -- when winning blind
                        "Whatcha got?", "Let's see...", "Gamba time!!", "My brethren...", "Take that one!"; -- when entering shop
-                       "Go next!", "Moving on!", "My groceries...", "I wanted more...", "Savings!" }, }, -- when leaving shop
+                       "Go next!", "Moving on!", "My groceries...", "I wanted more...", "Savings!"; -- when leaving shop
+                       "Whyyy...", "Was I bad?", "Betrayer...", "I'm upset.", "I'm the fool..." }, }, -- when getting sold :(
     loc_txt = {
         name = "Useful Joker",
         text = {
@@ -61,6 +62,10 @@ SMODS.Joker {
         -- Message when leaving shop
         if context.ending_shop then
             return { message = card.ability.extra[math.random(36, 40)], sound = "voice"..math.random(11) }
+        end
+        -- Message when getting sold
+        if context.selling_self then
+            return { message = card.ability.extra[math.random(41, 45)], sound = "voice"..math.random(11) }
         end
     end
 }
