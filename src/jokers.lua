@@ -6,8 +6,14 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 2,
     discovered = true,
-    config = { extra = { "I'm helping!", "My groceries...", "Don't sell me!", "Am I doing it?", "Yippee!",
-                       "Yippee?", "X4 Chips!!!", "+naneinf", "Ship it!", "Pokerissimo!", "Big number!" }, },
+    config = { extra = { "I'm helping!", "Yum!", "Keep me...!", "Am I doing it?", "Yippee!", -- when scoring
+                       "Yippee?", "X4 Chips!!!", "+naneinf", "Ship it!", "Pokerissimo!"; -- also when scoring
+                       "Hewwo!", "Win time!", "I'm useful!", "Count me in!", "Go XChips!!!"; -- when obtained
+                       "Ouch!!", "Careful!", "Stinky...", "Unfair!!", "Bummer!"; -- when boss triggers
+                       "You got this!", "Let's go!!", "Breathe...", "Go time!", "I'll help!"; -- when starting blind
+                       "Go Bulls!!", "Take that!", "We did it!", "I did it!!", "Calculated!"; -- when winning blind
+                       "Whatcha got?", "Let's see...", "Gamba time!!", "My brethren...", "Take that one!"; -- when entering shop
+                       "Go next!", "Moving on!", "My groceries...", "I wanted more...", "Savings!" }, }, -- when leaving shop
     loc_txt = {
         name = "Useful Joker",
         text = {
@@ -16,15 +22,45 @@ SMODS.Joker {
             "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
         },
     },
-    -- Add half of the cost to sell value to equalize them (initial sell value is rounded down so we round up to compensate)
     add_to_deck = function(self, card, from_debuff)
-       card.ability.extra_value = math.ceil(self.cost / 2)
-       card:set_cost()
+        -- Equalize cost and sell value
+        card.ability.extra_value = 1
+        card:set_cost()
+        -- Say a funny when obtained, say a special funny if it's a copy
+        if next(SMODS.find_card("j_nancy_usefuljoker")) then
+            SMODS.calculate_effect({ message = "My clone???", sound = "voice"..math.random(11) }, card)
+        else
+            SMODS.calculate_effect({ message = card.ability.extra[math.random(11, 15)], sound = "voice"..math.random(11) }, card)
+        end
 	end,
-    -- Returns a random message from config.extra with a random jimbo sound byte (voice1-voice11)
     calculate = function(self, card, context)
+        -- Returns a random message from config.extra with a random jimbo sound byte (voice1-voice11)
         if context.joker_main then
-            return { message = card.ability.extra[math.random(#card.ability.extra)], sound = "voice"..math.random(11) }
+            if not G.GAME.blind.triggered then
+                return { message = card.ability.extra[math.random(1, 10)], sound = "voice"..math.random(11) }
+            end
+        end
+        -- Message when boss blind effect is triggered
+        if context.debuffed_hand or context.joker_main then
+            if G.GAME.blind.triggered then
+                return { message = card.ability.extra[math.random(16, 20)], sound = "voice"..math.random(11) }
+            end
+        end
+        -- Message when starting blind
+        if context.setting_blind then
+            return { message = card.ability.extra[math.random(21, 25)], sound = "voice"..math.random(11) }
+        end
+        -- Message when winning blind
+        if context.end_of_round and context.main_eval and context.game_over == false then
+            return { message = card.ability.extra[math.random(26, 30)], sound = "voice"..math.random(11) }
+        end
+        -- Message when entering shop
+        if context.starting_shop then
+            return { message = card.ability.extra[math.random(31, 35)], sound = "voice"..math.random(11) }
+        end
+        -- Message when leaving shop
+        if context.ending_shop then
+            return { message = card.ability.extra[math.random(36, 40)], sound = "voice"..math.random(11) }
         end
     end
 }
@@ -68,10 +104,11 @@ SMODS.Joker {
                     card.ability.extra.xmult = card.ability.extra.xmult - #G.play.cards * card.ability.extra.loss
                     -- Makes sure xmult is at least 1
                     if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
+                    -- Say "Downgrade!"
+                    SMODS.calculate_effect({ message = "Downgrade!", colour = G.C.UI_MULT }, card)
                     return true
                 end
             }))
-            return { message = "Downgrade!", colour = G.C.UI_MULT }
         end
         -- When joker is scored
         if context.joker_main then
