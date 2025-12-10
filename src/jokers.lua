@@ -19,21 +19,32 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.selling_self then
-            local sound
+            local targets = {}
             for _, _card in ipairs(G.hand.cards) do
                 if not _card.edition then
-                    sound = true
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            _card:set_edition("e_negative", true, true)
-                            _card:juice_up(0.3, 0.5)
-                            -- draw_card(G.deck, G.hand)
-                            return true
-                        end
-                    }))
+                    targets[#targets + 1] = _card
                 end
             end
-            if sound then play_sound("negative", 1.5, 1) end
+            if #targets > 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        for _=1, #targets do
+                            draw_card(G.deck, G.hand)
+                        end
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                for _=1, #targets do
+                                    targets[_]:set_edition("e_negative", true, true)
+                                    targets[_]:juice_up(0.3, 0.5)
+                                end
+                                play_sound("negative", 1.5, 0.7)
+                                return true
+                            end
+                        }))
+                        return true
+                    end
+                }))
+            end
         end
     end
 }
