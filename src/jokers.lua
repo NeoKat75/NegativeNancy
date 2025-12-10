@@ -27,7 +27,7 @@ SMODS.Joker {
                         func = function()
                             _card:set_edition("e_negative", true, true)
                             _card:juice_up(0.3, 0.5)
-                            draw_card(G.deck, G.hand)
+                            -- draw_card(G.deck, G.hand)
                             return true
                         end
                     }))
