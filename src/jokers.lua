@@ -27,20 +27,20 @@ SMODS.Joker {
             end
             if #targets > 0 then
                 G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.1,
                     func = function()
-                        for _=1, #targets do
-                            draw_card(G.deck, G.hand)
-                        end
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                for _=1, #targets do
-                                    targets[_]:set_edition("e_negative", true, true)
-                                    targets[_]:juice_up(0.3, 0.5)
+                        for _, _card in ipairs(targets) do
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'after',
+                                delay = 0.1,
+                                func = function()
+                                    _card:set_edition("e_negative", true)
+                                    _card:juice_up(0.3, 0.5)
+                                    return true
                                 end
-                                play_sound("negative", 1.5, 0.7)
-                                return true
-                            end
-                        }))
+                            }))
+                        end
                         return true
                     end
                 }))
