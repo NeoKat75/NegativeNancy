@@ -1,3 +1,43 @@
+-- Negative Nancy
+SMODS.Joker {
+    key = "negativenancy",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 8,
+    discovered = true,
+    loc_txt = {
+        name = "Negative Nancy",
+        text = {
+            "Sell this Joker to",
+            "apply {C:dark_edition}Negative{} to all",
+            "cards {C:attention}held in hand"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if context.selling_self then
+            local sound
+            for _, _card in ipairs(G.hand.cards) do
+                if not _card.edition then
+                    sound = true
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            _card:set_edition("e_negative", true, true)
+                            _card:juice_up(0.3, 0.5)
+                            draw_card(G.deck, G.hand)
+                            return true
+                        end
+                    }))
+                end
+            end
+            if sound then play_sound("negative", 1.5, 1) end
+        end
+    end
+}
+
 -- Useful Joker
 SMODS.Joker {
     key = "usefuljoker",
