@@ -4,8 +4,8 @@ NegaNancy.optional_features = {
 	cardareas = { deck = true , discard = true }
 }
 
--- Makes cards in hand negative (targets is a table of cards)
-function NegaNancy.makenegatives(targets)
+-- Makes cards in hand negative (targets is a table of cards to affect, card is the card doing it)
+function NegaNancy.makenegatives(targets, card)
 	G.CONTROLLER.locks.nancy_makenegatives = true
     local currentcard = 1
     local handsize = G.hand.config.card_limit
@@ -26,6 +26,8 @@ function NegaNancy.makenegatives(targets)
             func = function()
                 targets[currentcard]:set_edition("e_negative", true)
                 targets[currentcard]:juice_up(0.3, 0.5)
+				card:juice_up(0.3, 0.5)
+				play_sound('tarot1')
                 currentcard = currentcard + 1
                 handsize = G.hand.config.card_limit
                 checkevent()

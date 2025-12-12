@@ -27,7 +27,7 @@ SMODS.Joker {
                 end
             end
             -- Do the thing if there are any targets
-            if next(targets) ~= nil then NegaNancy.makenegatives(targets) end
+            if next(targets) ~= nil then NegaNancy.makenegatives(targets, card) end
         end
     end
 }
