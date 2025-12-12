@@ -6,7 +6,7 @@ NegaNancy.optional_features = {
 
 -- Makes cards in hand negative (targets is a table of cards)
 function NegaNancy.makenegatives(targets)
-	G.CONTROLLER.locks.neganancy = true
+	G.CONTROLLER.locks.nancy_makenegatives = true
     local currentcard = 1
     local handsize = G.hand.config.card_limit
 	-- Event that makes negative cards one at a time
@@ -15,7 +15,7 @@ function NegaNancy.makenegatives(targets)
         local function checkevent()
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    if targets[currentcard] == nil then G.CONTROLLER.locks.neganancy = false; return true
+                    if targets[currentcard] == nil then G.CONTROLLER.locks.nancy_makenegatives = nil; return true
                     elseif handsize < G.hand.config.card_limit then mainevent(); return true
                     else return false end
                 end
