@@ -27,7 +27,7 @@ SMODS.Joker {
                 end
             end
             -- Do the thing if there are any targets
-            if next(targets) ~= nil then NegaNancy.makenegatives(targets, card) end
+            if next(targets) ~= nil then NegaNancy.makenegatives(targets) end
         end
     end
 }
@@ -59,7 +59,7 @@ SMODS.Joker {
     },
     add_to_deck = function(self, card, from_debuff)
         -- Equalize cost and sell value
-        card.ability.extra_value = 1
+        card.ability.extra_value = math.ceil(self.cost / 2)
         card:set_cost()
         -- Say a funny when obtained, say a special funny if it's a copy
         if next(SMODS.find_card("j_nancy_usefuljoker")) then
