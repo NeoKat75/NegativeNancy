@@ -10,8 +10,8 @@ SMODS.Joker {
         name = "Negative Nancy",
         text = {
             "Sell this Joker to",
-            "apply {C:dark_edition}Negative{} to all",
-            "cards {C:attention}held in hand"
+            "apply {C:dark_edition}Negative{} {C:attention}Edition{}",
+            "to all cards {C:attention}held in hand"
         },
     },
     loc_vars = function(self, info_queue, card)
