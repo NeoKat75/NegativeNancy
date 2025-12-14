@@ -1,8 +1,12 @@
+---@diagnostic disable: duplicate-set-field
+
 NegaNancy = SMODS.current_mod
 
 NegaNancy.optional_features = {
 	cardareas = { deck = true , discard = true }
 }
+
+-- Function to make cards negative
 
 ---@param targets table table of cards
 -- Makes cards in hand negative
