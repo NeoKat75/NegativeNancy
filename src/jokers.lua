@@ -18,7 +18,7 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     calculate = function(self, card, context)
-        if context.selling_self then
+        if G.hand and G.hand.cards and context.selling_self then
             -- Put valid cards in a table
             local targets = {}
             for _, _card in ipairs(G.hand.cards) do

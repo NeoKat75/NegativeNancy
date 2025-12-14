@@ -17,7 +17,7 @@ function NegaNancy.makenegatives(targets)
     -- Highlight affected cards
     G.hand:unhighlight_all()
     local highlightlimit = G.hand.config.highlighted_limit
-    G.hand.config.highlighted_limit = 99999
+    G.hand.config.highlighted_limit = 9999
     for _, _card in ipairs(targets) do G.hand:add_to_highlighted(_card, true) end
     play_sound('cardSlide1')
 	-- Event that makes negative cards one at a time
