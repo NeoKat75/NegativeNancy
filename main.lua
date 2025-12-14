@@ -55,4 +55,40 @@ function NegaNancy.makenegatives(targets)
     }))
 end
 
+-- Hooks to disable play/discard during makenegatives()
+
+-- save the orig function (no executing)
+local canplay = G.FUNCS.can_play
+-- overwrite the orig function
+function G.FUNCS.can_play(e)
+    -- before the orig function
+    -- do nothing!
+    -- execute and save the orig function's return
+    local ret = canplay(e)
+    -- after the orig function
+    if G.CONTROLLER.locks.nancy_makenegatives then
+        e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+        e.config.button = nil
+    end
+    -- actually return the orig function's return
+    return ret
+end
+
+-- save the orig function (no executing)
+local candiscard = G.FUNCS.can_discard
+-- overwrite the orig function
+function G.FUNCS.can_discard(e)
+    -- before the orig function
+    -- do nothing!
+    -- execute and save the orig function's return
+    local ret = candiscard(e)
+    -- after the orig function
+    if G.CONTROLLER.locks.nancy_makenegatives then
+        e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+        e.config.button = nil
+    end
+    -- actually return the orig function's return
+    return ret
+end
+
 assert(SMODS.load_file("src/jokers.lua"))()

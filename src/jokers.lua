@@ -10,7 +10,7 @@ SMODS.Joker {
         name = "Negative Nancy",
         text = {
             "Sell this Joker to",
-            "apply {C:dark_edition}Negative{} {C:attention}Edition{}",
+            "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
             "to all cards {C:attention}held in hand"
         },
     },
