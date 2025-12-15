@@ -6,7 +6,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 6,
     discovered = true,
-    config = { extra = { amount = 1, growth = 1 }, },
+    config = { extra = { amount = 2, growth = 1 }, },
     loc_txt = {
         name = "Stairwell",
         text = {
