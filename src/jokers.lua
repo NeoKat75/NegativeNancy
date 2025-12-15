@@ -1,3 +1,65 @@
+-- Stairwell
+SMODS.Joker {
+    key = "stairwell",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    discovered = true,
+    config = { extra = { amount = 1, growth = 1 }, },
+    loc_txt = {
+        name = "Stairwell",
+        text = {
+            "Sell this Joker to",
+            "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
+            "to {C:attention}#1#{} random cards {C:attention}in hand",
+            "{s:0.8}Amount increases by {s:0.8,C:attention}#2# {s:0.8}each round"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.amount, card.ability.extra.growth } }
+    end,
+    calculate = function(self, card, context)
+        -- Scaling
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            card.ability.extra.amount = card.ability.extra.amount + card.ability.extra.growth
+            return { message = localize('k_upgrade_ex') }
+        end
+        -- Wiggle wiggle
+        if context.first_hand_drawn and card.ability.extra.amount >= G.hand.config.card_limit and not context.blueprint then
+            -- Wiggle when amount > hand size
+            local eval = function() return not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        -- Doing the thing
+        if G.hand and G.hand.cards and context.selling_self then
+            -- Put non-editioned cards in a table
+            local targets = {}
+            for _, _card in ipairs(G.hand.cards) do
+                if not _card.edition then
+                    targets[#targets + 1] = _card
+                end
+            end
+            -- Select random eligible cards 
+            if next(targets) ~= nil then
+                local finaltargets = {}
+                if card.ability.extra.amount >= #targets then
+                    finaltargets = targets
+                else
+                    -- Select amount of random cards from targets (ily btw)
+                    for i = 1, card.ability.extra.amount do
+                        local _card, _index = pseudorandom_element(targets, "nancy_stairwell")
+                        finaltargets[#finaltargets+1] = _card
+                        table.remove(targets, _index)
+                    end
+                end
+                NegaNancy.makenegatives(finaltargets)
+            end
+        end
+    end
+}
+
 -- Negative Nancy
 SMODS.Joker {
     key = "negativenancy",
