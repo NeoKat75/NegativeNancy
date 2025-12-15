@@ -1,3 +1,43 @@
+-- Golden Fingers
+SMODS.Joker {
+    key = "goldenfingers",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { payout = 1 }, },
+    loc_txt = {
+        name = "Golden Fingers",
+        text = {
+            "Earn {C:money}$#1#{} per held {C:attention}consumable{}",
+            "when hand is played"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.payout } }
+    end,
+    calculate = function(self, card, context)
+        if context.other_consumeable then
+            -- Use money buffer!!
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.payout
+            return {
+                dollars = card.ability.extra.payout,
+                message_card = context.other_consumeable,
+                -- Reset money buffer!!
+                func = function() -- This is for timing purposes, it runs after the dollar manipulation
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+    end
+}
+
 -- Stairwell
 SMODS.Joker {
     key = "stairwell",
