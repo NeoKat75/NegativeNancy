@@ -1,3 +1,54 @@
+---@diagnostic disable: need-check-nil
+
+-- Laminator
+SMODS.Joker {
+    key = "laminator",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    discovered = true,
+    loc_txt = {
+        name = "Laminator",
+        text = {
+            "When round begins,",
+            "apply a random {C:enhanced}Edition{} to",
+            "one random card {C:attention}in hand"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if context.first_hand_drawn then
+            local joker = context.blueprint_card or card
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    -- Table of non-editioned cards
+                    local targets = {}
+                    for _, _card in ipairs(G.hand.cards) do
+                        if not _card.edition then
+                            targets[#targets + 1] = _card
+                        end
+                    end
+                    -- If there are any, apply random edition
+                    if next(targets) ~= nil then
+                        local _card = pseudorandom_element(targets, "nancy_laminator")
+                        local edition = pseudorandom_element({"e_foil", "e_holo", "e_polychrome", "e_negative"}, "nancy_laminator")
+                        _card:set_edition(edition, true)
+                        _card:juice_up()
+                        joker:juice_up()
+                    end
+                    return true
+                end
+            }))
+        end
+    end
+}
+
 -- Golden Fingers
 SMODS.Joker {
     key = "goldenfingers",
@@ -121,7 +172,7 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if G.hand and G.hand.cards and context.selling_self then
-            -- Put valid cards in a table
+            -- Put non-editioned cards in a table
             local targets = {}
             for _, _card in ipairs(G.hand.cards) do
                 if not _card.edition then
