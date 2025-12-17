@@ -6,7 +6,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 6,
+    cost = 7,
     discovered = true,
     loc_txt = {
         name = "Laminator",
@@ -55,7 +55,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    cost = 5,
     discovered = true,
     config = { extra = { payout = 1 }, },
     loc_txt = {
@@ -95,7 +95,8 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 6,
+    eternal_compat = false,
+    cost = 7,
     discovered = true,
     config = { extra = { amount = 2, growth = 1 }, },
     loc_txt = {
@@ -157,7 +158,8 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 3,
     blueprint_compat = true,
-    cost = 8,
+    eternal_compat = false,
+    cost = 9,
     discovered = true,
     loc_txt = {
         name = "Negative Nancy",
@@ -263,7 +265,8 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 6,
+    perishable_compat = false,
+    cost = 7,
     discovered = true,
     config = { extra = { xmult = 1, gain = 0.01, loss = 0.01 }, },
     loc_txt = {
@@ -317,7 +320,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = false,
     eternal_compat = false,
-    cost = 6,
+    cost = 7,
     discovered = true,
     config = { extra = { slots = 3, odds = 3 }, },
     loc_txt = {
@@ -362,7 +365,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 6,
+    cost = 8,
     discovered = true,
     config = { extra = { fullhouse = false }, },
     loc_txt = {
@@ -451,7 +454,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    cost = 5,
     discovered = true,
     config = { extra = { dollars = 3, cards = 1 }, },
     loc_txt = {
