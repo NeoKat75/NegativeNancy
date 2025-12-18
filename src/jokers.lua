@@ -1,5 +1,8 @@
 ---@diagnostic disable: need-check-nil
 
+-- card.ability.perma_debuff = true to debuff
+-- card.debuff to check for any debuff
+
 -- Post-Modern Joker
 SMODS.Joker {
     key = "postmodernjoker",
@@ -22,7 +25,7 @@ SMODS.Joker {
         local negacards = 0
         if G.deck and G.deck.cards then
             for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
+                if _card.edition and _card.edition.key == "e_negative" and not _card.debuff then negacards = negacards + 1 end
             end
         end
         return { vars = { card.ability.extra.percard, card.ability.extra.percard * negacards } }
@@ -31,10 +34,11 @@ SMODS.Joker {
         if context.joker_main and G.deck and G.deck.cards then
             local negacards = 0
             for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
+                if _card.edition and _card.edition.key == "e_negative" and not _card.debuff then negacards = negacards + 1 end
             end
             return { chips = card.ability.extra.percard * negacards }
         end
+        card:set_debuff()
     end
 }
 
