@@ -8,7 +8,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { percard = 25 }, },
+    config = { extra = { percard = 20 }, },
     loc_txt = {
         name = "Post-Modern Joker",
         text = {
