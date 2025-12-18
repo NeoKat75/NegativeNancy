@@ -3,6 +3,38 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Collector
+SMODS.Joker {
+    key = "collector",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { chips = 2 }, },
+    loc_txt = {
+        name = "Collector",
+        text = {
+            "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
+            "in your {C:attention}full deck{}, including",
+            "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals{}",
+            "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        if G.playing_cards and #G.playing_cards > 0 then
+            return { vars = { card.ability.extra.chips, card.ability.extra.chips * NegaNancy.uniquecards() } }
+        else
+            return { vars = { card.ability.extra.chips, card.ability.extra.chips * 52 } }
+        end
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return { chips = card.ability.extra.chips * NegaNancy.uniquecards() }
+        end
+    end
+}
+
 -- Post-Modern Joker
 SMODS.Joker {
     key = "postmodernjoker",
@@ -38,7 +70,6 @@ SMODS.Joker {
             end
             return { chips = card.ability.extra.percard * negacards }
         end
-        card:set_debuff()
     end
 }
 
