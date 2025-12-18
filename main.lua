@@ -93,11 +93,11 @@ function NegaNancy.makenegatives(targets)
         -- Actual main event
         G.E_MANAGER:add_event(Event({
             func = function()
+                handsize = G.hand.config.card_limit
                 targets[currentcard]:set_edition("e_negative", true)
                 targets[currentcard]:juice_up()
                 G.hand:remove_from_highlighted(targets[currentcard])
                 currentcard = currentcard + 1
-                handsize = G.hand.config.card_limit
                 checkevent()
                 return true
             end
