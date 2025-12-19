@@ -8,12 +8,13 @@ NegaNancy.optional_features = {
 
 -- FUNCTIONS --
 
--- Counts unique cards in full deck, returns amount of cards
-function NegaNancy.uniquecards()
+---@param cardarea CardArea a cardarea with playing cards
+-- Counts unique cards in specified cardarea, returns amount of cards
+function NegaNancy.uniquecards(cardarea)
     local cards = {}
     local stones = {}
     -- Put playing cards into 'cards' and stone cards into 'stones'
-    for _, _card in ipairs(G.playing_cards) do
+    for _, _card in ipairs(cardarea) do
         if _card.config.center.key == "m_stone" then
             stones[#stones+1] = _card
         else
