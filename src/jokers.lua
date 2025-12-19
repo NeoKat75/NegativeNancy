@@ -3,6 +3,51 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Frugal Joker
+SMODS.Joker {
+    key = "frugaljoker",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    config = { extra = { gain = 9, mult = 0 }, },
+    loc_txt = {
+        name = "Frugal Joker",
+        text = {
+            "This Joker gains {C:mult}+#1#{} Mult",
+            "per {C:dark_edition}Negative{} card {C:attention}discarded{},",
+            "resets each round",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
+    end,
+    calculate = function(self, card, context)
+        -- Upgrade mult when discarding negatives
+        if context.discard and not context.blueprint
+            and context.other_card.edition and context.other_card.edition.key == "e_negative"
+            and not context.other_card.debuff
+        then
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
+            return { message = localize('k_upgrade_ex') }
+        end
+        -- If there's any mult, reset it
+        if context.end_of_round and context.game_over == false and context.main_eval
+            and not context.blueprint and card.ability.extra.mult > 0
+        then
+            card.ability.extra.mult = 0
+            return { message = localize('k_reset') }
+        end
+        -- Scoooooore!
+        if context.joker_main then
+            return { mult = card.ability.extra.mult }
+        end
+    end
+}
+
 -- Collector
 SMODS.Joker {
     key = "collector",
