@@ -11,13 +11,12 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 7,
     discovered = true,
-    config = { extra = { gain = 9, mult = 0 }, },
+    config = { extra = { gain = 2, mult = 0 }, },
     loc_txt = {
         name = "Frugal Joker",
         text = {
-            "This Joker gains {C:mult}+#1#{} Mult",
-            "per {C:dark_edition}Negative{} card {C:attention}discarded{},",
-            "resets each round",
+            "This Joker gains {C:mult}+#1#{} Mult when",
+            "a {C:dark_edition}Negative{} card is {C:attention}discarded{},",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
         },
     },
@@ -33,13 +32,6 @@ SMODS.Joker {
         then
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
             return { message = localize('k_upgrade_ex') }
-        end
-        -- If there's any mult, reset it
-        if context.end_of_round and context.game_over == false and context.main_eval
-            and not context.blueprint and card.ability.extra.mult > 0
-        then
-            card.ability.extra.mult = 0
-            return { message = localize('k_reset') }
         end
         -- Scoooooore!
         if context.joker_main then
