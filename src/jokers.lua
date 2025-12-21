@@ -3,6 +3,51 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Stimulus Cheque
+SMODS.Joker {
+    key = "stimuluscheque",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { money = 2 }, },
+    loc_txt = {
+        name = "Stimulus Cheque",
+        text = {
+            "This Joker gives {C:money}$#1#{} per {C:attention}debuffed{}",
+            "card held in hand at end of round"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        return { vars = { card.ability.extra.money } }
+    end,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval and not context.game_over then
+            local totalmoney = 0
+            -- Count debuffed cards
+            for _, _card in ipairs(G.hand.cards) do
+                if _card.debuff then totalmoney = totalmoney + card.ability.extra.money end
+            end
+            -- Muhnee buffer
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + totalmoney
+            return {
+                dollars = totalmoney,
+                -- Reset muhnee buffer
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+    end
+}
+
 -- Slot Machine
 SMODS.Joker {
     key = "slotmachine",
@@ -294,7 +339,7 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         -- Scaling
-        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+        if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
             card.ability.extra.amount = card.ability.extra.amount + card.ability.extra.growth
             return { message = localize('k_upgrade_ex') }
         end
@@ -421,7 +466,7 @@ SMODS.Joker {
             return { message = card.ability.extra[math.random(21, 25)], sound = "voice"..math.random(11) }
         end
         -- Message when winning blind
-        if context.end_of_round and context.main_eval and context.game_over == false then
+        if context.end_of_round and context.main_eval and not context.game_over then
             return { message = card.ability.extra[math.random(26, 30)], sound = "voice"..math.random(11) }
         end
         -- Message when entering shop
@@ -593,7 +638,7 @@ SMODS.Joker {
             }
         end
         -- At end of round if var is true
-        if context.end_of_round and context.main_eval and context.game_over == false
+        if context.end_of_round and context.main_eval and not context.game_over
         and card.ability.extra.fullhouse == true and not context.blueprint then
             -- Set var back to false
             -- (Main eval prevents calculations in context.individual and context.repetitions at end of round)
