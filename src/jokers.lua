@@ -3,6 +3,76 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Slot Machine
+SMODS.Joker {
+    key = "slotmachine",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    config = { extra = { gain = 7, mult = 0, sevens = {} }, },
+    loc_txt = {
+        name = "Slot Machine",
+        text = {
+            "This Joker gains {C:mult}+#1#{} Mult if",
+            "{C:attention}poker hand{} contains any undebuffed {C:attention}7{}s,",
+            "{C:attention}debuffs{} the {C:attention}7{}s after they're played",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint then
+            -- print("before")
+            -- Gather scoring undebuffed 7s
+            card.ability.extra.sevens = {}
+            for _, _card in ipairs(context.scoring_hand) do
+                if _card:get_id() == 7 and not _card.debuff then
+                    card.ability.extra.sevens[#card.ability.extra.sevens+1] = _card
+                end
+            end
+            -- If sevens, upgrade
+            if next(card.ability.extra.sevens) ~= nil then
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
+                return { message = localize('k_upgrade_ex') }
+            end
+        end
+        -- If sevens, permadebuff them and clear table
+        if context.after and not context.blueprint and next(card.ability.extra.sevens) ~= nil then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    -- print("after")
+                    for _, _card in ipairs(card.ability.extra.sevens) do
+                        _card.ability.perma_debuff = true
+                    end
+                    card:juice_up()
+                    play_sound('tarot2', 1, 0.4)
+                    G.E_MANAGER:add_event(Event({
+                        blocking = false,
+                        blockable = false,
+                        trigger = 'after',
+                        delay = 0.06*G.SETTINGS.GAMESPEED,
+                        func = function()
+                            play_sound('tarot2', 0.76, 0.4)
+                            return true
+                        end
+                    }))
+                    card.ability.extra.sevens = {}
+                    return true
+                end
+            }))
+        end
+        -- Score!
+        if context.joker_main then
+            return { mult = card.ability.extra.mult }
+        end
+    end
+}
+
 -- Frugal Joker
 SMODS.Joker {
     key = "frugaljoker",
