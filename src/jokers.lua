@@ -253,7 +253,7 @@ SMODS.Joker {
                     for i = 1, card.ability.extra.amount do
                         local _card, _index = pseudorandom_element(targets, "nancy_stairwell")
                         finaltargets[#finaltargets+1] = _card
-                        table.remove(targets, _index)
+                        table.remove(targets, tonumber(_index))
                     end
                 end
                 NegaNancy.makenegatives(finaltargets)
