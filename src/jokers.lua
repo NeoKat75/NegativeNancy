@@ -11,7 +11,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { money = 2 }, },
+    config = { extra = { money = 3 }, },
     loc_txt = {
         name = "Stimulus Cheque",
         text = {
