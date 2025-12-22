@@ -15,8 +15,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Stimulus Cheque",
         text = {
-            "This Joker gives {C:money}$#1#{} per {C:attention}debuffed{}",
-            "card held in hand at end of round"
+            "Each {C:attention}debuffed{} card {C:attention}in hand{}",
+            "gives {C:money}$#1#{} at end of round"
         },
     },
     loc_vars = function(self, info_queue, card)
@@ -24,26 +24,36 @@ SMODS.Joker {
         return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.game_over then
-            local totalmoney = 0
-            -- Count debuffed cards
+        if context.end_of_round and not context.game_over and context.main_eval then
+            local joker = context.blueprint_card or card
+            -- For each debuffed card in hand
             for _, _card in ipairs(G.hand.cards) do
-                if _card.debuff then totalmoney = totalmoney + card.ability.extra.money end
-            end
-            -- Muhnee buffer
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + totalmoney
-            return {
-                dollars = totalmoney,
-                -- Reset muhnee buffer
-                func = function()
+                if _card.debuff then
+                    -- Juice da joker
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            G.GAME.dollar_buffer = 0
+                            joker:juice_up()
                             return true
                         end
                     }))
+                    -- Muhnee buffer
+                    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+                    -- Do the thing!
+                    SMODS.calculate_effect({
+                        dollars = card.ability.extra.money,
+                        message_card = _card,
+                        -- Reset muhnee buffer
+                        func = function()
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    G.GAME.dollar_buffer = 0
+                                    return true
+                                end
+                            }))
+                        end
+                    }, _card)
                 end
-            }
+            end
         end
     end
 }
