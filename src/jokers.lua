@@ -9,7 +9,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    cost = 5,
     discovered = true,
     config = { extra = { money = 3 }, },
     loc_txt = {
@@ -41,7 +41,6 @@ SMODS.Joker {
                     -- Do the thing!
                     SMODS.calculate_effect({
                         dollars = card.ability.extra.money,
-                        message_card = _card,
                         -- Reset muhnee buffer
                         func = function()
                             G.E_MANAGER:add_event(Event({
