@@ -11,12 +11,13 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { money = 3 }, },
+    config = { extra = { money = 5 }, },
     loc_txt = {
         name = "Stimulus Cheque",
         text = {
-            "Each {C:attention}debuffed{} card {C:attention}in hand{}",
-            "gives {C:money}$#1#{} at end of round"
+            "This Joker gives {C:money}$#1#{} per",
+            "{C:attention}debuffed{} card {C:attention}in hand{}",
+            "at end of round"
         },
     },
     loc_vars = function(self, info_queue, card)
@@ -25,14 +26,13 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.end_of_round and not context.game_over and context.main_eval then
-            local joker = context.blueprint_card or card
             -- For each debuffed card in hand
             for _, _card in ipairs(G.hand.cards) do
                 if _card.debuff then
-                    -- Juice da joker
+                    -- Juice da card
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            joker:juice_up()
+                            _card:juice_up()
                             return true
                         end
                     }))
@@ -41,6 +41,7 @@ SMODS.Joker {
                     -- Do the thing!
                     SMODS.calculate_effect({
                         dollars = card.ability.extra.money,
+                        message_card = context.blueprint_card or card,
                         -- Reset muhnee buffer
                         func = function()
                             G.E_MANAGER:add_event(Event({
@@ -50,7 +51,7 @@ SMODS.Joker {
                                 end
                             }))
                         end
-                    }, _card)
+                    }, card)
                 end
             end
         end
