@@ -3,6 +3,46 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Decorative Joker
+SMODS.Joker {
+    key = "decorativejoker",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { mult = 5 }, },
+    loc_txt = {
+        name = "Decorative Joker",
+        text = {
+            "{C:mult}+#1#{} Mult for each {C:attention}debuffed{}",
+            "card in your {C:attention}full deck{}",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        local totalmult = 0
+        if G.playing_cards and #G.playing_cards > 0 then
+            for _, _card in ipairs(G.playing_cards) do
+                if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
+            end
+        end
+        return { vars = { card.ability.extra.mult, totalmult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local totalmult = 0
+            if G.playing_cards and #G.playing_cards > 0 then
+                for _, _card in ipairs(G.playing_cards) do
+                    if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
+                end
+            end
+            return { mult = totalmult }
+        end
+    end
+}
+
 -- Stimulus Cheque
 SMODS.Joker {
     key = "stimuluscheque",
@@ -11,13 +51,13 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { money = 5 }, },
+    config = { extra = { money = 4 }, },
     loc_txt = {
         name = "Stimulus Cheque",
         text = {
             "This Joker gives {C:money}$#1#{} per",
             "{C:attention}debuffed{} card {C:attention}in hand{}",
-            "at end of round"
+            "when hand is played"
         },
     },
     loc_vars = function(self, info_queue, card)
@@ -25,7 +65,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and not context.game_over and context.main_eval then
+        if context.joker_main then
             -- For each debuffed card in hand
             for _, _card in ipairs(G.hand.cards) do
                 if _card.debuff then
