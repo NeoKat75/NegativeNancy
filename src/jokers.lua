@@ -3,6 +3,58 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Lack of the Draw
+SMODS.Joker {
+    key = "lackofthedraw",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    loc_txt = {
+        name = "#2# of the Draw",
+        text = {
+            "If {C:attention}discard{} contains {C:attention}#1#{}",
+            "{C:dark_edition}Negative{} cards, create a",
+            "random {C:spectral}Spectral{} card",
+            "{C:inactive}(Must have room)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local luck
+        if math.random(10) == 10 then luck = "Luck" else luck = "Lack" end
+        return { vars = { G.GAME.starting_params.discard_limit, luck } }
+    end,
+    calculate = function(self, card, context)
+        -- If discaring max amount of cards, when the last card is being discarded
+        if context.pre_discard and #context.full_hand == G.GAME.starting_params.discard_limit then
+            -- Check if discard contains non-negatives, stop calculation if yes
+            for _, _card in ipairs(context.full_hand) do
+                if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
+            end
+            -- Add the spectral card (from Vanilla Remade's Sixth Sense)
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card{
+                            set = 'Spectral',
+                            key_append = 'nancy_lackofthedraw' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+                return {
+                    message = localize('k_plus_spectral'),
+                    colour = G.C.SECONDARY_SET.Spectral
+                }
+            end
+        end
+    end
+}
+
 -- Initiation
 SMODS.Joker {
     key = "initiation",
@@ -28,12 +80,15 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.after and #G.hand.cards > 0 and not context.blueprint then
-            -- Check if hand contains non-negatives, stop calculate if yes
+            -- Check if hand contains non-negatives, stop calculation if yes
             for _, _card in ipairs(G.hand.cards) do
                 if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
             end
             G.E_MANAGER:add_event(Event({
                 func = function()
+                    for _, _card in ipairs(G.hand.cards) do
+                        _card:juice_up()
+                    end
                     G.hand:change_size(card.ability.extra.size)
                     play_sound('gong')
                     card:start_dissolve()
@@ -109,7 +164,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        if context.joker_main then
+        if context.before then
             -- For each debuffed card in hand
             for _, _card in ipairs(G.hand.cards) do
                 if _card.debuff then
