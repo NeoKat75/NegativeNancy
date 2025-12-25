@@ -3,6 +3,50 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Initiation
+SMODS.Joker {
+    key = "initiation",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = false,
+    eternal_compat = false,
+    cost = 8,
+    discovered = true,
+    config = { extra = { size = 1 }, },
+    loc_txt = {
+        name = "Initiation",
+        text = {
+            "Permanently gain {C:attention}+#1#{} hand size",
+            "after hand is played if all",
+            "cards {C:attention}held in hand{} are {C:dark_edition}Negative{}",
+            "{C:red,E:2}self-destructs{}"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.size } }
+    end,
+    calculate = function(self, card, context)
+        if context.after and #G.hand.cards > 0 and not context.blueprint then
+            -- Check if hand contains non-negatives, stop calculate if yes
+            for _, _card in ipairs(G.hand.cards) do
+                if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
+            end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.hand:change_size(card.ability.extra.size)
+                    play_sound('gong')
+                    card:start_dissolve()
+                    return true
+                end
+            }))
+            return {
+                message = localize{type = 'variable', key = 'a_handsize', vars = { card.ability.extra.size }}
+            }
+        end
+    end
+}
+
 -- Decorative Joker
 SMODS.Joker {
     key = "decorativejoker",
@@ -104,6 +148,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
+    perishable_compat = false,
     cost = 7,
     discovered = true,
     config = { extra = { gain = 7, mult = 0, sevens = {} }, },
@@ -174,6 +219,7 @@ SMODS.Joker {
     pos = { x = 0, y = 0 },
     rarity = 2,
     blueprint_compat = true,
+    perishable_compat = false,
     cost = 7,
     discovered = true,
     config = { extra = { gain = 2, mult = 0 }, },
