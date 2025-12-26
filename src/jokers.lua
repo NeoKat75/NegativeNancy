@@ -3,6 +3,58 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Pump & Dump
+SMODS.Joker {
+    key = "pumpdump",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = false,
+    cost = 9,
+    discovered = true,
+    config = { extra = { money = 6, cards = 0, reset = false }, },
+    loc_txt = {
+        name = "Pump & Dump",
+        text = {
+            "At end of round, earn {C:money}$#1#{}",
+            "per {C:dark_edition}Negative{} card",
+            "{C:attention}destroyed{} this Ante",
+            "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.money, card.ability.extra.money * card.ability.extra.cards } }
+    end,
+    calculate = function(self, card, context)
+        -- Scale per destroyed card, only show upgrade message once per destruction event
+        if context.remove_playing_cards and not context.blueprint then
+            local yes = false
+            for _, _card in ipairs(context.removed) do
+                if _card.edition and _card.edition.key == "e_negative" then
+                    card.ability.extra.cards = card.ability.extra.cards + 1
+                    yes = true
+                end
+            end
+            if yes then return { message = localize('k_upgrade_ex') } end
+        end
+        -- Reset when entering shop after beating boss blind
+        if context.ante_change and context.ante_end and not context.blueprint
+            and card.ability.extra.cards > 0
+        then card.ability.extra.reset = true end
+        if context.starting_shop and not context.blueprint and card.ability.extra.reset == true then
+            card.ability.extra.cards = 0
+            card.ability.extra.reset = false
+            return { message = localize('k_reset') }
+        end
+    end,
+    -- Gives end of round money
+    calc_dollar_bonus = function(self, card)
+        if card.ability.extra.cards > 0 then
+            return card.ability.extra.money * card.ability.extra.cards
+        end
+    end
+}
+
 -- Deep Ocean
 SMODS.Joker {
     key = "deepocean",
@@ -28,7 +80,7 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
-            local yes
+            local yes = false
             for _, _card in ipairs(context.scoring_hand) do
                 if _card.edition and _card.edition.key == "e_negative" and not _card.debuff then yes = true; break end
             end
@@ -230,7 +282,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { money = 4 }, },
+    config = { extra = { money = 3 }, },
     loc_txt = {
         name = "Stimulus Cheque",
         text = {
@@ -336,7 +388,6 @@ SMODS.Joker {
                             return true
                         end
                     }))
-                    card.ability.extra.sevens = {}
                     return true
                 end
             }))
