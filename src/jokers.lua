@@ -3,6 +3,51 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Deep Ocean
+SMODS.Joker {
+    key = "deepocean",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 8,
+    discovered = true,
+    config = { extra = { chips = 0, gain = 25 }, },
+    loc_txt = {
+        name = "Deep Ocean",
+        text = {
+            "This Joker gains {C:chips}+#1#{} Chips",
+            "per {C:attention}consecutive{} hand played",
+            "with a scoring {C:dark_edition}Negative{} card",
+            "{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.gain, card.ability.extra.chips } }
+    end,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint then
+            local yes
+            for _, _card in ipairs(context.scoring_hand) do
+                if _card.edition and _card.edition.key == "e_negative" and not _card.debuff then yes = true; break end
+            end
+            if yes then
+                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.gain
+                return { message = localize('k_upgrade_ex') }
+            else
+                if card.ability.extra.chips > 0 then
+                    card.ability.extra.chips = 0
+                    return { message = localize('k_reset') }
+                end
+            end
+        end
+        if context.joker_main then
+            return { chips = card.ability.extra.chips }
+        end
+    end
+}
+
 -- Double Take
 SMODS.Joker {
     key = "doubletake",
@@ -15,9 +60,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Double Take",
         text = {
-            "{C:green}#1# in #2#{} chance",
-            "to retrigger each",
-            "{C:dark_edition}Negative{} {C:attention}playing card{}"
+            "{C:green}#1# in #2#{} chance to",
+            "retrigger each",
+            "{C:dark_edition}Negative{} {C:attention}playing card"
         },
     },
     loc_vars = function(self, info_queue, card)
