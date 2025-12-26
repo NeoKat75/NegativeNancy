@@ -3,6 +3,41 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Double Take
+SMODS.Joker {
+    key = "doubletake",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 9,
+    discovered = true,
+    config = { extra = { odds = 2, retriggers = 1 }, },
+    loc_txt = {
+        name = "Double Take",
+        text = {
+            "{C:green}#1# in #2#{} chance",
+            "to retrigger each",
+            "{C:dark_edition}Negative{} {C:attention}playing card{}"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_doubletake')
+        return { vars = { num, denom } }
+    end,
+    calculate = function(self, card, context)
+        if (context.repetition and context.cardarea == G.play)
+            or (context.repetition and context.cardarea == G.hand and (next(context.card_effects[1]) or #context.card_effects > 1))
+        then
+            if context.other_card.edition and context.other_card.edition.key == "e_negative" then
+                if SMODS.pseudorandom_probability(card, 'nancy_doubletake', 1, card.ability.extra.odds) then
+                    return { repetitions = card.ability.extra.retriggers }
+                end
+            end
+        end
+    end
+}
+
 -- Lack of the Draw
 SMODS.Joker {
     key = "lackofthedraw",
