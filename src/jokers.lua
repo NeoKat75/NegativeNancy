@@ -3,6 +3,54 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Exorcist
+SMODS.Joker {
+    key = "exorcist",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 8,
+    discovered = true,
+    config = { extra = { xmult = 4, active = false }, },
+    loc_txt = {
+        name = "Exorcist",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative{} {C:attention}playing",
+            "{C:attention}card{} has been {C:attention}destroyed{}",
+            "since end of last round",
+            "{C:inactive,E:2}#2#"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local activetext
+        if card.ability.extra.active then activetext = "(Active!)" else activetext = "(Inactive...)" end
+        return { vars = { card.ability.extra.xmult, activetext } }
+    end,
+    calculate = function(self, card, context)
+        -- Activate if inactive and negative card is destroyed
+        if context.remove_playing_cards and not context.blueprint and not card.ability.extra.active then
+            for _, _card in ipairs(context.removed) do
+                if _card.edition and _card.edition.key == "e_negative" then
+                    card.ability.extra.active = true
+                    return { message = localize{type = "variable", key = 'loyalty_active'} }
+                end
+            end
+        end
+        -- Reset at end of round if active
+        if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint
+            and card.ability.extra.active
+        then
+            card.ability.extra.active = false
+            return { message = localize('k_reset') }
+        end
+        -- Score if active
+        if context.joker_main and card.ability.extra.active then
+            return { xmult = card.ability.extra.xmult }
+        end
+    end
+}
+
 -- Pump & Dump
 SMODS.Joker {
     key = "pumpdump",
@@ -38,10 +86,10 @@ SMODS.Joker {
             if yes then return { message = localize('k_upgrade_ex') } end
         end
         -- Reset when entering shop after beating boss blind
-        if context.ante_change and context.ante_end and not context.blueprint
-            and card.ability.extra.cards > 0
-        then card.ability.extra.reset = true end
-        if context.starting_shop and not context.blueprint and card.ability.extra.reset == true then
+        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.cards > 0 then
+            card.ability.extra.reset = true
+        end
+        if context.starting_shop and not context.blueprint and card.ability.extra.reset then
             card.ability.extra.cards = 0
             card.ability.extra.reset = false
             return { message = localize('k_reset') }
