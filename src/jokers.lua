@@ -15,9 +15,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Exorcist",
         text = {
-            "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative{} {C:attention}playing",
-            "{C:attention}card{} has been {C:attention}destroyed{}",
-            "since end of last round",
+            "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative{}",
+            "playing card has been",
+            "{C:attention}destroyed{} this Ante",
             "{C:inactive,E:2}#2#"
         },
     },
@@ -37,10 +37,8 @@ SMODS.Joker {
                 end
             end
         end
-        -- Reset at end of round if active
-        if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint
-            and card.ability.extra.active
-        then
+        -- Reset after beating boss blind if active
+        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.active then
             card.ability.extra.active = false
             return { message = localize('k_reset') }
         end
@@ -64,7 +62,7 @@ SMODS.Joker {
         name = "Pump & Dump",
         text = {
             "At end of round, earn {C:money}$#1#{}",
-            "per {C:dark_edition}Negative{} card",
+            "per {C:dark_edition}Negative{} playing card",
             "{C:attention}destroyed{} this Ante",
             "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
         },
