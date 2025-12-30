@@ -3,6 +3,35 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Pack of Buffoons
+SMODS.Joker {
+    key = "packofbuffoons",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    config = { extra = { gain = 3 }, },
+    loc_txt = {
+        name = "Pack of Buffoons",
+        text = {
+            "{C:mult}+#1#{} Mult per {C:attention}unique{} Joker",
+            "obtained during this run",
+            "{C:inactive}(Currently {C:mult}+#2# {C:inactive}Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        local mult = 0
+        if G.GAME.nancy_jokerlist then mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain end
+        return { vars = { card.ability.extra.gain, mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and G.GAME.nancy_jokerlist then
+            return { mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain }
+        end
+    end
+}
+
 -- Participation Award
 SMODS.Joker {
     key = "participationaward",
@@ -11,7 +40,6 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 8,
     discovered = true,
-    config = {},
     loc_txt = {
         name = "Participation Award",
         text = {

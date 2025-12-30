@@ -6,9 +6,25 @@ NegaNancy.optional_features = {
 	cardareas = { deck = true , discard = true }
 }
 
+
 -- FUNCTIONS --
 
+-- Initiate Pack of Buffoons' joker list when a run starts
+function NegaNancy.reset_game_globals(run_start)
+    if run_start then G.GAME.nancy_jokerlist = {} end
+end
+
+---@param table table target table
+---@return number
+-- Utility function for getting the amount of items in a table (from the internet)
+function NegaNancy.tablelength(table)
+    local count = 0
+    for _ in pairs(table) do count = count + 1 end
+    return count
+end
+
 ---@param cardarea CardArea a cardarea with playing cards
+---@return number
 -- Counts unique cards in specified cardarea, returns amount of cards
 function NegaNancy.uniquecards(cardarea)
     local cards = {}
@@ -117,6 +133,19 @@ function NegaNancy.makenegatives(targets)
 end
 
 -- HOOKS --
+
+-- Add joker to jokerlist if it's unique when it's added (mostly taken from Vanilla Remade)
+local card_add_to_deck_ref = Card.add_to_deck
+function Card:add_to_deck(from_debuff)
+    local ret = card_add_to_deck_ref(self, from_debuff)
+    if not from_debuff -- If the card wasn't added by being undebuffed
+        and self.ability.set == "Joker" -- and the card (`self` in this case) is a Joker
+        and G.GAME.nancy_jokerlist[self.config.center.key] == nil
+    then
+        G.GAME.nancy_jokerlist[self.config.center.key] = true
+    end
+    return ret
+end
 
 -- Disable play button during makenegatives()
 -- save the orig function (no executing)
