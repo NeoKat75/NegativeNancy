@@ -3,6 +3,54 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Participation Award
+SMODS.Joker {
+    key = "participationaward",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 8,
+    discovered = true,
+    config = {},
+    loc_txt = {
+        name = "Participation Award",
+        text = {
+            "Create a random {C:tarot}Tarot{}",
+            "card if {C:attention}poker hand{}",
+            "contains a {C:attention}debuffed{} card",
+            "{C:inactive}(Must have room)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local yes = false
+            for _, _card in ipairs(context.scoring_hand) do
+                if _card.debuff then yes = true; break end
+            end
+            if yes then
+                -- Code from Vanilla Remade's Vagabond
+                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card{
+                            set = 'Tarot',
+                            key_append = 'nancy_participationaward' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+                return {
+                    message = localize('k_plus_tarot'),
+                }
+            end
+        end
+    end
+}
+
 -- Exorcist
 SMODS.Joker {
     key = "exorcist",
@@ -205,7 +253,7 @@ SMODS.Joker {
         return { vars = { G.GAME.starting_params.discard_limit, luck } }
     end,
     calculate = function(self, card, context)
-        -- If discaring max amount of cards, when the last card is being discarded
+        -- If discaring max amount of cards
         if context.pre_discard and #context.full_hand == G.GAME.starting_params.discard_limit then
             -- Check if discard contains non-negatives, stop calculation if yes
             for _, _card in ipairs(context.full_hand) do
