@@ -3,6 +3,49 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Expired Coupon
+SMODS.Joker {
+    key = "expiredcoupon",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    eternal_compat = false,
+    cost = 5,
+    discovered = true,
+    config = { extra = { limit = 25, reduction = 2 }, },
+    loc_txt = {
+        name = "Expired Coupon",
+        text = {
+            "While in a round, sell this Joker",
+            "to immediately {C:attention}spend{} up to {C:money}$#1#{}",
+            "and {C:attention}reduce{} the blind requirement",
+            "by {C:money}#2#%{} for each dollar spent"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.limit, card.ability.extra.reduction } }
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        -- Set sell value to 0
+        card.ability.extra_value = -(math.floor(self.cost / 2))
+        card:set_cost()
+    end,
+    calculate = function(self, card, context)
+        -- If selling card while blind req is over 5 chips and player has any money
+        if context.selling_self and G.GAME.blind.in_blind and G.GAME.blind.chips > 5 and G.GAME.dollars > G.GAME.bankrupt_at then
+            -- Calc available money and cap it at limit, spend money
+            local money = math.abs(G.GAME.bankrupt_at - G.GAME.dollars)
+            if money > card.ability.extra.limit then money = card.ability.extra.limit end
+            ease_dollars(-money)
+            -- Calc chip reduction and do it, wiggle blind
+            local chipmod = G.GAME.blind.chips * ((money * card.ability.extra.reduction) / 100)
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips - chipmod)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            G.GAME.blind:wiggle()
+        end
+    end
+}
+
 -- Pack of Buffoons
 SMODS.Joker {
     key = "packofbuffoons",
