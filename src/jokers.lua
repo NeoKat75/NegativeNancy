@@ -10,7 +10,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     eternal_compat = false,
-    cost = 5,
+    cost = 4,
     discovered = true,
     config = { extra = { limit = 25, reduction = 2 }, },
     loc_txt = {
@@ -42,6 +42,20 @@ SMODS.Joker {
             G.GAME.blind.chips = math.floor(G.GAME.blind.chips - chipmod)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             G.GAME.blind:wiggle()
+            -- Win blind if enough score
+            if G.GAME.chips >= G.GAME.blind.chips then
+                G.E_MANAGER:add_event(Event({
+                    blocking = false,
+                    func = function()
+                        if G.STATE == G.STATES.SELECTING_HAND then
+                            G.STATE = G.STATES.HAND_PLAYED
+                            G.STATE_COMPLETE = true
+                            end_round()
+                            return true
+                        end
+                    end
+                }))
+            end
         end
     end
 }
