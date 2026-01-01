@@ -11,13 +11,14 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { amount = 3, tally = 0 }, },
+    config = { extra = { amount = 3, tally = 0, growth = 1 }, },
     loc_txt = {
         name = "Return Policy",
         text = {
-            "For every {C:attention}#1#rd{} Joker sold,",
-            "create a free {C:attention}Rarity Tag",
-            "corresponding to its rarity",
+            "Sell {C:attention}#1#{} Jokers to create",
+            "a free {C:attention}Rarity Tag{} based on",
+            "{C:attention}last sold{} Joker's rarity",
+            "{s:0.8}Amount increases by {s:0.8,C:attention}#3# {s:0.8}after each use",
             "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1# Jokers sold)"
         },
     },
@@ -25,7 +26,7 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
         info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
         info_queue[#info_queue + 1] = G.P_TAGS.tag_rare
-        return { vars = { card.ability.extra.amount, card.ability.extra.tally } }
+        return { vars = { card.ability.extra.amount, card.ability.extra.tally, card.ability.extra.growth } }
     end,
     calculate = function(self, card, context)
         -- If selling a Joker
@@ -33,7 +34,7 @@ SMODS.Joker {
             -- If this Joker is the last one needed to be sold
             if card.ability.extra.tally == card.ability.extra.amount - 1 then
                 -- Determine tag
-                local tag = "tag_double" -- Failsafe tag
+                local tag = "tag_double" -- Legendary/failsafe tag
                 if context.card:is_rarity(1) then tag = "tag_top_up" end
                 if context.card:is_rarity(2) then tag = "tag_uncommon" end
                 if context.card:is_rarity(3) then tag = "tag_rare" end
@@ -52,6 +53,9 @@ SMODS.Joker {
                         -- This is for timing purposes, this goes after activation
                         G.E_MANAGER:add_event(Event({
                             func = function()
+                                if card.ability.extra.tally ~= 0 then
+                                    card.ability.extra.amount = card.ability.extra.amount + card.ability.extra.growth
+                                end
                                 card.ability.extra.tally = 0
                                 return true
                             end
