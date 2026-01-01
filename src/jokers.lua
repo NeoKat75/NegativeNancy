@@ -42,7 +42,7 @@ SMODS.Joker {
             G.GAME.blind.chips = math.floor(G.GAME.blind.chips - chipmod)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             G.GAME.blind:wiggle()
-            -- Win blind if enough score
+            -- Win blind if enough score (from Vanilla Remade wiki)
             if G.GAME.chips >= G.GAME.blind.chips then
                 G.E_MANAGER:add_event(Event({
                     blocking = false,
