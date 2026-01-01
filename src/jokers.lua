@@ -3,6 +3,80 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Return Policy
+SMODS.Joker {
+    key = "returnpolicy",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 5,
+    discovered = true,
+    config = { extra = { amount = 3, tally = 0 }, },
+    loc_txt = {
+        name = "Return Policy",
+        text = {
+            "For every {C:attention}#1#rd{} Joker sold,",
+            "create a free {C:attention}Rarity Tag",
+            "corresponding to its rarity",
+            "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1# Jokers sold)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_rare
+        return { vars = { card.ability.extra.amount, card.ability.extra.tally } }
+    end,
+    calculate = function(self, card, context)
+        -- If selling a Joker
+        if context.selling_card and context.card.ability.set == "Joker" then
+            -- If this Joker is the last one needed to be sold
+            if card.ability.extra.tally == card.ability.extra.amount - 1 then
+                -- Determine tag
+                local tag = "tag_double" -- Failsafe tag
+                if context.card:is_rarity(1) then tag = "tag_top_up" end
+                if context.card:is_rarity(2) then tag = "tag_uncommon" end
+                if context.card:is_rarity(3) then tag = "tag_rare" end
+                -- Give tag
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        add_tag(Tag(tag))
+                        play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                        return true
+                    end)
+                }))
+                -- Reset tally after activation for blueprint compat
+                return {
+                    message = "+1 Rarity Tag",
+                    func = function()
+                        -- This is for timing purposes, this goes after activation
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                card.ability.extra.tally = 0
+                                return true
+                            end
+                        }))
+                    end
+                }
+            elseif not context.blueprint then
+                -- Increment tally after activation for blueprint compat
+                return {
+                    message = (card.ability.extra.tally + 1) .. "/" .. card.ability.extra.amount,
+                    func = function()
+                        -- This is for timing purposes, this goes after activation
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                card.ability.extra.tally = card.ability.extra.tally + 1
+                                return true
+                            end
+                        }))
+                    end
+                }
+            end
+        end
+    end
+}
+
 -- Expired Coupon
 SMODS.Joker {
     key = "expiredcoupon",
@@ -10,7 +84,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     eternal_compat = false,
-    cost = 4,
+    cost = 3,
     discovered = true,
     config = { extra = { limit = 25, reduction = 2 }, },
     loc_txt = {
@@ -32,7 +106,9 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         -- If selling card while blind req is over 5 chips and player has any money
-        if context.selling_self and G.GAME.blind.in_blind and G.GAME.blind.chips > 5 and G.GAME.dollars > G.GAME.bankrupt_at then
+        if context.selling_self and G.GAME.blind.in_blind
+            and G.GAME.blind.chips > 5 and G.GAME.dollars > G.GAME.bankrupt_at
+        then
             -- Calc available money and cap it at limit, spend money
             local money = math.abs(G.GAME.bankrupt_at - G.GAME.dollars)
             if money > card.ability.extra.limit then money = card.ability.extra.limit end
