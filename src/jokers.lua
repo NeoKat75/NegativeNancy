@@ -3,6 +3,37 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Quality of Life
+SMODS.Joker {
+    key = "qualityoflife",
+    pos = { x = 0, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { levels = 1 }, },
+    loc_txt = {
+        name = "Quality of Life",
+        text = {
+            "Upgrade the {C:attention}highest{} drawn",
+            "{C:attention}poker hand{} by {C:attention}#1#{} level",
+            "when drawing playing cards",
+            "inside a {C:red}Booster Pack"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels } }
+    end,
+    calculate = function(self, card, context)
+        if context.other_drawn then
+            G.CONTROLLER.locks.nancy_qualityoflife = true
+            local pokerhand = G.FUNCS.get_poker_hand_info(context.other_drawn)
+            SMODS.upgrade_poker_hands({hands = {pokerhand}, level_up = card.ability.extra.levels, from = context.blueprint_card or card})
+            G.CONTROLLER.locks.nancy_qualityoflife = nil
+        end
+    end
+}
+
 -- Return Policy
 SMODS.Joker {
     key = "returnpolicy",
@@ -15,11 +46,11 @@ SMODS.Joker {
     loc_txt = {
         name = "Return Policy",
         text = {
-            "Sell {C:attention}#1#{} Jokers to create",
-            "a free {C:attention}Rarity Tag{} based on",
+            "Sell {C:attention}#1#{} Jokers to create a",
+            "free {C:attention}Rarity Tag{} based on",
             "{C:attention}last sold{} Joker's rarity",
-            "{s:0.8}Amount increases by {s:0.8,C:attention}#3# {s:0.8}after each use",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1# Jokers sold)"
+            "{s:0.8}Amount increases by {s:0.8,C:attention}#3# {s:0.8}each use",
+            "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
         },
     },
     loc_vars = function(self, info_queue, card)
@@ -40,11 +71,11 @@ SMODS.Joker {
                 if context.card:is_rarity(3) then tag = "tag_rare" end
                 -- Give tag
                 G.E_MANAGER:add_event(Event({
-                    func = (function()
+                    func = function()
                         add_tag(Tag(tag))
                         play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
                         return true
-                    end)
+                    end
                 }))
                 -- Reset tally after activation for blueprint compat
                 return {
@@ -62,6 +93,7 @@ SMODS.Joker {
                         }))
                     end
                 }
+            -- Erm actually no blueprint here to avoid multiple increments
             elseif not context.blueprint then
                 -- Increment tally after activation for blueprint compat
                 return {
