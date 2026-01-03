@@ -6,7 +6,6 @@ NegaNancy.optional_features = {
 	cardareas = { deck = true , discard = true }
 }
 
-
 -- FUNCTIONS --
 
 -- Initiate Pack of Buffoons' joker list when a run starts
