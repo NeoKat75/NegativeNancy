@@ -3,6 +3,61 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Cutoff Card
+SMODS.Joker {
+    key = "cutoffcard",
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    discovered = true,
+    config = { extra = { used = false }, },
+    loc_txt = {
+        name = "Cutoff Card",
+        text = {
+            "Once per round, sell a",
+            "{C:attention}consumable{} to destroy",
+            "a random card {C:attention}in hand"
+        },
+    },
+    calculate = function(self, card, context)
+        -- When first hand is drawn
+        if context.first_hand_drawn and not context.blueprint then
+            -- Wiggle while used = false
+            local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        -- Do the thing (nancy_cutoff is for blueprint compat, destroying cards happens later)
+        if context.selling_card and context.card.ability.consumeable and card.ability.extra.used == false
+            and G.hand and #G.hand.cards > 0
+        then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local targets = {}
+                    for _, _card in ipairs(G.hand.cards) do
+                        if not _card.ability.nancy_cutoff then
+                            targets[#targets + 1] = _card
+                        end
+                    end
+                    if next(targets) ~= nil then
+                        local _card = pseudorandom_element(targets, "nancy_cutoffcard")
+                        _card.ability.nancy_cutoff = true
+                        SMODS.destroy_cards(_card, nil, true)
+                        card.ability.extra.used = true
+                    end
+                    return true
+                end
+            }))
+        end
+         -- At end of round if var is true
+        if context.end_of_round and context.main_eval and not context.game_over
+            and card.ability.extra.used == true and not context.blueprint
+        then
+            card.ability.extra.used = false
+        end
+    end
+}
+
 -- Quality of Life
 SMODS.Joker {
     key = "qualityoflife",
@@ -26,10 +81,8 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.other_drawn then
-            G.CONTROLLER.locks.nancy_qualityoflife = true
             local pokerhand = G.FUNCS.get_poker_hand_info(context.other_drawn)
             SMODS.upgrade_poker_hands({hands = {pokerhand}, level_up = card.ability.extra.levels, from = context.blueprint_card or card})
-            G.CONTROLLER.locks.nancy_qualityoflife = nil
         end
     end
 }
@@ -437,7 +490,7 @@ SMODS.Joker {
     loc_txt = {
         name = "#2# of the Draw",
         text = {
-            "If {C:attention}discard{} contains {C:attention}#1#{}",
+            "If {C:red}discard{} contains {C:attention}#1#{}",
             "{C:dark_edition}Negative{} cards, create a",
             "random {C:spectral}Spectral{} card",
             "{C:inactive}(Must have room)"
