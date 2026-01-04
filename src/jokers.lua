@@ -363,9 +363,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Participation Award",
         text = {
-            "Create a random {C:tarot}Tarot{}",
-            "card if {C:attention}poker hand{}",
-            "contains a {C:attention}debuffed{} card",
+            "Create a random {C:tarot}Tarot{} card",
+            "if {C:attention}poker hand{} contains",
+            "at least one {C:attention}debuffed{} card",
             "{C:inactive}(Must have room)"
         },
     },
