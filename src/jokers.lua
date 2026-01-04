@@ -32,7 +32,6 @@ SMODS.Joker {
                     func = function()
                         play_sound('gong', 0.94, 0.5)
                         play_sound('gong', 0.94*1.5, 0.5)
-                        play_sound('tarot1', 1.5)
                         for _, _card in ipairs(targets) do
                             draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
                         end
@@ -667,7 +666,6 @@ SMODS.Joker {
                     G.hand:change_size(card.ability.extra.size)
                     play_sound('gong', 0.94, 0.5)
                     play_sound('gong', 0.94*1.5, 0.5)
-                    play_sound('tarot1', 1.5)
                     card:start_dissolve()
                     return true
                 end
@@ -788,8 +786,9 @@ SMODS.Joker {
         name = "Slot Machine",
         text = {
             "This Joker gains {C:mult}+#1#{} Mult if",
-            "{C:attention}poker hand{} contains any undebuffed {C:attention}7{}s,",
-            "{C:attention}debuffs{} the {C:attention}7{}s after they're played",
+            "{C:attention}poker hand{} contains any",
+            "undebuffed {C:attention}7{}s, {C:attention}debuffs{} the {C:attention}7{}s",
+            "after they are played",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
         },
     },
