@@ -1,7 +1,49 @@
 ---@diagnostic disable: need-check-nil
 
--- card.ability.perma_debuff = true to debuff
--- card.debuff to check for any debuff
+-- Exposure Therapy
+SMODS.Joker {
+    key = "exposuretherapy",
+    pos = { x = 0, y = 0 },
+    rarity = 4,
+    blueprint_compat = false,
+    cost = 20,
+    discovered = true,
+    loc_txt = {
+        name = "Exposure Therapy",
+        text = {
+            "All {C:dark_edition}Negative{} cards in {C:attention}deck",
+            "are {C:legendary,E:1}drawn to hand",
+            "when a hand is drawn"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+            local targets = {}
+            for _, _card in ipairs(G.deck.cards) do
+                if _card.edition and _card.edition.key == "e_negative" then
+                    targets[#targets+1] = _card
+                end
+            end
+            if next(targets) ~= nil then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('gong', 0.94, 0.5)
+                        play_sound('gong', 0.94*1.5, 0.5)
+                        play_sound('tarot1', 1.5)
+                        for _, _card in ipairs(targets) do
+                            draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
+                        end
+                        return true
+                    end
+                }))
+                return { message = "Exposed!" }
+            end
+        end
+    end
+}
 
 -- Street Graffiti
 SMODS.Joker {
@@ -623,7 +665,9 @@ SMODS.Joker {
                         _card:juice_up()
                     end
                     G.hand:change_size(card.ability.extra.size)
-                    play_sound('gong')
+                    play_sound('gong', 0.94, 0.5)
+                    play_sound('gong', 0.94*1.5, 0.5)
+                    play_sound('tarot1', 1.5)
                     card:start_dissolve()
                     return true
                 end
