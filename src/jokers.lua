@@ -12,12 +12,12 @@ SMODS.Joker {
     perishable_compat = false,
     cost = 8,
     discovered = true,
-    config = { extra = { chips = 0, mult = 0 }, },
+    config = { extra = { chips = 0, mult = 0, donezo = false }, },
     loc_txt = {
         name = "Street Graffiti",
         text = {
             "{C:red}Downgrades{} played {C:attention}poker hands",
-            "Gains Chips and Mult {C:red}lost{}",
+            "Gains Chips and Mult {C:red}lost",
             "from {C:attention}poker hand{} downgrades",
             "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips and {C:mult}+#2# {C:inactive}Mult)"
         },
@@ -26,23 +26,32 @@ SMODS.Joker {
         return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        if context.before and not context.blueprint
+        -- Upgrade when The Arm delevels your poker hand
+        if context.before -- and not context.blueprint (var 'donezo' accounts for blueprint for correct message display)
             and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
         then
-            card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
-            card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
-            card:juice_up(0.8, 0.5)
+            if not card.ability.extra.donezo then
+                card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
+            end
+            card.ability.extra.donezo = true
         end
+        -- Upgrade and delevel your poker hand
         if context.before and G.GAME.hands[context.scoring_name].level > 1 then
+            local joker = context.blueprint_card or card
             return {
-                level_up = -1,
                 func = function()
+                    SMODS.upgrade_poker_hands({hands = {context.scoring_name}, level_up = -1, from = joker})
                     card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
                     card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                    SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
                 end
             }
         end
+        -- Do the thing
         if context.joker_main then
+            card.ability.extra.donezo = false
             return {
                 chips = card.ability.extra.chips,
                 mult = card.ability.extra.mult
