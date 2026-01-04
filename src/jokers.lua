@@ -3,6 +3,54 @@
 -- card.ability.perma_debuff = true to debuff
 -- card.debuff to check for any debuff
 
+-- Street Graffiti
+SMODS.Joker {
+    key = "streetgraffiti",
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 8,
+    discovered = true,
+    config = { extra = { chips = 0, mult = 0 }, },
+    loc_txt = {
+        name = "Street Graffiti",
+        text = {
+            "{C:red}Downgrades{} played {C:attention}poker hands",
+            "Gains Chips and Mult {C:red}lost{}",
+            "from {C:attention}poker hand{} downgrades",
+            "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips and {C:mult}+#2# {C:inactive}Mult)"
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint
+            and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
+        then
+            card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+            card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+            card:juice_up(0.8, 0.5)
+        end
+        if context.before and G.GAME.hands[context.scoring_name].level > 1 then
+            return {
+                level_up = -1,
+                func = function()
+                    card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                    card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                end
+            }
+        end
+        if context.joker_main then
+            return {
+                chips = card.ability.extra.chips,
+                mult = card.ability.extra.mult
+            }
+        end
+    end
+}
+
 -- Cutoff Card
 SMODS.Joker {
     key = "cutoffcard",
