@@ -168,10 +168,10 @@ SMODS.Joker {
     loc_txt = {
         name = "Quality of Life",
         text = {
-            "Upgrade the {C:attention}highest{} drawn",
-            "{C:attention}poker hand{} by {C:attention}#1#{} level",
-            "when drawing playing cards",
-            "inside a {C:red}Booster Pack"
+            "When drawing a hand of cards",
+            "inside of a {C:red}Booster Pack{},",
+            "upgrade the {C:attention}highest{} ranking",
+            "{C:attention}poker hand{} present"
         },
     },
     loc_vars = function(self, info_queue, card)
