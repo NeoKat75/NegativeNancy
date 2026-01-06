@@ -23,7 +23,8 @@ SMODS.Joker {
         if (context.hand_drawn or context.other_drawn) and not context.blueprint then
             local targets = {}
             for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then
+                if _card.edition and _card.edition.key == "e_negative" and not _card.ability.nancy_exposed then
+                    _card.ability.nancy_exposed = true
                     targets[#targets+1] = _card
                 end
             end
@@ -34,6 +35,7 @@ SMODS.Joker {
                         play_sound('gong', 0.94*1.5, 0.5)
                         for _, _card in ipairs(targets) do
                             draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
+                            _card.ability.nancy_exposed = nil
                         end
                         return true
                     end
