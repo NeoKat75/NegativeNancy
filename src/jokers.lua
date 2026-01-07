@@ -990,7 +990,7 @@ SMODS.Joker {
                     -- If there are any, apply random edition
                     if next(targets) ~= nil then
                         local _card = pseudorandom_element(targets, "nancy_laminator")
-                        local edition = pseudorandom_element({"e_foil", "e_holo", "e_polychrome", "e_negative"}, "nancy_laminator")
+                        local edition = poll_edition("nancy_laminator", nil, nil, true)
                         _card:set_edition(edition, true)
                         _card:juice_up()
                         joker:juice_up()
@@ -1221,13 +1221,12 @@ SMODS.Joker {
     perishable_compat = false,
     cost = 7,
     discovered = true,
-    config = { extra = { xmult = 1, gain = 0.01, loss = 0.01 }, },
+    config = { extra = { xmult = 1, gain = 0.01, loss = 0.02 }, },
     loc_txt = {
         name = "Count Jokula",
         text = {
-            "While in a round:",
             "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
-            "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}played{}",
+            "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}scored{}",
             "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
         },
     },
@@ -1236,27 +1235,21 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         -- After a hand is drawn
-        if context.hand_drawn and not context.blueprint then
+        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+            local amount = 0
+            if context.hand_drawn then amount = #context.hand_drawn end
+            if context.other_drawn then amount = #context.other_drawn end
             -- Scale xmult up by amount of cards drawn * 'gain'
-            card.ability.extra.xmult = card.ability.extra.xmult + #context.hand_drawn * card.ability.extra.gain
+            card.ability.extra.xmult = card.ability.extra.xmult + amount * card.ability.extra.gain
             return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } }, colour = G.C.UI_MULT }
         end
-        -- Before a hand is played and if xmult > 1
-        if context.press_play and card.ability.extra.xmult > 1 and not context.blueprint then
-            -- For timing purposes so played cards can be accessed
-            G.E_MANAGER:add_event(Event({
-                trigger = 'after',
-                delay = 0.3,
-                func = function()
-                    -- Scale xmult down by amount of cards played * 'loss'
-                    card.ability.extra.xmult = card.ability.extra.xmult - #G.play.cards * card.ability.extra.loss
-                    -- Makes sure xmult is at least 1
-                    if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
-                    -- Say "Downgrade!"
-                    SMODS.calculate_effect({ message = "Downgrade!", colour = G.C.UI_MULT }, card)
-                    return true
-                end
-            }))
+        -- Before a hand is scored and if xmult > 1
+        if context.before and card.ability.extra.xmult > 1 and not context.blueprint then
+            -- Scale xmult down by amount of cards scored * 'loss'
+            card.ability.extra.xmult = card.ability.extra.xmult - #context.scoring_hand * card.ability.extra.loss
+            -- Makes sure xmult is at least 1
+            if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
+            return { message = "Downgrade!", colour = G.C.UI_MULT }
         end
         -- When joker is scored
         if context.joker_main then
@@ -1324,8 +1317,8 @@ SMODS.Joker {
     loc_txt = {
         name = "On the House",
         text = {
-            "Once per round, create a",
-            "free {C:attention}D6 Tag{} if played hand",
+            "Create a free {C:attention}D6 Tag{} if",
+            "{C:attention}final{} played hand of round",
             "contains a {C:attention}Full House"
         },
     },
@@ -1333,17 +1326,23 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'tag_d_six', set = 'Tag' }
     end,
     calculate = function(self, card, context)
-        -- When first hand is drawn
-        if context.first_hand_drawn and not context.blueprint then
-            -- Wiggle while fullhouse = false
-            local eval = function() return card.ability.extra.fullhouse == false and not G.RESET_JIGGLES end
+        -- When last hand is drawn
+        if context.hand_drawn and G.GAME.current_round.hands_left == 1 and not context.blueprint then
+            -- Wiggle while one hand left
+            local eval = function() return G.GAME.current_round.hands_left == 1 and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
-            -- print("Started juicing!")
         end
-        -- When a hand containing full house is played
-        if context.before and next(context.poker_hands['Full House']) and card.ability.extra.fullhouse == false then
+        -- Record if played hand contains a full house
+        if context.before and not context.blueprint then
+            if next(context.poker_hands['Full House']) then
+                card.ability.extra.fullhouse = true
+            else
+                card.ability.extra.fullhouse = false
+            end
+        end
+        -- At end of round, if last played hand contained a full house
+        if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.fullhouse then
             -- Give tag
-            -- print("Played full house, var is true!")
             G.E_MANAGER:add_event(Event({
                 func = (function()
                     add_tag(Tag('tag_d_six'))
@@ -1351,27 +1350,7 @@ SMODS.Joker {
                     return true
                 end)
             }))
-            -- Set var to true after scoring for blueprint compat
-            return {
-                message = "+1 D6 Tag",
-                func = function()
-                    -- This is for timing purposes, this goes after scoring
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            card.ability.extra.fullhouse = true
-                            return true
-                        end
-                    }))
-                end
-            }
-        end
-        -- At end of round if var is true
-        if context.end_of_round and context.main_eval and not context.game_over
-        and card.ability.extra.fullhouse == true and not context.blueprint then
-            -- Set var back to false
-            -- (Main eval prevents calculations in context.individual and context.repetitions at end of round)
-            -- print("Reset var to false!")
-            card.ability.extra.fullhouse = false
+            return { message = "+1 D6 Tag" }
         end
     end
 }
