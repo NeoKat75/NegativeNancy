@@ -62,7 +62,7 @@ SMODS.Joker {
             "{C:red}Downgrades{} played {C:attention}poker hands",
             "Gains Chips and Mult {C:red}lost",
             "from {C:attention}poker hand{} downgrades",
-            "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips and {C:mult}+#2# {C:inactive}Mult)"
+            "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
         },
     },
     loc_vars = function(self, info_queue, card)
@@ -790,7 +790,7 @@ SMODS.Joker {
             "This Joker gains {C:mult}+#1#{} Mult if",
             "{C:attention}poker hand{} contains any",
             "undebuffed {C:attention}7{}s, {C:attention}debuffs{} the {C:attention}7{}s",
-            "after they are played",
+            "after they're played",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
         },
     },
