@@ -171,7 +171,7 @@ SMODS.Joker {
         name = "Quality of Life",
         text = {
             "When drawing a hand of cards",
-            "inside of a {C:red}Booster Pack{},",
+            "inside a {C:red}Booster Pack{},",
             "upgrade the {C:attention}highest{} ranking",
             "{C:attention}poker hand{} present"
         },
