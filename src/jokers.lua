@@ -8,14 +8,6 @@ SMODS.Joker {
     blueprint_compat = false,
     cost = 20,
     discovered = true,
-    loc_txt = {
-        name = "Exposure Therapy",
-        text = {
-            "All {C:dark_edition}Negative{} cards in {C:attention}deck",
-            "are {C:legendary,E:1}drawn to hand",
-            "when a hand is drawn"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
@@ -56,15 +48,6 @@ SMODS.Joker {
     cost = 8,
     discovered = true,
     config = { extra = { chips = 0, mult = 0, donezo = false }, },
-    loc_txt = {
-        name = "Street Graffiti",
-        text = {
-            "{C:red}Downgrades{} played {C:attention}poker hands",
-            "Gains Chips and Mult {C:red}lost",
-            "from {C:attention}poker hand{} downgrades",
-            "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,
@@ -282,7 +265,7 @@ SMODS.Joker {
             "While in a round, sell this Joker",
             "to immediately {C:attention}spend{} up to {C:money}$#1#{}",
             "and {C:attention}reduce{} the blind requirement",
-            "by {C:money}#2#%{} for each dollar spent"
+            "by {C:money}#2#%{} per dollar spent"
         },
     },
     loc_vars = function(self, info_queue, card)
