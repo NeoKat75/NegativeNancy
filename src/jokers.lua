@@ -63,7 +63,7 @@ SMODS.Joker {
             end
             card.ability.extra.donezo = true
         end
-        -- Upgrade and delevel your poker hand
+        -- Delevel your poker hand and upgrade
         if context.before and G.GAME.hands[context.scoring_name].level > 1 then
             local joker = context.blueprint_card or card
             return {
@@ -95,14 +95,6 @@ SMODS.Joker {
     cost = 6,
     discovered = true,
     config = { extra = { used = false }, },
-    loc_txt = {
-        name = "Cutoff Card",
-        text = {
-            "Once per round, sell a",
-            "{C:attention}consumable{} to destroy",
-            "a random card {C:attention}in hand"
-        },
-    },
     calculate = function(self, card, context)
         -- When first hand is drawn
         if context.first_hand_drawn and not context.blueprint then
@@ -150,15 +142,6 @@ SMODS.Joker {
     cost = 4,
     discovered = true,
     config = { extra = { levels = 1 }, },
-    loc_txt = {
-        name = "Quality of Life",
-        text = {
-            "When drawing a hand of cards",
-            "inside a {C:red}Booster Pack{},",
-            "upgrade the {C:attention}highest{} ranking",
-            "{C:attention}poker hand{} present"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels } }
     end,
@@ -179,16 +162,6 @@ SMODS.Joker {
     cost = 5,
     discovered = true,
     config = { extra = { amount = 3, tally = 0, growth = 1 }, },
-    loc_txt = {
-        name = "Return Policy",
-        text = {
-            "Sell {C:attention}#1#{} Jokers to create a",
-            "free {C:attention}Rarity Tag{} based on",
-            "{C:attention}last sold{} Joker's rarity",
-            "{s:0.8}Amount increases by {s:0.8,C:attention}#3# {s:0.8}each use",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
         info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
