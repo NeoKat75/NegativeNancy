@@ -9,7 +9,7 @@ return {
                 name = "Exposure Therapy",
                 text = {
                     "All {C:dark_edition}Negative{} cards in {C:attention}deck",
-                    "are {C:legendary,E:1}drawn to hand",
+                    "are {C:legendary}drawn to hand",
                     "when a hand is drawn"
                 }
             },
@@ -33,7 +33,7 @@ return {
                     "Once per round,",
                     "sell a {C:attention}consumable",
                     "to destroy a random",
-                    "card {C:attention}held in hand"
+                    "card held {C:attention}in hand"
                 }
             },
             j_nancy_qualityoflife = {
@@ -98,7 +98,7 @@ return {
             j_nancy_pumpdump = {
                 name = "Pump & Dump",
                 text = {
-                    "At end of round, earn {C:money}$#1#{}",
+                    "At end of round, earn {C:money}$#1#",
                     "per {C:dark_edition}Negative{} playing card",
                     "{C:attention}destroyed{} this Ante",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
@@ -124,7 +124,7 @@ return {
             j_nancy_lackofthedraw = {
                 name = "#2# of the Draw",
                 text = {
-                    "If {C:red}discard{} contains {C:attention}#1#{}",
+                    "If {C:red}discard{} contains {C:attention}#1#",
                     "{C:dark_edition}Negative{} cards, create a",
                     "random {C:spectral}Spectral{} card",
                     "{C:inactive}(Must have room)"
@@ -133,17 +133,17 @@ return {
             j_nancy_initiation = {
                 name = "Initiation",
                 text = {
-                    "Permanently gain {C:attention}+#1#{} hand size",
+                    "{C:legendary}Permanently{} gain {C:attention}+#1#{} hand size",
                     "after hand is played if all",
-                    "cards {C:attention}held in hand{} are {C:dark_edition}Negative{}",
-                    "{C:red,E:2}self-destructs{}"
+                    "cards held {C:attention}in hand{} are {C:dark_edition}Negative",
+                    "{C:red,E:2}self-destructs"
                 }
             },
             j_nancy_decorativejoker = {
                 name = "Decorative Joker",
                 text = {
-                    "{C:mult}+#1#{} Mult for each {C:attention}debuffed{}",
-                    "card in your {C:attention}full deck{}",
+                    "{C:mult}+#1#{} Mult for each {C:attention}debuffed",
+                    "card in your {C:attention}full deck",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
@@ -151,7 +151,7 @@ return {
                 name = "Stimulus Cheque",
                 text = {
                     "This Joker gives {C:money}$#1#{} per",
-                    "{C:attention}debuffed{} card {C:attention}in hand{}",
+                    "{C:attention}debuffed{} card {C:attention}in hand",
                     "when hand is played"
                 }
             },
@@ -174,7 +174,7 @@ return {
                 name = "Frugal Joker",
                 text = {
                     "This Joker gains {C:mult}+#1#{} Mult when",
-                    "a {C:dark_edition}Negative{} card is {C:attention}discarded{}",
+                    "a {C:dark_edition}Negative{} card is {C:attention}discarded",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
@@ -183,7 +183,7 @@ return {
                 text = {
                     "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
                     "in your {C:attention}full deck{}, including",
-                    "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals{}",
+                    "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
                 }
             },
@@ -191,7 +191,7 @@ return {
                 name = "Post-Modern Joker",
                 text = {
                     "{C:chips}+#1#{} Chips for each remaining",
-                    "{C:dark_edition}Negative{} card in {C:attention}deck{}",
+                    "{C:dark_edition}Negative{} card in {C:attention}deck",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
                 }
             },
@@ -206,7 +206,7 @@ return {
             j_nancy_goldenfingers = {
                 name = "Golden Fingers",
                 text = {
-                    "Earn {C:money}$#1#{} per held {C:attention}consumable{}",
+                    "Earn {C:money}$#1#{} per held {C:attention}consumable",
                     "when hand is played"
                 }
             },
@@ -215,7 +215,7 @@ return {
                 text = {
                     {
                         "Sell this Joker to",
-                        "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
+                        "apply {C:dark_edition}Negative{} {C:enhanced}Edition",
                         "to {C:attention}#1#{} random cards",
                         "held {C:attention}in hand"
                     },
@@ -229,23 +229,23 @@ return {
                 name = "Negative Nancy",
                 text = {
                     "Sell this Joker to",
-                    "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
-                    "to all cards {C:attention}held in hand"
+                    "apply {C:dark_edition}Negative{} {C:enhanced}Edition",
+                    "to all cards held {C:attention}in hand"
                 }
             },
             j_nancy_usefuljoker = {
                 name = "Useful Joker",
                 text = {
                     "This Joker gains {X:chips,C:white}X0.5{} Chips",
-                    "when {C:attention}pigs fly{}",
+                    "when {C:attention}pigs fly",
                     "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
                 }
             },
             j_nancy_countjokula = {
                 name = "Count Jokula",
                 text = {
-                    "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
-                    "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}scored{}",
+                    "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn",
+                    "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}scored",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
                 }
             },
