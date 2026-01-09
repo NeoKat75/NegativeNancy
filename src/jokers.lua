@@ -32,7 +32,7 @@ SMODS.Joker {
                         return true
                     end
                 }))
-                return { message = "Exposed!" }
+                return { message = localize("nancy_exposed") }
             end
         end
     end
@@ -188,7 +188,7 @@ SMODS.Joker {
                 }))
                 -- Reset tally after activation for blueprint compat
                 return {
-                    message = "+1 Rarity Tag",
+                    message = localize("nancy_raritytag"),
                     func = function()
                         -- This is for timing purposes, this goes after activation
                         G.E_MANAGER:add_event(Event({
@@ -957,7 +957,7 @@ SMODS.Joker {
         card:set_cost()
         -- Say a funny when obtained, say a special funny if it's a copy
         if next(SMODS.find_card("j_nancy_usefuljoker")) then
-            SMODS.calculate_effect({ message = "My clone???", sound = "voice"..math.random(11) }, card)
+            SMODS.calculate_effect({ message = localize("nancy_usefuljoker_clone"), sound = "voice"..math.random(11) }, card)
         else
             SMODS.calculate_effect({ message = card.ability.extra[math.random(11, 15)], sound = "voice"..math.random(11) }, card)
         end
@@ -1019,7 +1019,7 @@ SMODS.Joker {
             if context.other_drawn then amount = #context.other_drawn end
             -- Scale xmult up by amount of cards drawn * 'gain'
             card.ability.extra.xmult = card.ability.extra.xmult + amount * card.ability.extra.gain
-            return { message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } }, colour = G.C.UI_MULT }
+            return { message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult }}, colour = G.C.UI_MULT }
         end
         -- Before a hand is scored and if xmult > 1
         if context.before and card.ability.extra.xmult > 1 and not context.blueprint then
@@ -1027,7 +1027,7 @@ SMODS.Joker {
             card.ability.extra.xmult = card.ability.extra.xmult - #context.scoring_hand * card.ability.extra.loss
             -- Makes sure xmult is at least 1
             if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
-            return { message = "Downgrade!", colour = G.C.UI_MULT }
+            return { message = localize("nancy_downgrade"), colour = G.C.UI_MULT }
         end
         -- When joker is scored
         if context.joker_main then
@@ -1112,7 +1112,7 @@ SMODS.Joker {
                     return true
                 end)
             }))
-            return { message = "+1 D6 Tag" }
+            return { message = localize("nancy_d6tag") }
         end
     end
 }

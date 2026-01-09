@@ -300,7 +300,13 @@ return {
         blind_states={},
         challenge_names={},
         collabs={},
-        dictionary={},
+        dictionary = {
+            nancy_exposed = "Exposed!",
+            nancy_raritytag = "+1 Rarity Tag",
+            nancy_downgrade = "Downgrade!",
+            nancy_d6tag = "+1 D6 Tag",
+            nancy_usefuljoker_clone = "My clone???"
+        },
         high_scores={},
         labels={},
         poker_hand_descriptions={},
