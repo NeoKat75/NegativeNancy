@@ -942,15 +942,6 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 2,
     discovered = true,
-    config = { extra = { "I'm helping!", "Yum!", "Keep me...!", "Am I doing it?", "Yippee!", -- when scoring
-                       "Yippee?", "X4 Chips!!!", "+naneinf", "Ship it!", "Pokerissimo!"; -- also when scoring
-                       "Hewwo!", "Win time!", "I'm useful!", "Count me in!", "Go XChips!!!"; -- when obtained
-                       "Ouch!!", "Careful!", "Stinky...", "Unfair!!", "Bummer!"; -- when boss triggers
-                       "You got this!", "Let's go!!", "Breathe...", "Go time!", "I'll help!"; -- when starting blind
-                       "Go Bulls!!", "Take that!", "We did it!", "I did it!!", "Calculated!"; -- when winning blind
-                       "Whatcha got?", "Let's see...", "Gamba time!!", "My brethren...", "Take that one!"; -- when entering shop
-                       "Go next!", "Moving on!", "My groceries...", "I wanted more...", "Savings!"; -- when leaving shop
-                       "Whyyy...", "Was I bad?", "Betrayer...", "I'm upset.", "I'm the fool..." }, }, -- when getting sold :(
     add_to_deck = function(self, card, from_debuff)
         -- Equalize cost and sell value
         card.ability.extra_value = math.ceil(self.cost / 2)
@@ -959,41 +950,41 @@ SMODS.Joker {
         if next(SMODS.find_card("j_nancy_usefuljoker")) then
             SMODS.calculate_effect({ message = localize("nancy_usefuljoker_clone"), sound = "voice"..math.random(11) }, card)
         else
-            SMODS.calculate_effect({ message = card.ability.extra[math.random(11, 15)], sound = "voice"..math.random(11) }, card)
+            SMODS.calculate_effect({ message = localize("nancy_usefuljoker_"..math.random(11, 15)), sound = "voice"..math.random(11) }, card)
         end
 	end,
     calculate = function(self, card, context)
         -- Returns a random message from config.extra with a random jimbo sound byte (voice1-voice11)
         if context.joker_main then
             if not G.GAME.blind.triggered then
-                return { message = card.ability.extra[math.random(1, 10)], sound = "voice"..math.random(11) }
+                return { message = localize("nancy_usefuljoker_"..math.random(1, 10)), sound = "voice"..math.random(11) }
             end
         end
         -- Message when boss blind effect is triggered
         if context.debuffed_hand or context.joker_main then
             if G.GAME.blind.triggered then
-                return { message = card.ability.extra[math.random(16, 20)], sound = "voice"..math.random(11) }
+                return { message = localize("nancy_usefuljoker_"..math.random(16, 20)), sound = "voice"..math.random(11) }
             end
         end
         -- Message when starting blind
         if context.setting_blind then
-            return { message = card.ability.extra[math.random(21, 25)], sound = "voice"..math.random(11) }
+            return { message = localize("nancy_usefuljoker_"..math.random(21, 25)), sound = "voice"..math.random(11) }
         end
         -- Message when winning blind
         if context.end_of_round and context.main_eval and not context.game_over then
-            return { message = card.ability.extra[math.random(26, 30)], sound = "voice"..math.random(11) }
+            return { message = localize("nancy_usefuljoker_"..math.random(26, 30)), sound = "voice"..math.random(11) }
         end
         -- Message when entering shop
         if context.starting_shop then
-            return { message = card.ability.extra[math.random(31, 35)], sound = "voice"..math.random(11) }
+            return { message = localize("nancy_usefuljoker_"..math.random(31, 35)), sound = "voice"..math.random(11) }
         end
         -- Message when leaving shop
         if context.ending_shop then
-            return { message = card.ability.extra[math.random(36, 40)], sound = "voice"..math.random(11) }
+            return { message = localize("nancy_usefuljoker_"..math.random(36, 40)), sound = "voice"..math.random(11) }
         end
         -- Message when getting sold
         if context.selling_self then
-            return { message = card.ability.extra[math.random(41, 45)], sound = "voice"..math.random(11) }
+            return { message = localize("nancy_usefuljoker_"..math.random(41, 45)), sound = "voice"..math.random(11) }
         end
     end
 }
