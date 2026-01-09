@@ -17,13 +17,12 @@ return {
                 name = "Street Graffiti",
                 text = {
                     {
-                        "{C:red}Downgrades{} played",
-                        "{C:attention}poker hands"
+                        "This Joker gains Chips and Mult",
+                        "{C:red}lost{} from {C:attention}poker hand{} downgrades",
+                        "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
                     },
                     {
-                        "This Joker gains {C:red}lost",
-                        "Chips and Mult",
-                        "{C:inactive}({C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
+                        "{C:red}Downgrades{} played {C:attention}poker hands"
                     }
                 }
             },
