@@ -232,15 +232,6 @@ SMODS.Joker {
     cost = 3,
     discovered = true,
     config = { extra = { limit = 25, reduction = 2 }, },
-    loc_txt = {
-        name = "Expired Coupon",
-        text = {
-            "While in a round, sell this Joker",
-            "to immediately {C:attention}spend{} up to {C:money}$#1#{}",
-            "and {C:attention}reduce{} the blind requirement",
-            "by {C:money}#2#%{} per dollar spent"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.limit, card.ability.extra.reduction } }
     end,
@@ -290,14 +281,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { gain = 3 }, },
-    loc_txt = {
-        name = "Pack of Buffoons",
-        text = {
-            "{C:mult}+#1#{} Mult per {C:attention}unique{} Joker",
-            "obtained during this run",
-            "{C:inactive}(Currently {C:mult}+#2# {C:inactive}Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         local mult = 0
         if G.GAME.nancy_jokerlist then mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain end
@@ -310,23 +293,14 @@ SMODS.Joker {
     end
 }
 
--- Participation Award
+-- Consolation Award
 SMODS.Joker {
-    key = "participationaward",
+    key = "consolationaward",
     pos = { x = 0, y = 0 },
     rarity = 3,
     blueprint_compat = true,
     cost = 8,
     discovered = true,
-    loc_txt = {
-        name = "Participation Award",
-        text = {
-            "Create a random {C:tarot}Tarot{} card",
-            "if {C:attention}poker hand{} contains",
-            "at least one {C:attention}debuffed{} card",
-            "{C:inactive}(Must have room)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
     end,
@@ -343,7 +317,7 @@ SMODS.Joker {
                     func = function()
                         SMODS.add_card{
                             set = 'Tarot',
-                            key_append = 'nancy_participationaward' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                            key_append = 'nancy_consolationaward' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
                         }
                         G.GAME.consumeable_buffer = 0
                         return true
@@ -366,15 +340,6 @@ SMODS.Joker {
     cost = 8,
     discovered = true,
     config = { extra = { xmult = 4, active = false }, },
-    loc_txt = {
-        name = "Exorcist",
-        text = {
-            "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative{}",
-            "playing card has been",
-            "{C:attention}destroyed{} this Ante",
-            "{C:inactive,E:2}#2#"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local activetext
@@ -412,15 +377,6 @@ SMODS.Joker {
     cost = 9,
     discovered = true,
     config = { extra = { money = 6, cards = 0, reset = false }, },
-    loc_txt = {
-        name = "Pump & Dump",
-        text = {
-            "At end of round, earn {C:money}$#1#{}",
-            "per {C:dark_edition}Negative{} playing card",
-            "{C:attention}destroyed{} this Ante",
-            "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.money, card.ability.extra.money * card.ability.extra.cards } }
@@ -465,15 +421,6 @@ SMODS.Joker {
     cost = 8,
     discovered = true,
     config = { extra = { chips = 0, gain = 25 }, },
-    loc_txt = {
-        name = "Deep Ocean",
-        text = {
-            "This Joker gains {C:chips}+#1#{} Chips",
-            "per {C:attention}consecutive{} hand played",
-            "with a scoring {C:dark_edition}Negative{} card",
-            "{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.gain, card.ability.extra.chips } }
@@ -509,14 +456,6 @@ SMODS.Joker {
     cost = 9,
     discovered = true,
     config = { extra = { odds = 2, retriggers = 1 }, },
-    loc_txt = {
-        name = "Double Take",
-        text = {
-            "{C:green}#1# in #2#{} chance to",
-            "retrigger each",
-            "{C:dark_edition}Negative{} {C:attention}playing card"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_doubletake')
@@ -543,15 +482,6 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 7,
     discovered = true,
-    loc_txt = {
-        name = "#2# of the Draw",
-        text = {
-            "If {C:red}discard{} contains {C:attention}#1#{}",
-            "{C:dark_edition}Negative{} cards, create a",
-            "random {C:spectral}Spectral{} card",
-            "{C:inactive}(Must have room)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local luck
@@ -597,15 +527,6 @@ SMODS.Joker {
     cost = 8,
     discovered = true,
     config = { extra = { size = 1 }, },
-    loc_txt = {
-        name = "Initiation",
-        text = {
-            "Permanently gain {C:attention}+#1#{} hand size",
-            "after hand is played if all",
-            "cards {C:attention}held in hand{} are {C:dark_edition}Negative{}",
-            "{C:red,E:2}self-destructs{}"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.size } }
@@ -644,14 +565,6 @@ SMODS.Joker {
     cost = 4,
     discovered = true,
     config = { extra = { mult = 5 }, },
-    loc_txt = {
-        name = "Decorative Joker",
-        text = {
-            "{C:mult}+#1#{} Mult for each {C:attention}debuffed{}",
-            "card in your {C:attention}full deck{}",
-            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         local totalmult = 0
@@ -683,15 +596,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { money = 3 }, },
-    loc_txt = {
-        name = "Stimulus Cheque",
-        text = {
-            "This Joker gives {C:money}$#1#{} per",
-            "{C:attention}debuffed{} card {C:attention}in hand{}",
-            "when hand is played"
-        },
-    },
+    config = { extra = { money = 2 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         return { vars = { card.ability.extra.money } }
@@ -740,16 +645,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { gain = 7, mult = 0, sevens = {} }, },
-    loc_txt = {
-        name = "Slot Machine",
-        text = {
-            "This Joker gains {C:mult}+#1#{} Mult if",
-            "{C:attention}poker hand{} contains any",
-            "undebuffed {C:attention}7{}s, {C:attention}debuffs{} the {C:attention}7{}s",
-            "after they're played",
-            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
@@ -811,14 +706,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { gain = 2, mult = 0 }, },
-    loc_txt = {
-        name = "Frugal Joker",
-        text = {
-            "This Joker gains {C:mult}+#1#{} Mult when",
-            "a {C:dark_edition}Negative{} card is {C:attention}discarded{}",
-            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
@@ -848,15 +735,6 @@ SMODS.Joker {
     cost = 5,
     discovered = true,
     config = { extra = { chips = 2 }, },
-    loc_txt = {
-        name = "Collector",
-        text = {
-            "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
-            "in your {C:attention}full deck{}, including",
-            "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals{}",
-            "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         if G.playing_cards and #G.playing_cards > 0 then
             return { vars = { card.ability.extra.chips, card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) } }
@@ -880,14 +758,6 @@ SMODS.Joker {
     cost = 4,
     discovered = true,
     config = { extra = { percard = 20 }, },
-    loc_txt = {
-        name = "Post-Modern Joker",
-        text = {
-            "{C:chips}+#1#{} Chips for each remaining",
-            "{C:dark_edition}Negative{} card in {C:attention}deck{}",
-            "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local negacards = 0
@@ -917,14 +787,6 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 7,
     discovered = true,
-    loc_txt = {
-        name = "Laminator",
-        text = {
-            "When round begins,",
-            "apply a random {C:enhanced}Edition{} to",
-            "a random card {C:attention}in hand"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
         info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
@@ -967,13 +829,6 @@ SMODS.Joker {
     cost = 5,
     discovered = true,
     config = { extra = { payout = 1 }, },
-    loc_txt = {
-        name = "Golden Fingers",
-        text = {
-            "Earn {C:money}$#1#{} per held {C:attention}consumable{}",
-            "when hand is played"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.payout } }
     end,
@@ -1008,15 +863,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { amount = 2, growth = 1 }, },
-    loc_txt = {
-        name = "Stairwell",
-        text = {
-            "Sell this Joker to",
-            "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
-            "to {C:attention}#1#{} random cards {C:attention}in hand",
-            "{s:0.8}Amount increases by {s:0.8,C:attention}#2# {s:0.8}each round"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.amount, card.ability.extra.growth } }
@@ -1070,14 +916,6 @@ SMODS.Joker {
     eternal_compat = false,
     cost = 9,
     discovered = true,
-    loc_txt = {
-        name = "Negative Nancy",
-        text = {
-            "Sell this Joker to",
-            "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
-            "to all cards {C:attention}held in hand"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
@@ -1113,14 +951,6 @@ SMODS.Joker {
                        "Whatcha got?", "Let's see...", "Gamba time!!", "My brethren...", "Take that one!"; -- when entering shop
                        "Go next!", "Moving on!", "My groceries...", "I wanted more...", "Savings!"; -- when leaving shop
                        "Whyyy...", "Was I bad?", "Betrayer...", "I'm upset.", "I'm the fool..." }, }, -- when getting sold :(
-    loc_txt = {
-        name = "Useful Joker",
-        text = {
-            "This Joker gains {X:chips,C:white}X0.5{} Chips",
-            "when {C:attention}pigs fly{}",
-            "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
-        },
-    },
     add_to_deck = function(self, card, from_debuff)
         -- Equalize cost and sell value
         card.ability.extra_value = math.ceil(self.cost / 2)
@@ -1178,14 +1008,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { xmult = 1, gain = 0.01, loss = 0.02 }, },
-    loc_txt = {
-        name = "Count Jokula",
-        text = {
-            "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
-            "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}scored{}",
-            "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
     end,
@@ -1225,14 +1047,6 @@ SMODS.Joker {
     cost = 7,
     discovered = true,
     config = { extra = { slots = 3, odds = 3 }, },
-    loc_txt = {
-        name = "Snack Tray",
-        text = {
-            "{C:attention}+#1#{} consumable slots",
-            "{C:green}#2# in #3#{} chance this gets",
-            "eaten when entering {C:attention}shop"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         -- Function that return the odds after the game affects them
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_snacktray')
@@ -1270,14 +1084,6 @@ SMODS.Joker {
     cost = 8,
     discovered = true,
     config = { extra = { fullhouse = false }, },
-    loc_txt = {
-        name = "On the House",
-        text = {
-            "Create a free {C:attention}D6 Tag{} if",
-            "{C:attention}final{} played hand of round",
-            "contains a {C:attention}Full House"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_d_six', set = 'Tag' }
     end,
@@ -1320,13 +1126,6 @@ SMODS.Joker {
     cost = 4,
     discovered = true,
     config = { extra = { times = 2 }, },
-    loc_txt = {
-        name = "Window Shopping",
-        text = {
-            "Adds {C:attention}double{} your current",
-            "{C:attention}hand size{} to Mult"
-        },
-    },
     calculate = function(self, card, context)
         -- When joker is scored
         if context.joker_main then
@@ -1345,14 +1144,6 @@ SMODS.Joker {
     cost = 5,
     discovered = true,
     config = { extra = { dollars = 3, cards = 1 }, },
-    loc_txt = {
-        name = "Junkie Joker",
-        text = {
-            "Earn {C:money}$#1#{} if played hand",
-            "contains exactly {C:attention}#2#",
-            "{C:attention}unscored{} card"
-        },
-    },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
     end,

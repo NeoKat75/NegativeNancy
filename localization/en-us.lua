@@ -11,24 +11,30 @@ return {
                     "All {C:dark_edition}Negative{} cards in {C:attention}deck",
                     "are {C:legendary,E:1}drawn to hand",
                     "when a hand is drawn"
-                },
+                }
             },
             j_nancy_streetgraffiti = {
                 name = "Street Graffiti",
                 text = {
-                    "{C:red}Downgrades{} played {C:attention}poker hands",
-                    "Gains Chips and Mult {C:red}lost",
-                    "from {C:attention}poker hand{} downgrades",
-                    "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
-                },
+                    {
+                        "{C:red}Downgrades{} played",
+                        "{C:attention}poker hands"
+                    },
+                    {
+                        "This Joker gains {C:red}lost",
+                        "Chips and Mult",
+                        "{C:inactive}({C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
+                    }
+                }
             },
             j_nancy_cutoffcard = {
                 name = "Cutoff Card",
                 text = {
-                    "Once per round, sell a",
-                    "{C:attention}consumable{} to destroy",
-                    "a random card {C:attention}in hand"
-                },
+                    "Once per round,",
+                    "sell a {C:attention}consumable",
+                    "to destroy a random",
+                    "card {C:attention}held in hand"
+                }
             },
             j_nancy_qualityoflife = {
                 name = "Quality of Life",
@@ -37,18 +43,248 @@ return {
                     "inside a {C:red}Booster Pack{},",
                     "upgrade the {C:attention}highest{} ranking",
                     "{C:attention}poker hand{} present"
-                },
+                }
             },
             j_nancy_returnpolicy = {
                 name = "Return Policy",
                 text = {
-                    "Sell {C:attention}#1#{} Jokers to create a",
-                    "free {C:attention}Rarity Tag{} based on",
-                    "{C:attention}last sold{} Joker's rarity",
-                    "{s:0.8}Amount increases by {s:0.8,C:attention}#3# {s:0.8}each use",
-                    "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
-                },
+                    {
+                        "Sell {C:attention}#1#{} Jokers to create a",
+                        "free {C:attention}Rarity Tag{} based on",
+                        "{C:attention}last sold{} Joker's rarity",
+                        "{C:inactive}(Currently {C:attention}#2#{C:inactive}/#1#)"
+                    },
+                    {
+                        "Requirement increases",
+                        "by {C:attention}#3#{} after each use"
+                    }
+                }
             },
+            j_nancy_expiredcoupon = {
+                name = "Expired Coupon",
+                text = {
+                    "While in a round, sell this Joker",
+                    "to immediately {C:attention}spend{} up to {C:money}$#1#",
+                    "and {C:attention}reduce{} the blind threshold",
+                    "by {C:money}#2#%{} per dollar spent"
+                }
+            },
+            j_nancy_packofbuffoons = {
+                name = "Pack of Buffoons",
+                text = {
+                    "{C:mult}+#1#{} Mult per {C:attention}unique{} Joker",
+                    "obtained during this run",
+                    "{C:inactive}(Currently {C:mult}+#2# {C:inactive}Mult)"
+                }
+            },
+            j_nancy_consolationaward = {
+                name = "Consolation Award",
+                text = {
+                    "Create a random {C:tarot}Tarot",
+                    "card if {C:attention}poker hand",
+                    "contains a {C:attention}debuffed{} card",
+                    "{C:inactive}(Must have room)"
+                }
+            },
+            j_nancy_exorcist = {
+                name = "Exorcist",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative",
+                    "playing card has been",
+                    "{C:attention}destroyed{} this Ante",
+                    "{C:inactive}#2#"
+                }
+            },
+            j_nancy_pumpdump = {
+                name = "Pump & Dump",
+                text = {
+                    "At end of round, earn {C:money}$#1#{}",
+                    "per {C:dark_edition}Negative{} playing card",
+                    "{C:attention}destroyed{} this Ante",
+                    "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
+                }
+            },
+            j_nancy_deepocean = {
+                name = "Deep Ocean",
+                text = {
+                    "This Joker gains {C:chips}+#1#{} Chips",
+                    "per {C:attention}consecutive{} hand played",
+                    "with a scoring {C:dark_edition}Negative{} card",
+                    "{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
+                }
+            },
+            j_nancy_doubletake = {
+                name = "Double Take",
+                text = {
+                    "{C:green}#1# in #2#{} chance to",
+                    "retrigger each",
+                    "{C:dark_edition}Negative{} {C:attention}playing card"
+                }
+            },
+            j_nancy_lackofthedraw = {
+                name = "#2# of the Draw",
+                text = {
+                    "If {C:red}discard{} contains {C:attention}#1#{}",
+                    "{C:dark_edition}Negative{} cards, create a",
+                    "random {C:spectral}Spectral{} card",
+                    "{C:inactive}(Must have room)"
+                }
+            },
+            j_nancy_initiation = {
+                name = "Initiation",
+                text = {
+                    "Permanently gain {C:attention}+#1#{} hand size",
+                    "after hand is played if all",
+                    "cards {C:attention}held in hand{} are {C:dark_edition}Negative{}",
+                    "{C:red,E:2}self-destructs{}"
+                }
+            },
+            j_nancy_decorativejoker = {
+                name = "Decorative Joker",
+                text = {
+                    "{C:mult}+#1#{} Mult for each {C:attention}debuffed{}",
+                    "card in your {C:attention}full deck{}",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                }
+            },
+            j_nancy_stimuluscheque = {
+                name = "Stimulus Cheque",
+                text = {
+                    "This Joker gives {C:money}$#1#{} per",
+                    "{C:attention}debuffed{} card {C:attention}in hand{}",
+                    "when hand is played"
+                }
+            },
+            j_nancy_slotmachine = {
+                name = "Slot Machine",
+                text = {
+                    {
+                        "This Joker gains {C:mult}+#1#{} Mult",
+                        "if played {C:attention}hand{} contains",
+                        "any scoring {C:attention}7{}s",
+                        "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:attention}Debuffs{} scored {C:attention}7{}s",
+                        "after they're played"
+                    }
+                }
+            },
+            j_nancy_frugaljoker = {
+                name = "Frugal Joker",
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult when",
+                    "a {C:dark_edition}Negative{} card is {C:attention}discarded{}",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                }
+            },
+            j_nancy_collector = {
+                name = "Collector",
+                text = {
+                    "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
+                    "in your {C:attention}full deck{}, including",
+                    "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals{}",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+                }
+            },
+            j_nancy_postmodernjoker = {
+                name = "Post-Modern Joker",
+                text = {
+                    "{C:chips}+#1#{} Chips for each remaining",
+                    "{C:dark_edition}Negative{} card in {C:attention}deck{}",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
+                }
+            },
+            j_nancy_laminator = {
+                name = "Laminator",
+                text = {
+                    "When round begins,",
+                    "apply a random {C:enhanced}Edition{} to",
+                    "a random card {C:attention}in hand"
+                }
+            },
+            j_nancy_goldenfingers = {
+                name = "Golden Fingers",
+                text = {
+                    "Earn {C:money}$#1#{} per held {C:attention}consumable{}",
+                    "when hand is played"
+                }
+            },
+            j_nancy_stairwell = {
+                name = "Stairwell",
+                text = {
+                    {
+                        "Sell this Joker to",
+                        "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
+                        "to {C:attention}#1#{} random cards",
+                        "held {C:attention}in hand"
+                    },
+                    {
+                        "Amount increases",
+                        "by {C:attention}#2#{} each round"
+                    }
+                }
+            },
+            j_nancy_negativenancy = {
+                name = "Negative Nancy",
+                text = {
+                    "Sell this Joker to",
+                    "apply {C:dark_edition}Negative{} {C:enhanced}Edition{}",
+                    "to all cards {C:attention}held in hand"
+                }
+            },
+            j_nancy_usefuljoker = {
+                name = "Useful Joker",
+                text = {
+                    "This Joker gains {X:chips,C:white}X0.5{} Chips",
+                    "when {C:attention}pigs fly{}",
+                    "{C:inactive}(Currently {X:chips,C:white}X1{C:inactive} Chips)"
+                }
+            },
+            j_nancy_countjokula = {
+                name = "Count Jokula",
+                text = {
+                    "Gains {X:mult,C:white}X#2#{} Mult per card {C:attention}drawn{}",
+                    "Loses {X:mult,C:white}X#3#{} Mult per card {C:attention}scored{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"
+                }
+            },
+            j_nancy_snacktray = {
+                name = "Snack Tray",
+                text = {
+                    {
+                        "{C:attention}+#1#{} consumable slots"
+                    },
+                    {
+                        "{C:green}#2# in #3#{} chance this",
+                        "gets eaten when",
+                        "entering {C:attention}shop"
+                    }
+                }
+            },
+            j_nancy_onthehouse = {
+                name = "On the House",
+                text = {
+                    "Create a free {C:attention}D6 Tag{} if",
+                    "{C:attention}final{} played hand of round",
+                    "contains a {C:attention}Full House"
+                }
+            },
+            j_nancy_windowshopping = {
+                name = "Window Shopping",
+                text = {
+                    "Adds {C:attention}double{} your current",
+                    "{C:attention}hand size{} to Mult"
+                }
+            },
+            j_nancy_junkiejoker = {
+                name = "Junkie Joker",
+                text = {
+                    "Earn {C:money}$#1#{} if played hand",
+                    "contains exactly {C:attention}#2#",
+                    "{C:attention}unscored{} card"
+                }
+            }
         },
         Other={},
         Planet={},
