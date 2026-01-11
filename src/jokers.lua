@@ -1,5 +1,6 @@
 ---@diagnostic disable: need-check-nil
 
+-- Joker atlas
 SMODS.Atlas {
     key = "nancy_jokers",
     path = "jokers.png",
