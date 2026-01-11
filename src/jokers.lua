@@ -613,7 +613,7 @@ SMODS.Joker {
                     G.hand:change_size(card.ability.extra.size)
                     play_sound('gong', 0.94, 0.5)
                     play_sound('gong', 0.94*1.5, 0.5)
-                    card:start_dissolve()
+                    SMODS.destroy_cards(card)
                     return true
                 end
             }))
