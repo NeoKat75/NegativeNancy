@@ -158,6 +158,14 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
     end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
+    end,
     calculate = function(self, card, context)
         -- Upgrade mult when discarding negatives
         if context.discard and not context.blueprint
@@ -316,6 +324,14 @@ SMODS.Joker {
         end
         return { vars = { card.ability.extra.percard, card.ability.extra.percard * negacards } }
     end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
+    end,
     calculate = function(self, card, context)
         if context.joker_main and G.deck and G.deck.cards then
             local negacards = 0
@@ -393,6 +409,14 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.gain, card.ability.extra.chips } }
     end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
+    end,
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
             local yes = false
@@ -429,6 +453,14 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'nancy_doubletake')
         return { vars = { num, denom } }
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
     end,
     calculate = function(self, card, context)
         if (context.repetition and context.cardarea == G.play)
@@ -514,6 +546,14 @@ SMODS.Joker {
         if card.ability.extra.active then activetext = "(Active!)" else activetext = "(Inactive...)" end
         return { vars = { card.ability.extra.xmult, activetext } }
     end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
+    end,
     calculate = function(self, card, context)
         -- Activate if inactive and negative card is destroyed
         if context.remove_playing_cards and not context.blueprint and not card.ability.extra.active then
@@ -550,6 +590,14 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.size } }
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
     end,
     calculate = function(self, card, context)
         if context.after and #G.hand.cards > 0 and not context.blueprint then
@@ -721,6 +769,14 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.money, card.ability.extra.money * card.ability.extra.cards } }
     end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
+    end,
     calculate = function(self, card, context)
         -- Scale per destroyed card, only show upgrade message once per destruction event
         if context.remove_playing_cards and not context.blueprint then
@@ -826,6 +882,14 @@ SMODS.Joker {
         local luck
         if math.random(10) == 10 then luck = "Luck" else luck = "Lack" end
         return { vars = { G.GAME.starting_params.discard_limit, luck } }
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
     end,
     calculate = function(self, card, context)
         -- When last card is being discarded, if discaring max amount of cards
@@ -1022,7 +1086,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { mult = 5 }, },
+    config = { extra = { mult = 3 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         local totalmult = 0
