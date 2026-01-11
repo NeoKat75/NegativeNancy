@@ -76,8 +76,8 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2# {C:inactive}Mult)"
                 }
             },
-            j_nancy_consolationaward = {
-                name = "Consolation Award",
+            j_nancy_consolationprize = {
+                name = "Consolation Prize",
                 text = {
                     "Create a random {C:tarot}Tarot",
                     "card if {C:attention}poker hand",

@@ -7,160 +7,168 @@ SMODS.Atlas {
     py = 95
 }
 
--- Exposure Therapy
+-- Window Shopping
 SMODS.Joker {
-    key = "exposuretherapy",
-    atlas = "nancy_jokers",
-    pos = { x = 4, y = 0 },
-    soul_pos = { x = 2, y = 6 },
-    rarity = 4,
-    blueprint_compat = false,
-    cost = 20,
-    discovered = true,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-    end,
-    calculate = function(self, card, context)
-        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
-            local targets = {}
-            for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" and not _card.ability.nancy_exposed then
-                    _card.ability.nancy_exposed = true
-                    targets[#targets+1] = _card
-                end
-            end
-            if next(targets) ~= nil then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('gong', 0.94, 0.5)
-                        play_sound('gong', 0.94*1.5, 0.5)
-                        for _, _card in ipairs(targets) do
-                            draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
-                            _card.ability.nancy_exposed = nil
-                        end
-                        return true
-                    end
-                }))
-                return { message = localize("nancy_exposed") }
-            end
-        end
-    end
-}
-
--- Street Graffiti
-SMODS.Joker {
-    key = "streetgraffiti",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 3,
-    blueprint_compat = true,
-    perishable_compat = false,
-    cost = 8,
-    discovered = true,
-    config = { extra = { chips = 0, mult = 0, donezo = false }, },
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
-    end,
-    calculate = function(self, card, context)
-        -- Upgrade when The Arm delevels your poker hand
-        if context.before -- and not context.blueprint (var 'donezo' accounts for blueprint for correct message display)
-            and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
-        then
-            if not card.ability.extra.donezo then
-                card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
-                card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
-                SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
-            end
-            card.ability.extra.donezo = true
-        end
-        -- Delevel your poker hand and upgrade
-        if context.before and G.GAME.hands[context.scoring_name].level > 1 then
-            local joker = context.blueprint_card or card
-            return {
-                func = function()
-                    SMODS.upgrade_poker_hands({hands = {context.scoring_name}, level_up = -1, from = joker})
-                    card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
-                    card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
-                    SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
-                end
-            }
-        end
-        -- Do the thing
-        if context.joker_main then
-            card.ability.extra.donezo = false
-            return {
-                chips = card.ability.extra.chips,
-                mult = card.ability.extra.mult
-            }
-        end
-    end
-}
-
--- Cutoff Card
-SMODS.Joker {
-    key = "cutoffcard",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 2,
-    blueprint_compat = true,
-    cost = 6,
-    discovered = true,
-    config = { extra = { used = false }, },
-    calculate = function(self, card, context)
-        -- When first hand is drawn
-        if context.first_hand_drawn and not context.blueprint then
-            -- Wiggle while used = false
-            local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
-            juice_card_until(card, eval, true)
-        end
-        -- Do the thing (nancy_cutoff is for blueprint compat, destroying cards happens later)
-        if context.selling_card and context.card.ability.consumeable and card.ability.extra.used == false
-            and G.hand and #G.hand.cards > 0
-        then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    local targets = {}
-                    for _, _card in ipairs(G.hand.cards) do
-                        if not _card.ability.nancy_cutoff then
-                            targets[#targets + 1] = _card
-                        end
-                    end
-                    if next(targets) ~= nil then
-                        local _card = pseudorandom_element(targets, "nancy_cutoffcard")
-                        _card.ability.nancy_cutoff = true
-                        SMODS.destroy_cards(_card, nil, true)
-                        card.ability.extra.used = true
-                    end
-                    return true
-                end
-            }))
-        end
-         -- At end of round if var is true
-        if context.end_of_round and context.main_eval and not context.game_over
-            and card.ability.extra.used == true and not context.blueprint
-        then
-            card.ability.extra.used = false
-        end
-    end
-}
-
--- Quality of Life
-SMODS.Joker {
-    key = "qualityoflife",
+    key = "windowshopping",
     atlas = "nancy_jokers",
     pos = { x = 0, y = 0 },
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { levels = 1 }, },
+    config = { extra = { times = 2 }, },
+    calculate = function(self, card, context)
+        -- When joker is scored
+        if context.joker_main then
+            -- Give hand size * 'times' var as mult
+            return { mult = G.hand.config.card_limit * card.ability.extra.times }
+        end
+    end
+}
+
+-- Golden Fingers
+SMODS.Joker {
+    key = "goldenfingers",
+    atlas = "nancy_jokers",
+    pos = { x = 1, y = 0 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 5,
+    discovered = true,
+    config = { extra = { payout = 1 }, },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.levels } }
+        return { vars = { card.ability.extra.payout } }
     end,
     calculate = function(self, card, context)
-        if context.other_drawn then
-            local pokerhand = G.FUNCS.get_poker_hand_info(context.other_drawn)
-            SMODS.upgrade_poker_hands({hands = {pokerhand}, level_up = card.ability.extra.levels, from = context.blueprint_card or card})
+        if context.other_consumeable then
+            -- Use money buffer!!
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.payout
+            return {
+                dollars = card.ability.extra.payout,
+                message_card = context.other_consumeable,
+                -- Reset money buffer!!
+                func = function() -- This is for timing purposes, it runs after the dollar manipulation
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+    end
+}
+
+-- Count Jokula
+SMODS.Joker {
+    key = "countjokula",
+    atlas = "nancy_jokers",
+    pos = { x = 2, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 7,
+    discovered = true,
+    config = { extra = { xmult = 1, gain = 0.01, loss = 0.02 }, },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
+    end,
+    calculate = function(self, card, context)
+        -- After a hand is drawn
+        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+            local amount = 0
+            if context.hand_drawn then amount = #context.hand_drawn end
+            if context.other_drawn then amount = #context.other_drawn end
+            -- Scale xmult up by amount of cards drawn * 'gain'
+            card.ability.extra.xmult = card.ability.extra.xmult + amount * card.ability.extra.gain
+            return { message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult }}, colour = G.C.UI_MULT }
+        end
+        -- Before a hand is scored and if xmult > 1
+        if context.before and card.ability.extra.xmult > 1 and not context.blueprint then
+            -- Scale xmult down by amount of cards scored * 'loss'
+            card.ability.extra.xmult = card.ability.extra.xmult - #context.scoring_hand * card.ability.extra.loss
+            -- Makes sure xmult is at least 1
+            if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
+            return { message = localize("nancy_downgrade"), colour = G.C.UI_MULT }
+        end
+        -- When joker is scored
+        if context.joker_main then
+            -- Give 'xmult' as xmult
+            return { xmult = card.ability.extra.xmult }
+        end
+    end
+}
+
+-- Laminator
+SMODS.Joker {
+    key = "laminator",
+    atlas = "nancy_jokers",
+    pos = { x = 3, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if context.first_hand_drawn then
+            local joker = context.blueprint_card or card
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    -- Table of non-editioned cards
+                    local targets = {}
+                    for _, _card in ipairs(G.hand.cards) do
+                        if not _card.edition then
+                            targets[#targets + 1] = _card
+                        end
+                    end
+                    -- If there are any, apply random edition
+                    if next(targets) ~= nil then
+                        local _card = pseudorandom_element(targets, "nancy_laminator")
+                        local edition = poll_edition("nancy_laminator", nil, nil, true)
+                        _card:set_edition(edition, true)
+                        _card:juice_up()
+                        joker:juice_up()
+                    end
+                    return true
+                end
+            }))
+        end
+    end
+}
+
+-- Frugal Joker
+SMODS.Joker {
+    key = "frugaljoker",
+    atlas = "nancy_jokers",
+    pos = { x = 4, y = 0 },
+    rarity = 2,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 7,
+    discovered = true,
+    config = { extra = { gain = 2, mult = 0 }, },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
+    end,
+    calculate = function(self, card, context)
+        -- Upgrade mult when discarding negatives
+        if context.discard and not context.blueprint
+            and context.other_card.edition and context.other_card.edition.key == "e_negative"
+            and not context.other_card.debuff
+        then
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
+            return { message = localize('k_upgrade_ex') }
+        end
+        -- Scoooooore!
+        if context.joker_main then
+            return { mult = card.ability.extra.mult }
         end
     end
 }
@@ -169,7 +177,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "returnpolicy",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 0, y = 1 },
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
@@ -235,11 +243,94 @@ SMODS.Joker {
     end
 }
 
+-- Collector
+SMODS.Joker {
+    key = "collector",
+    atlas = "nancy_jokers",
+    pos = { x = 1, y = 1 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 5,
+    discovered = true,
+    config = { extra = { chips = 2 }, },
+    loc_vars = function(self, info_queue, card)
+        if G.playing_cards and #G.playing_cards > 0 then
+            return { vars = { card.ability.extra.chips, card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) } }
+        else
+            return { vars = { card.ability.extra.chips, card.ability.extra.chips * 52 } }
+        end
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return { chips = card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) }
+        end
+    end
+}
+
+-- Negative Nancy
+SMODS.Joker {
+    key = "negativenancy",
+    atlas = "nancy_jokers",
+    pos = { x = 2, y = 1 },
+    rarity = 3,
+    blueprint_compat = true,
+    eternal_compat = false,
+    cost = 9,
+    discovered = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if G.hand and G.hand.cards and context.selling_self then
+            -- Put non-editioned cards in a table
+            local targets = {}
+            for _, _card in ipairs(G.hand.cards) do
+                if not _card.edition then
+                    targets[#targets + 1] = _card
+                end
+            end
+            -- Do the thing if there are any targets
+            if next(targets) ~= nil then NegaNancy.makenegatives(targets) end
+        end
+    end
+}
+
+-- Post-Modern Joker
+SMODS.Joker {
+    key = "postmodernjoker",
+    atlas = "nancy_jokers",
+    pos = { x = 3, y = 1 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    discovered = true,
+    config = { extra = { percard = 20 }, },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local negacards = 0
+        if G.deck and G.deck.cards then
+            for _, _card in ipairs(G.deck.cards) do
+                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
+            end
+        end
+        return { vars = { card.ability.extra.percard, card.ability.extra.percard * negacards } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and G.deck and G.deck.cards then
+            local negacards = 0
+            for _, _card in ipairs(G.deck.cards) do
+                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
+            end
+            return { chips = card.ability.extra.percard * negacards }
+        end
+    end
+}
+
 -- Expired Coupon
 SMODS.Joker {
     key = "expiredcoupon",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 4, y = 1 },
     rarity = 1,
     blueprint_compat = true,
     eternal_compat = false,
@@ -286,154 +377,11 @@ SMODS.Joker {
     end
 }
 
--- Pack of Buffoons
-SMODS.Joker {
-    key = "packofbuffoons",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 2,
-    blueprint_compat = true,
-    cost = 7,
-    discovered = true,
-    config = { extra = { gain = 3 }, },
-    loc_vars = function(self, info_queue, card)
-        local mult = 0
-        if G.GAME.nancy_jokerlist then mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain end
-        return { vars = { card.ability.extra.gain, mult } }
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main and G.GAME.nancy_jokerlist then
-            return { mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain }
-        end
-    end
-}
-
--- Consolation Award
-SMODS.Joker {
-    key = "consolationaward",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 3,
-    blueprint_compat = true,
-    cost = 8,
-    discovered = true,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            local yes = false
-            for _, _card in ipairs(context.scoring_hand) do
-                if _card.debuff then yes = true; break end
-            end
-            if yes then
-                -- Code from Vanilla Remade's Vagabond
-                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        SMODS.add_card{
-                            set = 'Tarot',
-                            key_append = 'nancy_consolationaward' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
-                        }
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end
-                }))
-                return {
-                    message = localize('k_plus_tarot'),
-                }
-            end
-        end
-    end
-}
-
--- Exorcist
-SMODS.Joker {
-    key = "exorcist",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 3,
-    blueprint_compat = true,
-    cost = 8,
-    discovered = true,
-    config = { extra = { xmult = 4, active = false }, },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        local activetext
-        if card.ability.extra.active then activetext = "(Active!)" else activetext = "(Inactive...)" end
-        return { vars = { card.ability.extra.xmult, activetext } }
-    end,
-    calculate = function(self, card, context)
-        -- Activate if inactive and negative card is destroyed
-        if context.remove_playing_cards and not context.blueprint and not card.ability.extra.active then
-            for _, _card in ipairs(context.removed) do
-                if _card.edition and _card.edition.key == "e_negative" then
-                    card.ability.extra.active = true
-                    return { message = localize{type = "variable", key = 'loyalty_active'} }
-                end
-            end
-        end
-        -- Reset after beating boss blind if active
-        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.active then
-            card.ability.extra.active = false
-            return { message = localize('k_reset') }
-        end
-        -- Score if active
-        if context.joker_main and card.ability.extra.active then
-            return { xmult = card.ability.extra.xmult }
-        end
-    end
-}
-
--- Pump & Dump
-SMODS.Joker {
-    key = "pumpdump",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 3,
-    blueprint_compat = false,
-    cost = 9,
-    discovered = true,
-    config = { extra = { money = 6, cards = 0, reset = false }, },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        return { vars = { card.ability.extra.money, card.ability.extra.money * card.ability.extra.cards } }
-    end,
-    calculate = function(self, card, context)
-        -- Scale per destroyed card, only show upgrade message once per destruction event
-        if context.remove_playing_cards and not context.blueprint then
-            local yes = false
-            for _, _card in ipairs(context.removed) do
-                if _card.edition and _card.edition.key == "e_negative" then
-                    card.ability.extra.cards = card.ability.extra.cards + 1
-                    yes = true
-                end
-            end
-            if yes then return { message = localize('k_upgrade_ex') } end
-        end
-        -- Reset when entering shop after beating boss blind
-        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.cards > 0 then
-            card.ability.extra.reset = true
-        end
-        if context.starting_shop and not context.blueprint and card.ability.extra.reset then
-            card.ability.extra.cards = 0
-            card.ability.extra.reset = false
-            return { message = localize('k_reset') }
-        end
-    end,
-    -- Gives end of round money
-    calc_dollar_bonus = function(self, card)
-        if card.ability.extra.cards > 0 then
-            return card.ability.extra.money * card.ability.extra.cards
-        end
-    end
-}
-
 -- Deep Ocean
 SMODS.Joker {
     key = "deepocean",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 0, y = 2 },
     rarity = 3,
     blueprint_compat = true,
     perishable_compat = false,
@@ -470,7 +418,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "doubletake",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 1, y = 2 },
     rarity = 3,
     blueprint_compat = true,
     cost = 9,
@@ -494,46 +442,95 @@ SMODS.Joker {
     end
 }
 
--- Lack of the Draw
+-- Stairwell
 SMODS.Joker {
-    key = "lackofthedraw",
+    key = "stairwell",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 2, y = 2 },
     rarity = 2,
     blueprint_compat = true,
+    eternal_compat = false,
     cost = 7,
     discovered = true,
+    config = { extra = { amount = 2, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        local luck
-        if math.random(10) == 10 then luck = "Luck" else luck = "Lack" end
-        return { vars = { G.GAME.starting_params.discard_limit, luck } }
+        return { vars = { card.ability.extra.amount, card.ability.extra.growth } }
     end,
     calculate = function(self, card, context)
-        -- If discaring max amount of cards
-        if context.pre_discard and #context.full_hand == G.GAME.starting_params.discard_limit then
-            -- Check if discard contains non-negatives, stop calculation if yes
-            for _, _card in ipairs(context.full_hand) do
-                if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
+        -- Scaling
+        if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
+            card.ability.extra.amount = card.ability.extra.amount + card.ability.extra.growth
+            return { message = localize('k_upgrade_ex') }
+        end
+        -- Wiggle wiggle
+        if context.first_hand_drawn and card.ability.extra.amount >= G.hand.config.card_limit and not context.blueprint then
+            -- Wiggle when amount > hand size
+            local eval = function() return not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        -- Doing the thing
+        if G.hand and G.hand.cards and context.selling_self then
+            -- Put non-editioned cards in a table
+            local targets = {}
+            for _, _card in ipairs(G.hand.cards) do
+                if not _card.edition then
+                    targets[#targets + 1] = _card
+                end
             end
-            -- Add the spectral card (from Vanilla Remade's Sixth Sense)
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        SMODS.add_card{
-                            set = 'Spectral',
-                            key_append = 'nancy_lackofthedraw' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
-                        }
-                        G.GAME.consumeable_buffer = 0
-                        return true
+            -- Select random eligible cards 
+            if next(targets) ~= nil then
+                local finaltargets = {}
+                if card.ability.extra.amount >= #targets then
+                    finaltargets = targets
+                else
+                    -- Select amount of random cards from targets (ily btw)
+                    for i = 1, card.ability.extra.amount do
+                        local _card, _index = pseudorandom_element(targets, "nancy_stairwell")
+                        finaltargets[#finaltargets+1] = _card
+                        table.remove(targets, tonumber(_index))
                     end
-                }))
-                return {
-                    message = localize('k_plus_spectral'),
-                    colour = G.C.SECONDARY_SET.Spectral
-                }
+                end
+                NegaNancy.makenegatives(finaltargets)
             end
+        end
+    end
+}
+
+-- Exorcist
+SMODS.Joker {
+    key = "exorcist",
+    atlas = "nancy_jokers",
+    pos = { x = 3, y = 2 },
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 8,
+    discovered = true,
+    config = { extra = { xmult = 4, active = false }, },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local activetext
+        if card.ability.extra.active then activetext = "(Active!)" else activetext = "(Inactive...)" end
+        return { vars = { card.ability.extra.xmult, activetext } }
+    end,
+    calculate = function(self, card, context)
+        -- Activate if inactive and negative card is destroyed
+        if context.remove_playing_cards and not context.blueprint and not card.ability.extra.active then
+            for _, _card in ipairs(context.removed) do
+                if _card.edition and _card.edition.key == "e_negative" then
+                    card.ability.extra.active = true
+                    return { message = localize{type = "variable", key = 'loyalty_active'} }
+                end
+            end
+        end
+        -- Reset after beating boss blind if active
+        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.active then
+            card.ability.extra.active = false
+            return { message = localize('k_reset') }
+        end
+        -- Score if active
+        if context.joker_main and card.ability.extra.active then
+            return { xmult = card.ability.extra.xmult }
         end
     end
 }
@@ -542,7 +539,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "initiation",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 4, y = 2 },
     rarity = 2,
     blueprint_compat = false,
     eternal_compat = false,
@@ -578,83 +575,71 @@ SMODS.Joker {
     end
 }
 
--- Decorative Joker
+-- Cutoff Card
 SMODS.Joker {
-    key = "decorativejoker",
+    key = "cutoffcard",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
+    pos = { x = 0, y = 3 },
+    rarity = 2,
     blueprint_compat = true,
-    cost = 4,
+    cost = 6,
     discovered = true,
-    config = { extra = { mult = 5 }, },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-        local totalmult = 0
-        if G.playing_cards and #G.playing_cards > 0 then
-            for _, _card in ipairs(G.playing_cards) do
-                if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
-            end
-        end
-        return { vars = { card.ability.extra.mult, totalmult } }
-    end,
+    config = { extra = { used = false }, },
     calculate = function(self, card, context)
-        if context.joker_main then
-            local totalmult = 0
-            if G.playing_cards and #G.playing_cards > 0 then
-                for _, _card in ipairs(G.playing_cards) do
-                    if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
+        -- When first hand is drawn
+        if context.first_hand_drawn and not context.blueprint then
+            -- Wiggle while used = false
+            local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        -- Do the thing (nancy_cutoff is for blueprint compat, destroying cards happens later)
+        if context.selling_card and context.card.ability.consumeable and card.ability.extra.used == false
+            and G.hand and #G.hand.cards > 0
+        then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local targets = {}
+                    for _, _card in ipairs(G.hand.cards) do
+                        if not _card.ability.nancy_cutoff then
+                            targets[#targets + 1] = _card
+                        end
+                    end
+                    if next(targets) ~= nil then
+                        local _card = pseudorandom_element(targets, "nancy_cutoffcard")
+                        _card.ability.nancy_cutoff = true
+                        SMODS.destroy_cards(_card, nil, true)
+                        card.ability.extra.used = true
+                    end
+                    return true
                 end
-            end
-            return { mult = totalmult }
+            }))
+        end
+         -- At end of round if var is true
+        if context.end_of_round and context.main_eval and not context.game_over
+            and card.ability.extra.used == true and not context.blueprint
+        then
+            card.ability.extra.used = false
         end
     end
 }
 
--- Stimulus Cheque
+-- Quality of Life
 SMODS.Joker {
-    key = "stimuluscheque",
+    key = "qualityoflife",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 1, y = 3 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 5,
+    cost = 4,
     discovered = true,
-    config = { extra = { money = 2 }, },
+    config = { extra = { levels = 1 }, },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-        return { vars = { card.ability.extra.money } }
+        return { vars = { card.ability.extra.levels } }
     end,
     calculate = function(self, card, context)
-        if context.before then
-            -- For each debuffed card in hand
-            for _, _card in ipairs(G.hand.cards) do
-                if _card.debuff then
-                    -- Juice da card
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            _card:juice_up()
-                            return true
-                        end
-                    }))
-                    -- Muhnee buffer
-                    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
-                    -- Do the thing!
-                    SMODS.calculate_effect({
-                        dollars = card.ability.extra.money,
-                        message_card = context.blueprint_card or card,
-                        -- Reset muhnee buffer
-                        func = function()
-                            G.E_MANAGER:add_event(Event({
-                                func = function()
-                                    G.GAME.dollar_buffer = 0
-                                    return true
-                                end
-                            }))
-                        end
-                    }, card)
-                end
-            end
+        if context.other_drawn then
+            local pokerhand = G.FUNCS.get_poker_hand_info(context.other_drawn)
+            SMODS.upgrade_poker_hands({hands = {pokerhand}, level_up = card.ability.extra.levels, from = context.blueprint_card or card})
         end
     end
 }
@@ -663,7 +648,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "slotmachine",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 2, y = 3 },
     rarity = 2,
     blueprint_compat = true,
     perishable_compat = false,
@@ -721,247 +706,248 @@ SMODS.Joker {
     end
 }
 
--- Frugal Joker
+-- Pump & Dump
 SMODS.Joker {
-    key = "frugaljoker",
+    key = "pumpdump",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 3, y = 3 },
+    rarity = 3,
+    blueprint_compat = false,
+    cost = 9,
+    discovered = true,
+    config = { extra = { money = 6, cards = 0, reset = false }, },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.money, card.ability.extra.money * card.ability.extra.cards } }
+    end,
+    calculate = function(self, card, context)
+        -- Scale per destroyed card, only show upgrade message once per destruction event
+        if context.remove_playing_cards and not context.blueprint then
+            local yes = false
+            for _, _card in ipairs(context.removed) do
+                if _card.edition and _card.edition.key == "e_negative" then
+                    card.ability.extra.cards = card.ability.extra.cards + 1
+                    yes = true
+                end
+            end
+            if yes then return { message = localize('k_upgrade_ex') } end
+        end
+        -- Reset when entering shop after beating boss blind
+        if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.cards > 0 then
+            card.ability.extra.reset = true
+        end
+        if context.starting_shop and not context.blueprint and card.ability.extra.reset then
+            card.ability.extra.cards = 0
+            card.ability.extra.reset = false
+            return { message = localize('k_reset') }
+        end
+    end,
+    -- Gives end of round money
+    calc_dollar_bonus = function(self, card)
+        if card.ability.extra.cards > 0 then
+            return card.ability.extra.money * card.ability.extra.cards
+        end
+    end
+}
+
+-- Junkie Joker
+SMODS.Joker {
+    key = "junkiejoker",
+    atlas = "nancy_jokers",
+    pos = { x = 4, y = 3 },
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 5,
+    discovered = true,
+    config = { extra = { dollars = 3, cards = 1 }, },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
+    end,
+    calculate = function(self, card, context)
+        -- Before scoring
+        if context.before then
+            -- If unscored cards = 'cards' variable
+            if #context.full_hand - #context.scoring_hand == card.ability.extra.cards then
+                -- Gives money in 'dollars' variable using the money buffer
+                G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
+                return {
+                    dollars = card.ability.extra.dollars,
+                    -- Clears the money buffer
+                    func = function()
+                        -- This is for timing purposes, this goes after the dollar modification
+                        -- It resets the buffer in an event after scoring
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                G.GAME.dollar_buffer = 0
+                                return true
+                            end
+                        }))
+                    end
+                }
+            end
+        end
+    end
+}
+
+-- Pack of Buffoons
+SMODS.Joker {
+    key = "packofbuffoons",
+    atlas = "nancy_jokers",
+    pos = { x = 0, y = 4 },
     rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    config = { extra = { gain = 3 }, },
+    loc_vars = function(self, info_queue, card)
+        local mult = 0
+        if G.GAME.nancy_jokerlist then mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain end
+        return { vars = { card.ability.extra.gain, mult } }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and G.GAME.nancy_jokerlist then
+            return { mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain }
+        end
+    end
+}
+
+-- Lack of the Draw
+SMODS.Joker {
+    key = "lackofthedraw",
+    atlas = "nancy_jokers",
+    pos = { x = 1, y = 4 },
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 7,
+    discovered = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local luck
+        if math.random(10) == 10 then luck = "Luck" else luck = "Lack" end
+        return { vars = { G.GAME.starting_params.discard_limit, luck } }
+    end,
+    calculate = function(self, card, context)
+        -- If discaring max amount of cards
+        if context.pre_discard and #context.full_hand == G.GAME.starting_params.discard_limit then
+            -- Check if discard contains non-negatives, stop calculation if yes
+            for _, _card in ipairs(context.full_hand) do
+                if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
+            end
+            -- Add the spectral card (from Vanilla Remade's Sixth Sense)
+            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card{
+                            set = 'Spectral',
+                            key_append = 'nancy_lackofthedraw' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+                return {
+                    message = localize('k_plus_spectral'),
+                    colour = G.C.SECONDARY_SET.Spectral
+                }
+            end
+        end
+    end
+}
+
+-- Street Graffiti
+SMODS.Joker {
+    key = "streetgraffiti",
+    atlas = "nancy_jokers",
+    pos = { x = 2, y = 4 },
+    rarity = 3,
     blueprint_compat = true,
     perishable_compat = false,
-    cost = 7,
+    cost = 8,
     discovered = true,
-    config = { extra = { gain = 2, mult = 0 }, },
+    config = { extra = { chips = 0, mult = 0, donezo = false }, },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        -- Upgrade mult when discarding negatives
-        if context.discard and not context.blueprint
-            and context.other_card.edition and context.other_card.edition.key == "e_negative"
-            and not context.other_card.debuff
+        -- Upgrade when The Arm delevels your poker hand
+        if context.before -- and not context.blueprint (var 'donezo' accounts for blueprint for correct message display)
+            and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
         then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
-            return { message = localize('k_upgrade_ex') }
-        end
-        -- Scoooooore!
-        if context.joker_main then
-            return { mult = card.ability.extra.mult }
-        end
-    end
-}
-
--- Collector
-SMODS.Joker {
-    key = "collector",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
-    blueprint_compat = true,
-    cost = 5,
-    discovered = true,
-    config = { extra = { chips = 2 }, },
-    loc_vars = function(self, info_queue, card)
-        if G.playing_cards and #G.playing_cards > 0 then
-            return { vars = { card.ability.extra.chips, card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) } }
-        else
-            return { vars = { card.ability.extra.chips, card.ability.extra.chips * 52 } }
-        end
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main then
-            return { chips = card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) }
-        end
-    end
-}
-
--- Post-Modern Joker
-SMODS.Joker {
-    key = "postmodernjoker",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
-    blueprint_compat = true,
-    cost = 4,
-    discovered = true,
-    config = { extra = { percard = 20 }, },
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        local negacards = 0
-        if G.deck and G.deck.cards then
-            for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
+            if not card.ability.extra.donezo then
+                card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
             end
+            card.ability.extra.donezo = true
         end
-        return { vars = { card.ability.extra.percard, card.ability.extra.percard * negacards } }
-    end,
-    calculate = function(self, card, context)
-        if context.joker_main and G.deck and G.deck.cards then
-            local negacards = 0
-            for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then negacards = negacards + 1 end
-            end
-            return { chips = card.ability.extra.percard * negacards }
-        end
-    end
-}
-
--- Laminator
-SMODS.Joker {
-    key = "laminator",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 2,
-    blueprint_compat = true,
-    cost = 7,
-    discovered = true,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_polychrome
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-    end,
-    calculate = function(self, card, context)
-        if context.first_hand_drawn then
+        -- Delevel your poker hand and upgrade
+        if context.before and G.GAME.hands[context.scoring_name].level > 1 then
             local joker = context.blueprint_card or card
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    -- Table of non-editioned cards
-                    local targets = {}
-                    for _, _card in ipairs(G.hand.cards) do
-                        if not _card.edition then
-                            targets[#targets + 1] = _card
-                        end
-                    end
-                    -- If there are any, apply random edition
-                    if next(targets) ~= nil then
-                        local _card = pseudorandom_element(targets, "nancy_laminator")
-                        local edition = poll_edition("nancy_laminator", nil, nil, true)
-                        _card:set_edition(edition, true)
-                        _card:juice_up()
-                        joker:juice_up()
-                    end
-                    return true
-                end
-            }))
-        end
-    end
-}
-
--- Golden Fingers
-SMODS.Joker {
-    key = "goldenfingers",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
-    blueprint_compat = true,
-    cost = 5,
-    discovered = true,
-    config = { extra = { payout = 1 }, },
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.payout } }
-    end,
-    calculate = function(self, card, context)
-        if context.other_consumeable then
-            -- Use money buffer!!
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.payout
             return {
-                dollars = card.ability.extra.payout,
-                message_card = context.other_consumeable,
-                -- Reset money buffer!!
-                func = function() -- This is for timing purposes, it runs after the dollar manipulation
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            G.GAME.dollar_buffer = 0
-                            return true
-                        end
-                    }))
+                func = function()
+                    SMODS.upgrade_poker_hands({hands = {context.scoring_name}, level_up = -1, from = joker})
+                    card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                    card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                    SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
                 end
+            }
+        end
+        -- Do the thing
+        if context.joker_main then
+            card.ability.extra.donezo = false
+            return {
+                chips = card.ability.extra.chips,
+                mult = card.ability.extra.mult
             }
         end
     end
 }
 
--- Stairwell
+-- Stimulus Cheque
 SMODS.Joker {
-    key = "stairwell",
+    key = "stimuluscheque",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 2,
+    pos = { x = 3, y = 4 },
+    rarity = 1,
     blueprint_compat = true,
-    eternal_compat = false,
-    cost = 7,
+    cost = 5,
     discovered = true,
-    config = { extra = { amount = 2, growth = 1 }, },
+    config = { extra = { money = 2 }, },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        return { vars = { card.ability.extra.amount, card.ability.extra.growth } }
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        -- Scaling
-        if context.end_of_round and not context.game_over and context.main_eval and not context.blueprint then
-            card.ability.extra.amount = card.ability.extra.amount + card.ability.extra.growth
-            return { message = localize('k_upgrade_ex') }
-        end
-        -- Wiggle wiggle
-        if context.first_hand_drawn and card.ability.extra.amount >= G.hand.config.card_limit and not context.blueprint then
-            -- Wiggle when amount > hand size
-            local eval = function() return not G.RESET_JIGGLES end
-            juice_card_until(card, eval, true)
-        end
-        -- Doing the thing
-        if G.hand and G.hand.cards and context.selling_self then
-            -- Put non-editioned cards in a table
-            local targets = {}
+        if context.before then
+            -- For each debuffed card in hand
             for _, _card in ipairs(G.hand.cards) do
-                if not _card.edition then
-                    targets[#targets + 1] = _card
+                if _card.debuff then
+                    -- Juice da card
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            _card:juice_up()
+                            return true
+                        end
+                    }))
+                    -- Muhnee buffer
+                    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+                    -- Do the thing!
+                    SMODS.calculate_effect({
+                        dollars = card.ability.extra.money,
+                        message_card = context.blueprint_card or card,
+                        -- Reset muhnee buffer
+                        func = function()
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    G.GAME.dollar_buffer = 0
+                                    return true
+                                end
+                            }))
+                        end
+                    }, card)
                 end
             end
-            -- Select random eligible cards 
-            if next(targets) ~= nil then
-                local finaltargets = {}
-                if card.ability.extra.amount >= #targets then
-                    finaltargets = targets
-                else
-                    -- Select amount of random cards from targets (ily btw)
-                    for i = 1, card.ability.extra.amount do
-                        local _card, _index = pseudorandom_element(targets, "nancy_stairwell")
-                        finaltargets[#finaltargets+1] = _card
-                        table.remove(targets, tonumber(_index))
-                    end
-                end
-                NegaNancy.makenegatives(finaltargets)
-            end
-        end
-    end
-}
-
--- Negative Nancy
-SMODS.Joker {
-    key = "negativenancy",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 3,
-    blueprint_compat = true,
-    eternal_compat = false,
-    cost = 9,
-    discovered = true,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-    end,
-    calculate = function(self, card, context)
-        if G.hand and G.hand.cards and context.selling_self then
-            -- Put non-editioned cards in a table
-            local targets = {}
-            for _, _card in ipairs(G.hand.cards) do
-                if not _card.edition then
-                    targets[#targets + 1] = _card
-                end
-            end
-            -- Do the thing if there are any targets
-            if next(targets) ~= nil then NegaNancy.makenegatives(targets) end
         end
     end
 }
@@ -970,7 +956,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "usefuljoker",
     atlas = "nancy_jokers",
-    pos = { x = 1, y = 0 },
+    pos = { x = 4, y = 4 },
     rarity = 1,
     blueprint_compat = true,
     cost = 2,
@@ -1022,42 +1008,35 @@ SMODS.Joker {
     end
 }
 
--- Count Jokula
+-- Decorative Joker
 SMODS.Joker {
-    key = "countjokula",
+    key = "decorativejoker",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 2,
+    pos = { x = 0, y = 5 },
+    rarity = 1,
     blueprint_compat = true,
-    perishable_compat = false,
-    cost = 7,
+    cost = 4,
     discovered = true,
-    config = { extra = { xmult = 1, gain = 0.01, loss = 0.02 }, },
+    config = { extra = { mult = 5 }, },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        local totalmult = 0
+        if G.playing_cards and #G.playing_cards > 0 then
+            for _, _card in ipairs(G.playing_cards) do
+                if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
+            end
+        end
+        return { vars = { card.ability.extra.mult, totalmult } }
     end,
     calculate = function(self, card, context)
-        -- After a hand is drawn
-        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
-            local amount = 0
-            if context.hand_drawn then amount = #context.hand_drawn end
-            if context.other_drawn then amount = #context.other_drawn end
-            -- Scale xmult up by amount of cards drawn * 'gain'
-            card.ability.extra.xmult = card.ability.extra.xmult + amount * card.ability.extra.gain
-            return { message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult }}, colour = G.C.UI_MULT }
-        end
-        -- Before a hand is scored and if xmult > 1
-        if context.before and card.ability.extra.xmult > 1 and not context.blueprint then
-            -- Scale xmult down by amount of cards scored * 'loss'
-            card.ability.extra.xmult = card.ability.extra.xmult - #context.scoring_hand * card.ability.extra.loss
-            -- Makes sure xmult is at least 1
-            if card.ability.extra.xmult < 1 then card.ability.extra.xmult = 1 end
-            return { message = localize("nancy_downgrade"), colour = G.C.UI_MULT }
-        end
-        -- When joker is scored
         if context.joker_main then
-            -- Give 'xmult' as xmult
-            return { xmult = card.ability.extra.xmult }
+            local totalmult = 0
+            if G.playing_cards and #G.playing_cards > 0 then
+                for _, _card in ipairs(G.playing_cards) do
+                    if _card.debuff then totalmult = totalmult + card.ability.extra.mult end
+                end
+            end
+            return { mult = totalmult }
         end
     end
 }
@@ -1066,7 +1045,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "snacktray",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 1, y = 5 },
     rarity = 2,
     blueprint_compat = false,
     eternal_compat = false,
@@ -1101,11 +1080,51 @@ SMODS.Joker {
     end
 }
 
+-- Exposure Therapy
+SMODS.Joker {
+    key = "exposuretherapy",
+    atlas = "nancy_jokers",
+    pos = { x = 2, y = 5 },
+    soul_pos = { x = 2, y = 6 },
+    rarity = 4,
+    blueprint_compat = false,
+    cost = 20,
+    discovered = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+            local targets = {}
+            for _, _card in ipairs(G.deck.cards) do
+                if _card.edition and _card.edition.key == "e_negative" and not _card.ability.nancy_exposed then
+                    _card.ability.nancy_exposed = true
+                    targets[#targets+1] = _card
+                end
+            end
+            if next(targets) ~= nil then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('gong', 0.94, 0.5)
+                        play_sound('gong', 0.94*1.5, 0.5)
+                        for _, _card in ipairs(targets) do
+                            draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
+                            _card.ability.nancy_exposed = nil
+                        end
+                        return true
+                    end
+                }))
+                return { message = localize("nancy_exposed") }
+            end
+        end
+    end
+}
+
 -- On the House
 SMODS.Joker {
     key = "onthehouse",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
+    pos = { x = 3, y = 5 },
     rarity = 2,
     blueprint_compat = true,
     cost = 8,
@@ -1144,58 +1163,39 @@ SMODS.Joker {
     end
 }
 
--- Window Shopping
+-- Consolation Prize
 SMODS.Joker {
-    key = "windowshopping",
+    key = "consolationprize",
     atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
+    pos = { x = 4, y = 5 },
+    rarity = 3,
     blueprint_compat = true,
-    cost = 4,
+    cost = 8,
     discovered = true,
-    config = { extra = { times = 2 }, },
-    calculate = function(self, card, context)
-        -- When joker is scored
-        if context.joker_main then
-            -- Give hand size * 'times' var as mult
-            return { mult = G.hand.config.card_limit * card.ability.extra.times }
-        end
-    end
-}
-
--- Junkie Joker
-SMODS.Joker {
-    key = "junkiejoker",
-    atlas = "nancy_jokers",
-    pos = { x = 0, y = 0 },
-    rarity = 1,
-    blueprint_compat = true,
-    cost = 5,
-    discovered = true,
-    config = { extra = { dollars = 3, cards = 1 }, },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
     end,
     calculate = function(self, card, context)
-        -- Before scoring
-        if context.before then
-            -- If unscored cards = 'cards' variable
-            if #context.full_hand - #context.scoring_hand == card.ability.extra.cards then
-                -- Gives money in 'dollars' variable using the money buffer
-                G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
-                return {
-                    dollars = card.ability.extra.dollars,
-                    -- Clears the money buffer
+        if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            local yes = false
+            for _, _card in ipairs(context.scoring_hand) do
+                if _card.debuff then yes = true; break end
+            end
+            if yes then
+                -- Code from Vanilla Remade's Vagabond
+                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
+                G.E_MANAGER:add_event(Event({
                     func = function()
-                        -- This is for timing purposes, this goes after the dollar modification
-                        -- It resets the buffer in an event after scoring
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                G.GAME.dollar_buffer = 0
-                                return true
-                            end
-                        }))
+                        SMODS.add_card{
+                            set = 'Tarot',
+                            key_append = 'nancy_consolationprize' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                        }
+                        G.GAME.consumeable_buffer = 0
+                        return true
                     end
+                }))
+                return {
+                    message = localize('k_plus_tarot'),
                 }
             end
         end
