@@ -827,8 +827,10 @@ SMODS.Joker {
         return { vars = { G.GAME.starting_params.discard_limit, luck } }
     end,
     calculate = function(self, card, context)
-        -- If discaring max amount of cards
-        if context.pre_discard and #context.full_hand == G.GAME.starting_params.discard_limit then
+        -- When last card is being discarded, if discaring max amount of cards
+        if context.discard and context.other_card == context.full_hand[#context.full_hand]
+            and #context.full_hand == G.GAME.starting_params.discard_limit
+        then
             -- Check if discard contains non-negatives, stop calculation if yes
             for _, _card in ipairs(context.full_hand) do
                 if not _card.edition or (_card.edition and _card.edition.key ~= "e_negative") then return end
@@ -836,19 +838,21 @@ SMODS.Joker {
             -- Add the spectral card (from Vanilla Remade's Sixth Sense)
             if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
                 G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        SMODS.add_card{
-                            set = 'Spectral',
-                            key_append = 'nancy_lackofthedraw' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
-                        }
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end
-                }))
                 return {
                     message = localize('k_plus_spectral'),
-                    colour = G.C.SECONDARY_SET.Spectral
+                    colour = G.C.SECONDARY_SET.Spectral,
+                    func = function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                SMODS.add_card{
+                                    set = 'Spectral',
+                                    key_append = 'nancy_lackofthedraw' -- Optional, useful for manipulating the random seed and checking the source of the creation in `in_pool`.
+                                }
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end
+                        }))
+                    end
                 }
             end
         end
