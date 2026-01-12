@@ -724,7 +724,7 @@ SMODS.Joker {
                 return { message = localize('k_upgrade_ex') }
             end
         end
-        -- If sevens, permadebuff them and clear table
+        -- If sevens, debuff them and clear table
         if context.after and not context.blueprint and next(card.ability.extra.sevens) ~= nil then
             G.E_MANAGER:add_event(Event({
                 func = function()

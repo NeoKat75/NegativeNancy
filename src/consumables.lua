@@ -10,21 +10,34 @@ SMODS.Consumable {
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         return { vars = { card.ability.max_highlighted } }
     end,
+    -- Mostly from Vanilla Remade's Cryptid
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event({
             func = function()
-                local _first_dissolve = nil
-                local new_cards = {}
                 G.playing_card = (G.playing_card and G.playing_card + 1) or 1
                 local _card = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
+                -- Make new card negative
+                _card:set_edition('e_negative')
                 _card:add_to_deck()
                 G.deck.config.card_limit = G.deck.config.card_limit + 1
                 table.insert(G.playing_cards, _card)
                 G.hand:emplace(_card)
-                _card:start_materialize(nil, _first_dissolve)
-                _first_dissolve = true
-                new_cards[#new_cards + 1] = _card
-                SMODS.calculate_context({ playing_card_added = true, cards = new_cards })
+                _card:start_materialize()
+                -- Debuff original card and play two sounds
+                G.hand.highlighted[1].ability.perma_debuff = true
+                G.hand.highlighted[1]:juice_up()
+                play_sound('tarot2', 1, 0.4)
+                G.E_MANAGER:add_event(Event({
+                    blocking = false,
+                    blockable = false,
+                    trigger = 'after',
+                    delay = 0.06*G.SETTINGS.GAMESPEED,
+                    func = function()
+                        play_sound('tarot2', 0.76, 0.4)
+                        return true
+                    end
+                }))
+                SMODS.calculate_context({ playing_card_added = true, cards = _card })
                 return true
             end
         }))
