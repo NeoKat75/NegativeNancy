@@ -9,7 +9,7 @@ return {
                 name = "Exposure Therapy",
                 text = {
                     "All {C:dark_edition}Negative{} cards in {C:attention}deck",
-                    "are {C:legendary}drawn to hand",
+                    "are {C:legendary,E:1}drawn to hand",
                     "when a hand is drawn"
                 }
             },
