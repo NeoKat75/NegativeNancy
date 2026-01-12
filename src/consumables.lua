@@ -23,8 +23,8 @@ SMODS.Consumable {
                 table.insert(G.playing_cards, _card)
                 G.hand:emplace(_card)
                 _card:start_materialize()
-                -- Debuff original card and play two sounds
-                G.hand.highlighted[1].ability.perma_debuff = true
+                -- Debuff original card and play sound wombo-combo
+                SMODS.debuff_card(G.hand.highlighted[1], true, "nancy")
                 G.hand.highlighted[1]:juice_up()
                 play_sound('tarot2', 1, 0.4)
                 G.E_MANAGER:add_event(Event({

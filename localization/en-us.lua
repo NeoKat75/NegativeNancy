@@ -164,8 +164,8 @@ return {
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {
-                        "{C:attention}Debuffs{} scored {C:attention}7{}s",
-                        "after they're played"
+                        "Permanently {C:attention}debuffs",
+                        "scored {C:attention}7{}s after played"
                     }
                 }
             },
@@ -300,7 +300,8 @@ return {
                         "card in your hand"
                     },
                     {
-                        "{C:attention}Debuffs{} selected card"
+                        "Permanently {C:attention}debuffs",
+                        "the selected card"
                     }
                 }
             }

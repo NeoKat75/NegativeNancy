@@ -730,7 +730,7 @@ SMODS.Joker {
                 func = function()
                     -- print("after")
                     for _, _card in ipairs(card.ability.extra.sevens) do
-                        _card.ability.perma_debuff = true
+                        SMODS.debuff_card(_card, true, "nancy")
                     end
                     card:juice_up()
                     play_sound('tarot2', 1, 0.4)
