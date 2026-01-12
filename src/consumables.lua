@@ -37,7 +37,7 @@ SMODS.Consumable {
                         return true
                     end
                 }))
-                SMODS.calculate_context({ playing_card_added = true, cards = _card })
+                SMODS.calculate_context({ playing_card_added = true, cards = {_card} })
                 return true
             end
         }))
