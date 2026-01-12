@@ -290,7 +290,21 @@ return {
         Spectral={},
         Stake={},
         Tag={},
-        Tarot={},
+        Tarot = {
+            c_nancy_downpour = {
+                name = "The Downpour",
+                text = {
+                    {
+                        "Create a {C:dark_edition}Negative{}",
+                        "copy of {C:attention}#1#{} selected",
+                        "card in your hand"
+                    },
+                    {
+                        "{C:attention}Debuffs{} selected card"
+                    }
+                }
+            }
+        },
         Voucher={},
     },
     misc = {

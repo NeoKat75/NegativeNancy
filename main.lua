@@ -191,3 +191,4 @@ end
 -- PULL THE LEVER, KRONK!
 
 assert(SMODS.load_file("src/jokers.lua"))()
+assert(SMODS.load_file("src/consumables.lua"))()
