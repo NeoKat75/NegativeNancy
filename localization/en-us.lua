@@ -304,6 +304,19 @@ return {
                         "the selected card"
                     }
                 }
+            },
+            c_nancy_trainee = {
+                name = "The Trainee",
+                text = {
+                    {
+                        "Select {C:attention}#1#{} cards, give the {C:attention}left{} card",
+                        "the {C:attention}right{} card's {C:enhanced}Enhancement{}, {C:enhanced}Edition",
+                        "and/or {C:enhanced}Seal{} where it's {C:attention}applicable"
+                    },
+                    {
+                        "Permanently {C:attention}debuffs{} the {C:attention}right{} card"
+                    }
+                }
             }
         },
         Voucher={},
