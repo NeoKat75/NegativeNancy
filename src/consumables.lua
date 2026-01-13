@@ -51,7 +51,7 @@ SMODS.Consumable {
     --]]
 }
 
--- Death
+-- The Trainee
 SMODS.Consumable {
     key = 'trainee',
     set = 'Tarot',
