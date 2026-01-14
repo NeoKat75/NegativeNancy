@@ -1,8 +1,17 @@
+-- Consumable atlas
+SMODS.Atlas {
+    key = "nancy_consumables",
+    path = "consumables.png",
+    px = 71,
+    py = 95
+}
+
 -- The Downpour
 SMODS.Consumable {
     key = 'downpour',
     set = 'Tarot',
     discovered = true,
+    atlas = "nancy_consumables",
     pos = { x = 0, y = 0 },
     config = { max_highlighted = 1 },
     loc_vars = function(self, info_queue, card)
@@ -59,7 +68,8 @@ SMODS.Consumable {
     key = 'trainee',
     set = 'Tarot',
     discovered = true,
-    pos = { x = 0, y = 0 },
+    atlas = "nancy_consumables",
+    pos = { x = 1, y = 0 },
     config = { max_highlighted = 2, min_highlighted = 2 },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
@@ -163,7 +173,8 @@ SMODS.Consumable {
     key = 'offering',
     set = 'Tarot',
     discovered = true,
-    pos = { x = 0, y = 0 },
+    atlas = "nancy_consumables",
+    pos = { x = 2, y = 0 },
     config = { extra = { max_highlighted = 1 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_charm', set = 'Tag' }
