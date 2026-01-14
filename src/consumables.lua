@@ -26,6 +26,7 @@ SMODS.Consumable {
                 -- Debuff original card and play sound wombo-combo
                 SMODS.debuff_card(G.hand.highlighted[1], true, "nancy")
                 G.hand.highlighted[1]:juice_up()
+                card:juice_up(0.3, 0.5)
                 play_sound('tarot2', 1, 0.4)
                 G.E_MANAGER:add_event(Event({
                     blocking = false,
@@ -37,10 +38,12 @@ SMODS.Consumable {
                         return true
                     end
                 }))
+                G.hand:unhighlight_all()
                 SMODS.calculate_context({ playing_card_added = true, cards = {_card} })
                 return true
             end
         }))
+        delay(0.5)
     end
     -- The config field already handles the functionality so it doesn't need to be implemented
     -- The following is how the implementation would be
@@ -153,4 +156,74 @@ SMODS.Consumable {
             #G.hand.highlighted <= card.ability.max_highlighted
     end
     --]]
+}
+
+-- The Offering
+SMODS.Consumable {
+    key = 'offering',
+    set = 'Tarot',
+    discovered = true,
+    pos = { x = 0, y = 0 },
+    config = { extra = { max_highlighted = 1 } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'tag_charm', set = 'Tag' }
+        info_queue[#info_queue + 1] = { key = 'tag_ethereal', set = 'Tag' }
+        info_queue[#info_queue + 1] = { key = 'tag_meteor', set = 'Tag' }
+        info_queue[#info_queue + 1] = { key = 'tag_standard', set = 'Tag' }
+        info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
+        info_queue[#info_queue + 1] = { key = 'tag_buffoon', set = 'Tag' }
+        return { vars = { card.ability.extra.max_highlighted } }
+    end,
+    use = function(self, card, area, copier)
+        -- Debuff card
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                SMODS.debuff_card(G.hand.highlighted[1], true, "nancy")
+                G.hand.highlighted[1]:juice_up()
+                card:juice_up(0.3, 0.5)
+                play_sound('tarot2', 1, 0.4)
+                G.E_MANAGER:add_event(Event({
+                    blocking = false,
+                    blockable = false,
+                    trigger = 'after',
+                    delay = 0.06*G.SETTINGS.GAMESPEED,
+                    func = function()
+                        play_sound('tarot2', 0.76, 0.4)
+                        return true
+                    end
+                }))
+                return true
+            end
+        }))
+        delay(0.5)
+        -- Give random tag
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                local tag = pseudorandom_element({"tag_charm", "tag_ethereal", "tag_meteor", "tag_standard", "tag_buffoon"}, "nancy_offering")
+                card:juice_up(0.3, 0.5)
+                add_tag(Tag(tag))
+                play_sound('generic1')
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                G.hand:unhighlight_all()
+                return true
+            end
+        }))
+        delay(0.5)
+    end,
+    -- Usable if the 1 selected card has an edition and isn't debuffed
+    can_use = function(self, card)
+        return G.hand and #G.hand.highlighted <= card.ability.extra.max_highlighted and #G.hand.highlighted > 0
+            and G.hand.highlighted[1].edition and not G.hand.highlighted[1].debuff
+    end
 }

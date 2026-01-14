@@ -317,6 +317,20 @@ return {
                         "Permanently {C:attention}debuffs{} the {C:attention}right{} card"
                     }
                 }
+            },
+            c_nancy_offering = {
+                name = "The Offering",
+                text = {
+                    {
+                        "Permanently {C:attention}debuff",
+                        "{C:attention}#1#{} selected {C:enhanced}Editioned",
+                        "card in your hand"
+                    },
+                    {
+                        "Creates a random",
+                        "free {C:attention}Booster Tag"
+                    }
+                }
             }
         },
         Voucher={},
