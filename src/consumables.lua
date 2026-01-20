@@ -236,5 +236,13 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.hand and #G.hand.highlighted <= card.ability.extra.max_highlighted and #G.hand.highlighted > 0
             and G.hand.highlighted[1].edition and not G.hand.highlighted[1].debuff
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition then
+                return true
+            end
+        end
+        return false
     end
 }

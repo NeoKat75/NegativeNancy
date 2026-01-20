@@ -13,8 +13,8 @@ return {
                     "when a hand is drawn"
                 }
             },
-            j_nancy_streetgraffiti = {
-                name = "Street Graffiti",
+            j_nancy_streetart = {
+                name = "Street Art",
                 text = {
                     {
                         "This Joker gains Chips and Mult",
@@ -159,8 +159,8 @@ return {
                 text = {
                     {
                         "This Joker gains {C:mult}+#1#{} Mult",
-                        "if played {C:attention}hand{} contains",
-                        "any scoring {C:attention}7{}s",
+                        "for each scoring {C:attention}7",
+                        "in played {C:attention}hand",
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {

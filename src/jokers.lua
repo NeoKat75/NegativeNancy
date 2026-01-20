@@ -718,9 +718,9 @@ SMODS.Joker {
                     card.ability.extra.sevens[#card.ability.extra.sevens+1] = _card
                 end
             end
-            -- If sevens, upgrade
+            -- If sevens, upgrade once for each 7
             if next(card.ability.extra.sevens) ~= nil then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
+                card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.gain * #card.ability.extra.sevens)
                 return { message = localize('k_upgrade_ex') }
             end
         end
@@ -924,9 +924,9 @@ SMODS.Joker {
     end
 }
 
--- Street Graffiti
+-- Street Art
 SMODS.Joker {
-    key = "streetgraffiti",
+    key = "streetart",
     atlas = "nancy_jokers",
     pos = { x = 2, y = 4 },
     rarity = 3,
