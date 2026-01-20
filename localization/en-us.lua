@@ -158,9 +158,8 @@ return {
                 name = "Slot Machine",
                 text = {
                     {
-                        "This Joker gains {C:mult}+#1#{} Mult",
-                        "for each scoring {C:attention}7",
-                        "in played {C:attention}hand",
+                        "This Joker gains {C:mult}+#1#{} Mult for",
+                        "each scoring {C:attention}7{} in played {C:attention}hand",
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {
