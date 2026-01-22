@@ -308,6 +308,20 @@ return {
                     "each {C:attention}unenhanced",
                     "card in hand"
                 }
+            },
+            c_nancy_sacrifice = {
+                name = "Sacrifice",
+                text = {
+                    {
+                        "Destroy {C:attention}#1#{} random",
+                        "{C:dark_edition}Negative{} cards",
+                        "held {C:attention}in hand"
+                    },
+                    {
+                        "Creates a free",
+                        "{C:dark_edition}Negative{} {C:enhanced}Tag"
+                    }
+                }
             }
         },
         Stake={},

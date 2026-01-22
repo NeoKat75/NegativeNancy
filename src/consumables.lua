@@ -371,3 +371,77 @@ SMODS.Consumable {
         return false
     end
 }
+
+-- Sacrifice
+SMODS.Consumable {
+    key = 'sacrifice',
+    set = 'Spectral',
+    discovered = true,
+    atlas = "nancy_consumables",
+    pos = { x = 2, y = 1 },
+    config = { extra = { scaling = 3 } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        info_queue[#info_queue + 1] = { key = 'tag_negative', set = 'Tag' }
+        return { vars = { (G.GAME.nancy_sacrifice or card.ability.extra.scaling) } }
+    end,
+    use = function(self, card, area, copier)
+        -- Init setup for global variable
+        G.GAME.nancy_sacrifice = G.GAME.nancy_sacrifice or card.ability.extra.scaling
+        -- Pick cards to destroy
+        local targets = {}
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                targets[#targets+1] = _card
+            end
+        end
+        local finaltargets = {}
+        if #targets > G.GAME.nancy_sacrifice then
+            for i = 1, G.GAME.nancy_sacrifice do
+                local _card, index = pseudorandom_element(targets, "nancy_sacrifice")
+                finaltargets[#finaltargets+1] = _card
+                table.remove(targets, tonumber(index))
+            end
+        else
+            finaltargets = targets
+        end
+        -- Increment variable
+        G.GAME.nancy_sacrifice = G.GAME.nancy_sacrifice + card.ability.extra.scaling
+        -- Award tag
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                card:juice_up(0.3, 0.5)
+                add_tag(Tag("tag_negative"))
+                play_sound('generic1')
+                play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                return true
+            end
+        }))
+        delay(0.5)
+        -- Sound effect
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.1,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        -- Wario smash
+        SMODS.destroy_cards(finaltargets)
+        delay(0.5)
+    end,
+    can_use = function(self, card)
+        local count = 0
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                count = count + 1
+            end
+        end
+        if count >= (G.GAME.nancy_sacrifice or card.ability.extra.scaling) then return true end
+        return false
+    end
+}
