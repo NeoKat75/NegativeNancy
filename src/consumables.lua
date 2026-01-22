@@ -246,3 +246,55 @@ SMODS.Consumable {
         return false
     end
 }
+
+-- Flood
+SMODS.Consumable {
+    key = 'flood',
+    set = 'Spectral',
+    discovered = true,
+    atlas = "nancy_consumables",
+    pos = { x = 0, y = 1 },
+    config = { extra = { hsize = -1 } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        return { vars = { card.ability.extra.hsize } }
+    end,
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                local targets = {}
+                for _, _card in ipairs(G.hand.cards or {}) do
+                    if _card.config.center.key == "c_base" and not _card.edition then
+                        targets[#targets+1] = _card
+                    end
+                end
+                if next(targets) ~= nil then
+                    play_sound('tarot1')
+                    card:juice_up(0.3, 0.5)
+                    G.hand:change_size(card.ability.extra.hsize)
+                    if area == G.pack_cards then
+                        for _, _card in ipairs(targets) do
+                            _card:juice_up()
+                            _card:set_edition("e_negative", true, true)
+                        end
+                        play_sound('negative', 1.5, 0.4)
+                    else
+                        NegaNancy.makenegatives(targets)
+                    end
+                end
+                return true
+            end
+        }))
+        delay(0.4)
+    end,
+    can_use = function(self, card)
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.config.center.key == "c_base" and not _card.edition then
+                return true
+            end
+        end
+        return false
+    end
+}

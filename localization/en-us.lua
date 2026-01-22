@@ -17,8 +17,8 @@ return {
                 name = "Street Art",
                 text = {
                     {
-                        "This Joker gains Chips and Mult",
-                        "{C:red}lost{} from {C:attention}poker hand{} downgrades",
+                        "This Joker gains Chips & Mult {C:red}lost",
+                        "from {C:attention}poker hand{} downgrades",
                         "{C:inactive}(Currently {C:chips}+#1# {C:inactive}Chips & {C:mult}+#2# {C:inactive}Mult)"
                     },
                     {
@@ -286,7 +286,21 @@ return {
         },
         Other={},
         Planet={},
-        Spectral={},
+        Spectral = {
+            c_nancy_flood = {
+                name = "Flood",
+                text = {
+                    {
+                        "Apply {C:dark_edition}Negative{} {C:enhanced}Edition",
+                        "to all {C:attention}unenhanced",
+                        "cards in your hand"
+                    },
+                    {
+                        "{C:red}#1#{} hand size"
+                    }
+                }
+            }
+        },
         Stake={},
         Tag={},
         Tarot = {
