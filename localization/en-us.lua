@@ -319,7 +319,7 @@ return {
                     },
                     {
                         "Creates a free",
-                        "{C:dark_edition}Negative{} {C:enhanced}Tag"
+                        "{C:dark_edition}Negative Tag"
                     }
                 }
             }
