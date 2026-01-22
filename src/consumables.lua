@@ -260,38 +260,111 @@ SMODS.Consumable {
         return { vars = { card.ability.extra.hsize } }
     end,
     use = function(self, card, area, copier)
+        local targets = {}
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.config.center.key == "c_base" and not _card.edition then
+                targets[#targets+1] = _card
+            end
+        end
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.4,
             func = function()
-                local targets = {}
-                for _, _card in ipairs(G.hand.cards or {}) do
-                    if _card.config.center.key == "c_base" and not _card.edition then
-                        targets[#targets+1] = _card
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                G.hand:change_size(card.ability.extra.hsize)
+                if area == G.pack_cards then
+                    for _, _card in ipairs(targets) do
+                        _card:juice_up()
+                        _card:set_edition("e_negative", true, true)
                     end
-                end
-                if next(targets) ~= nil then
-                    play_sound('tarot1')
-                    card:juice_up(0.3, 0.5)
-                    G.hand:change_size(card.ability.extra.hsize)
-                    if area == G.pack_cards then
-                        for _, _card in ipairs(targets) do
-                            _card:juice_up()
-                            _card:set_edition("e_negative", true, true)
-                        end
-                        play_sound('negative', 1.5, 0.4)
-                    else
-                        NegaNancy.makenegatives(targets)
-                    end
+                    play_sound('negative', 1.5, 0.4)
+                else
+                    NegaNancy.makenegatives(targets)
                 end
                 return true
             end
         }))
-        delay(0.4)
+        delay(0.5)
     end,
     can_use = function(self, card)
         for _, _card in ipairs(G.hand.cards or {}) do
             if _card.config.center.key == "c_base" and not _card.edition then
+                return true
+            end
+        end
+        return false
+    end
+}
+
+-- Mastery
+SMODS.Consumable {
+    key = 'mastery',
+    set = 'Spectral',
+    discovered = true,
+    atlas = "nancy_consumables",
+    pos = { x = 1, y = 1 },
+    -- Partially from Vanilla Remade's Sigil
+    use = function(self, card, area, copier)
+        local targets = {}
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.config.center.key == "c_base" then
+                targets[#targets+1] = _card
+            end
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        -- Flip cards
+        for i = 1, #targets do
+            local percent = 1.15 - (i - 0.999) / (#targets - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    targets[i]:flip()
+                    play_sound('card1', percent)
+                    targets[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        -- Enhance!
+        for i = 1, #targets do
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local _card = targets[i]
+                    local enh = SMODS.poll_enhancement{guaranteed = true}
+                    _card:set_ability(enh)
+                    return true
+                end
+            }))
+        end
+        -- Unflip cards
+        for i = 1, #targets do
+            local percent = 0.85 + (i - 0.999) / (#targets - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    targets[i]:flip()
+                    play_sound('tarot2', percent, 0.6)
+                    targets[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        delay(0.5)
+    end,
+    can_use = function(self, card)
+        for _, _card in ipairs(G.hand.cards or {}) do
+            if _card.config.center.key == "c_base" then
                 return true
             end
         end

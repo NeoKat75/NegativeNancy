@@ -299,6 +299,15 @@ return {
                         "{C:red}#1#{} hand size"
                     }
                 }
+            },
+            c_nancy_mastery = {
+                name = "Mastery",
+                text = {
+                    "Apply a random",
+                    "{C:enhanced}Enhancement{} to",
+                    "each {C:attention}unenhanced",
+                    "card in hand"
+                }
             }
         },
         Stake={},
