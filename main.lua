@@ -8,14 +8,14 @@ NegaNancy.optional_features = {
 
 -- FUNCTIONS --
 
--- [SMODS function] Initiate Pack of Buffoons' joker list when a run starts
+---- [SMODS function] Initiate Pack of Buffoons' joker list when a run starts
 function NegaNancy.reset_game_globals(run_start)
     if run_start then G.GAME.nancy_jokerlist = {} end
 end
 
 ---@param table table target table
 ---@return number
--- Utility function for getting the amount of items in a table (from the internet)
+---- Utility function for getting the amount of items in a table (from the internet)
 function NegaNancy.tablelength(table)
     local count = 0
     for _ in pairs(table) do count = count + 1 end
@@ -24,7 +24,7 @@ end
 
 ---@param cardarea CardArea a cardarea with playing cards
 ---@return number
--- Counts unique cards in specified cardarea, returns amount of cards
+---- Counts unique cards in specified cardarea, returns amount of cards
 function NegaNancy.uniquecards(cardarea)
     local cards = {}
     local stones = {}
@@ -80,7 +80,7 @@ function NegaNancy.uniquecards(cardarea)
 end
 
 ---@param targets table table of cards
--- Makes cards in hand negative
+---- Makes cards in hand negative
 function NegaNancy.makenegatives(targets)
 	G.CONTROLLER.locks.nancy_makenegatives = true
     local currentcard = 1
@@ -133,7 +133,7 @@ end
 
 -- HOOKS --
 
--- Allow negatives in standard packs and from Illusion
+---- Allow negatives in standard packs and from Illusion
 -- save the orig function (no executing)
 local polledition = poll_edition
 -- overwrite the orig function
@@ -148,7 +148,7 @@ function poll_edition(_key, _mod, _no_neg, _guaranteed)
     return ret
 end
 
--- Add joker to jokerlist if it's unique when it's added (mostly taken from Vanilla Remade)
+---- Add joker to jokerlist if it's unique when it's added (mostly taken from Vanilla Remade)
 -- save the orig function (no executing)
 local card_add_to_deck_ref = Card.add_to_deck
 function Card:add_to_deck(from_debuff)
@@ -167,7 +167,7 @@ function Card:add_to_deck(from_debuff)
     return ret
 end
 
--- Disable play button during makenegatives()
+---- Disable play button during makenegatives()
 -- save the orig function (no executing)
 local canplay = G.FUNCS.can_play
 -- overwrite the orig function
@@ -185,7 +185,7 @@ function G.FUNCS.can_play(e)
     return ret
 end
 
--- Disable discard button during makenegatives()
+---- Disable discard button during makenegatives()
 -- save the orig function (no executing)
 local candiscard = G.FUNCS.can_discard
 -- overwrite the orig function
@@ -203,7 +203,7 @@ function G.FUNCS.can_discard(e)
     return ret
 end
 
--- PULL THE LEVER, KRONK!
+-- PULL THE LEVER, KRONK! --
 
 assert(SMODS.load_file("src/jokers.lua"))()
 assert(SMODS.load_file("src/consumables.lua"))()
