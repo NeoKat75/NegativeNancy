@@ -133,6 +133,21 @@ end
 
 -- HOOKS --
 
+-- Allow negatives in standard packs and from Illusion
+-- save the orig function (no executing)
+local polledition = poll_edition
+-- overwrite the orig function
+function poll_edition(_key, _mod, _no_neg, _guaranteed)
+    -- before the orig function
+    if _key == 'standard_edition'..G.GAME.round_resets.ante or 'illusion' then _no_neg = false end
+    -- execute and save the orig function's return
+    local ret = polledition(_key, _mod, _no_neg, _guaranteed)
+    -- after the orig function
+    ---- do nothing!
+    -- actually return the orig function's return
+    return ret
+end
+
 -- Add joker to jokerlist if it's unique when it's added (mostly taken from Vanilla Remade)
 -- save the orig function (no executing)
 local card_add_to_deck_ref = Card.add_to_deck
