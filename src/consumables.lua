@@ -379,7 +379,7 @@ SMODS.Consumable {
     discovered = true,
     atlas = "nancy_consumables",
     pos = { x = 2, y = 1 },
-    config = { extra = { scaling = 3 } },
+    config = { extra = { scaling = 2 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         info_queue[#info_queue + 1] = { key = 'tag_negative', set = 'Tag' }
@@ -442,6 +442,14 @@ SMODS.Consumable {
             end
         end
         if count >= (G.GAME.nancy_sacrifice or card.ability.extra.scaling) then return true end
+        return false
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
         return false
     end
 }
