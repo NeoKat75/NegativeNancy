@@ -133,7 +133,7 @@ end
 
 -- HOOKS --
 
----- Allow negatives in standard packs and from Illusion
+---- Allow negative cards in standard packs and from Illusion
 -- save the orig function (no executing)
 local polledition = poll_edition
 -- overwrite the orig function
@@ -202,6 +202,196 @@ function G.FUNCS.can_discard(e)
     -- actually return the orig function's return
     return ret
 end
+
+-- OWNERSHIP --
+
+---- Prevent DNA from copying negative
+SMODS.Joker:take_ownership('dna', -- object key (class prefix not required)
+    { -- table of properties to change from the existing object
+	loc_vars = function(self, info_queue, card)
+        -- Append warning to description if needed
+        local main_end = {}
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                localize{type = 'other', key = 'remove_negative', nodes = main_end, vars = {}}
+            end
+        end
+        return { vars = { card.ability.extra }, main_end = main_end[1] }
+    end,
+    -- From Vanilla Remade
+    calculate = function(self, card, context)
+        if context.first_hand_drawn and not context.blueprint then
+            local eval = function() return G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
+        if context.before and G.GAME.current_round.hands_played == 0 and #context.full_hand == 1 then
+            G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+            local card_copied = copy_card(context.full_hand[1], nil, nil, G.playing_card)
+            -- Remove negative from copy
+            if card_copied.edition and card_copied.edition.key == "e_negative" then
+                card_copied:set_edition(nil, true, true)
+            end
+            -- --
+            card_copied:add_to_deck()
+            G.deck.config.card_limit = G.deck.config.card_limit + 1
+            table.insert(G.playing_cards, card_copied)
+            G.hand:emplace(card_copied)
+            card_copied.states.visible = nil
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    card_copied:start_materialize()
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_copied_ex'),
+                colour = G.C.CHIPS,
+                func = function() -- This is for timing purposes, it runs after the message
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.calculate_context({ playing_card_added = true, cards = { card_copied } })
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
+    end
+    },
+    true -- silent | suppresses mod badge
+)
+
+---- Prevent Death from copying negative
+SMODS.Consumable:take_ownership('death', -- object key (class prefix not required)
+    { -- table of properties to change from the existing object
+	loc_vars = function(self, info_queue, card)
+        -- Append warning to description if needed
+        local main_end = {}
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                localize{type = 'other', key = 'remove_negative', nodes = main_end, vars = {}}
+            end
+        end
+        return { vars = { card.ability.min_highlighted }, main_end = main_end[1] }
+    end,
+    -- From Vanilla Remade
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        for i = 1, #G.hand.highlighted do
+            local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('card1', percent)
+                    G.hand.highlighted[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        delay(0.2)
+        local rightmost = G.hand.highlighted[1]
+        for i = 1, #G.hand.highlighted do
+            if G.hand.highlighted[i].T.x > rightmost.T.x then
+                rightmost = G.hand.highlighted[i]
+            end
+        end
+        for i = 1, #G.hand.highlighted do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function()
+                    if G.hand.highlighted[i] ~= rightmost then
+                        copy_card(rightmost, G.hand.highlighted[i])
+                        -- Remove negative from copy
+                        if G.hand.highlighted[i].edition and G.hand.highlighted[i].edition.key == "e_negative" then
+                            G.hand.highlighted[i]:set_edition(nil, true, true)
+                        end
+                        -- --
+                    end
+                    return true
+                end
+            }))
+        end
+        for i = 1, #G.hand.highlighted do
+            local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.15,
+                func = function()
+                    G.hand.highlighted[i]:flip()
+                    play_sound('tarot2', percent, 0.6)
+                    G.hand.highlighted[i]:juice_up(0.3, 0.3)
+                    return true
+                end
+            }))
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                G.hand:unhighlight_all()
+                return true
+            end
+        }))
+        delay(0.5)
+    end
+    },
+    true -- silent | suppresses mod badge
+)
+
+---- Prevent Cryptid from copying negative
+SMODS.Consumable:take_ownership('cryptid', -- object key (class prefix not required)
+    { -- table of properties to change from the existing object
+	loc_vars = function(self, info_queue, card)
+        -- Append warning to description if needed
+        local main_end = {}
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                localize{type = 'other', key = 'remove_negative', nodes = main_end, vars = {}}
+            end
+        end
+        return { vars = { card.ability.extra }, main_end = main_end[1] }
+    end,
+    -- From Vanilla Remade
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                local _first_dissolve = nil
+                local new_cards = {}
+                for i = 1, card.ability.extra do
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    local _card = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
+                    -- Remove negative from copy
+                    if _card.edition and _card.edition.key == "e_negative" then
+                        _card:set_edition(nil, true, true)
+                    end
+                    -- --
+                    _card:add_to_deck()
+                    G.deck.config.card_limit = G.deck.config.card_limit + 1
+                    table.insert(G.playing_cards, _card)
+                    G.hand:emplace(_card)
+                    _card:start_materialize(nil, _first_dissolve)
+                    _first_dissolve = true
+                    new_cards[#new_cards + 1] = _card
+                end
+                SMODS.calculate_context({ playing_card_added = true, cards = new_cards })
+                return true
+            end
+        }))
+    end
+    },
+    true -- silent | suppresses mod badge
+)
 
 -- PULL THE LEVER, KRONK! --
 
