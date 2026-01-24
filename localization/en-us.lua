@@ -284,7 +284,18 @@ return {
                 }
             }
         },
-        Other={},
+        Other = {
+            nancy_boostertags = {
+                name = "Booster Tags",
+                text = {
+                    "{C:attention}Standard{} Tag",
+                    "{C:tarot}Charm{} Tag",
+                    "{C:planet}Meteor{} Tag",
+                    "{C:spectral}Ethereal{} Tag",
+                    "{C:attention}Buffoon{} Tag"
+                }
+            }
+        },
         Planet={},
         Spectral = {
             c_nancy_flood = {

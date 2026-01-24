@@ -177,12 +177,8 @@ SMODS.Consumable {
     pos = { x = 2, y = 0 },
     config = { extra = { max_highlighted = 1 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'tag_charm', set = 'Tag' }
-        info_queue[#info_queue + 1] = { key = 'tag_ethereal', set = 'Tag' }
-        info_queue[#info_queue + 1] = { key = 'tag_meteor', set = 'Tag' }
-        info_queue[#info_queue + 1] = { key = 'tag_standard', set = 'Tag' }
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-        info_queue[#info_queue + 1] = { key = 'tag_buffoon', set = 'Tag' }
+        info_queue[#info_queue + 1] = { key = 'nancy_boostertags', set = 'Other' }
         return { vars = { card.ability.extra.max_highlighted } }
     end,
     use = function(self, card, area, copier)
