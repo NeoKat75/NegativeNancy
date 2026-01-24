@@ -8,11 +8,6 @@ NegaNancy.optional_features = {
 
 -- FUNCTIONS --
 
----- [SMODS function] Initiate Pack of Buffoons' joker list when a run starts
-function NegaNancy.reset_game_globals(run_start)
-    if run_start then G.GAME.nancy_jokerlist = {} end
-end
-
 ---@param table table target table
 ---@return number
 ---- Utility function for getting the amount of items in a table (from the internet)
@@ -157,6 +152,7 @@ function Card:add_to_deck(from_debuff)
     -- execute and save the orig function's return
     local ret = card_add_to_deck_ref(self, from_debuff)
     -- after the orig function
+    G.GAME.nancy_jokerlist = G.GAME.nancy_jokerlist or {}
     if not from_debuff -- If the card wasn't added by being undebuffed
         and self.ability.set == "Joker" -- and the card (`self` in this case) is a Joker
         and G.GAME.nancy_jokerlist[self.config.center.key] == nil -- and it's not already in the jokerlist
