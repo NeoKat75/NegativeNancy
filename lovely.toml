@@ -1,0 +1,116 @@
+[manifest] # Header for the file, this should only be here once at the beginning
+version = "0.1.0"
+priority = 0 # Priority for loading the file
+
+## Stop DNA from copying Negative (description)
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua' # The file you want to patch.
+pattern = '''
+elseif _c.name == 'Midas Mask' then info_queue[#info_queue+1] = G.P_CENTERS.m_gold
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+elseif _c.name == 'DNA' then
+    for _, _card in ipairs(G.playing_cards or {}) do
+        if _card.edition and _card.edition.key == "e_negative" then
+            info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+            main_end = {}
+            localize{ type = 'other', key = 'remove_negative', nodes = main_end, vars = {} }
+            main_end = main_end[1]
+            break
+        end
+    end
+''' # What code you want to replace it with.
+match_indent = true
+
+## Stop DNA from copying Negative (functionality)
+[[patches]]
+[patches.pattern]
+target = 'card.lua' # The file you want to patch.
+pattern = '''
+local _card = copy_card(context.full_hand[1], nil, nil, G.playing_card)
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if _card.edition and _card.edition.key == "e_negative" then
+    _card:set_edition(nil, true, true)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+## Stop Death from copying Negative (description)
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua' # The file you want to patch.
+pattern = '''
+elseif _c.name == "Death" then loc_vars = {cfg.max_highlighted}
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+elseif _c.name == "Death" then
+    for _, _card in ipairs(G.playing_cards or {}) do
+        if _card.edition and _card.edition.key == "e_negative" then
+            info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+            main_end = {}
+            localize{ type = 'other', key = 'remove_negative', nodes = main_end, vars = {} }
+            main_end = main_end[1]
+            break
+        end
+    end
+loc_vars = {cfg.max_highlighted}
+''' # What code you want to replace it with.
+match_indent = true
+
+## Stop Death from copying Negative (functionality)
+[[patches]]
+[patches.pattern]
+target = 'card.lua' # The file you want to patch.
+pattern = '''
+copy_card(rightmost, G.hand.highlighted[i])
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if G.hand.highlighted[i].edition and G.hand.highlighted[i].edition.key == "e_negative" then
+    G.hand.highlighted[i]:set_edition(nil, true, true)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+## Stop Cryptid from copying Negative (description)
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua' # The file you want to patch.
+pattern = '''
+elseif _c.name == 'Cryptid' then loc_vars = {cfg.extra}
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+elseif _c.name == 'Cryptid' then
+    for _, _card in ipairs(G.playing_cards or {}) do
+        if _card.edition and _card.edition.key == "e_negative" then
+            info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+            main_end = {}
+            localize{ type = 'other', key = 'remove_negative', nodes = main_end, vars = {} }
+            main_end = main_end[1]
+            break
+        end
+    end
+loc_vars = {cfg.extra}
+''' # What code you want to replace it with.
+match_indent = true
+
+## Stop Cryptid from copying Negative (functionality)
+[[patches]]
+[patches.pattern]
+target = 'card.lua' # The file you want to patch.
+pattern = '''
+local _card = copy_card(G.hand.highlighted[1], nil, nil, G.playing_card)
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if _card.edition and _card.edition.key == "e_negative" then
+    _card:set_edition(nil, true, true)
+end
+''' # What code you want to replace it with.
+match_indent = true
