@@ -269,15 +269,7 @@ SMODS.Consumable {
                 play_sound('tarot1')
                 card:juice_up(0.3, 0.5)
                 G.hand:change_size(card.ability.extra.hsize)
-                if area == G.pack_cards then
-                    for _, _card in ipairs(targets) do
-                        _card:juice_up()
-                        _card:set_edition("e_negative", true, true)
-                    end
-                    play_sound('negative', 1.5, 0.4)
-                else
-                    NegaNancy.makenegatives(targets)
-                end
+                NegaNancy.makenegatives(targets)
                 return true
             end
         }))
