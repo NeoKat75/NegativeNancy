@@ -191,7 +191,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { amount = 3, tally = 0, growth = 1 }, },
+    config = { extra = { amount = 2, tally = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
         info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
@@ -635,8 +635,8 @@ SMODS.Joker {
     discovered = true,
     config = { extra = { used = false }, },
     calculate = function(self, card, context)
-        -- When first hand is drawn
-        if context.first_hand_drawn and not context.blueprint then
+        -- When hand is drawn and you got da cards
+        if context.hand_drawn and next(G.consumeables.cards) ~= nil and not card.juice and not context.blueprint then
             -- Wiggle while used = false
             local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
