@@ -380,7 +380,22 @@ return {
                 }
             }
         },
-        Voucher={},
+        Voucher = {
+            v_nancy_scarf = {
+                name = "Dainty Scarf",
+                text = {
+                    "Every {C:attention}played{} {C:dark_edition}Negative",
+                    "card counts in {C:attention}scoring"
+                }
+            },
+            v_nancy_purse = {
+                name = "Velvet Purse",
+                text = {
+                    "All {C:dark_edition}Negative{} cards held",
+                    "{C:attention}in hand{} count in {C:attention}scoring"
+                }
+            }
+        }
     },
     misc = {
         achievement_descriptions={},
@@ -458,6 +473,6 @@ return {
         suits_singular={},
         tutorial={},
         v_dictionary={},
-        v_text={},
-    },
+        v_text={}
+    }
 }
