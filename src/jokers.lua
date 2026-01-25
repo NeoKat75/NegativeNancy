@@ -216,6 +216,17 @@ SMODS.Joker {
                         return true
                     end
                 }))
+                -- Apply if top-up tag
+                if tag == "tag_top_up" then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            for i = 1, #G.GAME.tags do
+                                if G.GAME.tags[i]:apply_to_run{type = 'immediate'} then break end
+                            end
+                            return true
+                        end
+                    }))
+                end
                 -- Reset tally after activation for blueprint compat
                 return {
                     message = localize("nancy_raritytag"),

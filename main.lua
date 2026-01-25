@@ -6,6 +6,29 @@ NegaNancy.optional_features = {
 	cardareas = { deck = true , discard = true }
 }
 
+function NegaNancy.calculate(self, context)
+    -- Use Booster Tags when entering shop
+    if context.starting_shop and G.GAME.tags then
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag:apply_to_run{type = 'new_blind_choice'} then break end
+        end
+    end
+    -- Use Edition Tags when exiting a booster pack
+    if context.ending_booster and G.GAME.tags and G.shop_jokers and G.shop_jokers.cards then
+        local doneboostering = true
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag.config.type == 'new_blind_choice' then doneboostering = false; break end
+        end
+        if doneboostering then
+            for k, card in ipairs(G.shop_jokers.cards) do
+                for kk, tag in ipairs(G.GAME.tags) do
+                    if tag:apply_to_run{type = 'store_joker_modify', card = card} then break end
+                end
+            end
+        end
+    end
+end
+
 -- FUNCTIONS --
 
 ---@param table table target table
