@@ -13,11 +13,11 @@ SMODS.Consumable {
     discovered = true,
     atlas = "nancy_consumables",
     pos = { x = 0, y = 0 },
-    config = { max_highlighted = 1 },
+    config = { extra = { max_highlighted = 1 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-        return { vars = { card.ability.max_highlighted } }
+        return { vars = { card.ability.extra.max_highlighted } }
     end,
     -- Mostly from Vanilla Remade's Cryptid
     use = function(self, card, area, copier)
@@ -53,14 +53,11 @@ SMODS.Consumable {
             end
         }))
         delay(0.5)
-    end
-    -- The config field already handles the functionality so it doesn't need to be implemented
-    -- The following is how the implementation would be
-    --[[
+    end,
     can_use = function(self, card)
-        return G.hand and #G.hand.highlighted <= card.config.max_highlighted and #G.hand.highlighted > 0
+        return G.hand and #G.hand.highlighted <= card.ability.extra.max_highlighted and #G.hand.highlighted > 0
+            and not G.hand.highlighted[1].debuff
     end
-    --]]
 }
 
 -- The Trainee
@@ -70,10 +67,10 @@ SMODS.Consumable {
     discovered = true,
     atlas = "nancy_consumables",
     pos = { x = 1, y = 0 },
-    config = { max_highlighted = 2, min_highlighted = 2 },
+    config = { extra = { max_highlighted = 2, min_highlighted = 2 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
-        return { vars = { card.ability.max_highlighted } }
+        return { vars = { card.ability.extra.max_highlighted } }
     end,
     -- Mostly from Vanilla Remade's Death
     use = function(self, card, area, copier)
@@ -157,15 +154,20 @@ SMODS.Consumable {
             end
         }))
         delay(0.5)
-    end
-    -- The config field already handles the functionality so it doesn't need to be implemented
-    -- The following is how the implementation would be
-    --[[
+    end,
     can_use = function(self, card)
-        return G.hand and #G.hand.highlighted >= card.ability.extra.min_highlighted and
-            #G.hand.highlighted <= card.ability.max_highlighted
+        if G.hand and G.hand.highlighted then
+            local rightmost = G.hand.highlighted[1]
+            for i = 1, #G.hand.highlighted do
+                if G.hand.highlighted[i].T.x > rightmost.T.x then
+                    rightmost = G.hand.highlighted[i]
+                end
+            end
+            return G.hand and #G.hand.highlighted >= card.ability.extra.min_highlighted and
+                #G.hand.highlighted <= card.ability.extra.max_highlighted and not rightmost.debuff
+        end
+        return false
     end
-    --]]
 }
 
 -- The Offering
