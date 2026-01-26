@@ -190,3 +190,21 @@ if next(SMODS.find_card("v_nancy_purse")) then
 end
 ''' # What code you want to replace it with.
 match_indent = true
+
+
+## Secret Tag sound
+
+
+[[patches]]
+[patches.pattern]
+target = 'tag.lua' # The file you want to patch.
+pattern = '''
+play_sound('paper1', math.random()*0.1 + 0.55, 0.42)
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "before" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if self.key == "tag_nancy_secret" then
+    play_sound("voice"..math.random(11), 1, 0.4)
+end
+''' # What code you want to replace it with.
+match_indent = true

@@ -336,7 +336,38 @@ return {
             }
         },
         Stake={},
-        Tag={},
+        Tag = {
+            tag_nancy_secret = {
+                name = "Secret Tag",
+                text = {
+                    "{C:legendary,E:1}Why would you do this?"
+                }
+            },
+            tag_nancy_accolades = {
+                name = "Accolades Tag",
+                text = {
+                    "Gives {C:money}$#1#{} per {C:enhanced}Editioned",
+                    "card in your {C:attention}full deck",
+                    "{C:inactive}(Will give {C:money}$#2#{C:inactive})"
+                }
+            },
+            tag_nancy_priority = {
+                name = "Priority Tag",
+                text = {
+                    "All {C:dark_edition}Negative{} cards in {C:attention}deck",
+                    "are {C:legendary}drawn to hand",
+                    "when next round begins"
+                }
+            },
+            tag_nancy_shredder = {
+                name = "Shredder Tag",
+                text = {
+                    "Destroys all {C:attention}debuffed",
+                    "cards {C:attention}in hand{} when",
+                    "at least one is drawn"
+                }
+            }
+        },
         Tarot = {
             c_nancy_downpour = {
                 name = "The Downpour",

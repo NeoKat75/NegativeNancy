@@ -27,6 +27,25 @@ function NegaNancy.calculate(self, context)
             end
         end
     end
+    -- Shredder Tag (only triggered if no Exposure Therapy & no potential Priority Tags)
+    -- If those are present, they trigger Shredder Tags themselves after doing their thing
+    if (context.hand_drawn or context.other_drawn) and G.GAME.tags then
+        local priority = false
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag.key == 'tag_nancy_priority' then priority = true; break end
+        end
+        if next(SMODS.find_card("j_nancy_exposuretherapy")) == nil and (not priority or not context.first_hand_drawn) then
+            for _, tag in ipairs(G.GAME.tags) do
+                if tag:apply_to_run{type = 'nancy_shredder'} then break end
+            end
+        end
+    end
+    -- Priority Tag
+    if context.first_hand_drawn and G.GAME.tags then
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag:apply_to_run{type = 'nancy_priority'} then break end
+        end
+    end
 end
 
 -- FUNCTIONS --
@@ -235,3 +254,4 @@ end
 assert(SMODS.load_file("src/jokers.lua"))()
 assert(SMODS.load_file("src/consumables.lua"))()
 assert(SMODS.load_file("src/vouchers.lua"))()
+assert(SMODS.load_file("src/tags.lua"))()

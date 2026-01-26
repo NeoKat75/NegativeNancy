@@ -204,7 +204,7 @@ SMODS.Joker {
             -- If this Joker is the last one needed to be sold
             if card.ability.extra.tally == card.ability.extra.amount - 1 then
                 -- Determine tag
-                local tag = "tag_double" -- Legendary/failsafe tag
+                local tag = "tag_nancy_secret" -- Legendary/failsafe tag
                 if context.card:is_rarity(1) then tag = "tag_top_up" end
                 if context.card:is_rarity(2) then tag = "tag_uncommon" end
                 if context.card:is_rarity(3) then tag = "tag_rare" end
@@ -1191,10 +1191,34 @@ SMODS.Joker {
                             draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
                             _card.ability.nancy_exposed = nil
                         end
+                        -- Trigger Shredder Tags after drawing cards
+                        if G.GAME.tags then
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    for _, _tag in ipairs(G.GAME.tags) do
+                                        if _tag:apply_to_run{type = 'nancy_shredder'} then break end
+                                    end
+                                    return true
+                                end
+                            }))
+                        end
                         return true
                     end
                 }))
                 return { message = localize("nancy_exposed") }
+            end
+            -- Trigger Shredder Tags even if no cards were drawn cuz they won't trigger themselves if this Joker is present
+            if next(targets) == nil then
+                if G.GAME.tags then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            for _, _tag in ipairs(G.GAME.tags) do
+                                if _tag:apply_to_run{type = 'nancy_shredder'} then break end
+                            end
+                            return true
+                        end
+                    }))
+                end
             end
         end
     end
