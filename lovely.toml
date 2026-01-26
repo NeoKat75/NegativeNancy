@@ -2,7 +2,9 @@
 version = "0.1.0"
 priority = 0 # Priority for loading the file
 
+
 ## Stop DNA from copying Negative
+
 
 [[patches]]
 [patches.pattern]
@@ -39,7 +41,9 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
+
 ## Stop Death from copying Negative
+
 
 [[patches]]
 [patches.pattern]
@@ -77,7 +81,9 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
+
 ## Stop Cryptid from copying Negative
+
 
 [[patches]]
 [patches.pattern]
@@ -115,7 +121,9 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
+
 ## Velvet Purse implementation
+
 
 [[patches]]
 [patches.pattern]
