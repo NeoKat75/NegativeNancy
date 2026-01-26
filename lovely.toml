@@ -2,9 +2,8 @@
 version = "0.1.0"
 priority = 0 # Priority for loading the file
 
-
-
 ## Stop DNA from copying Negative
+
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -40,9 +39,8 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
-
-
 ## Stop Death from copying Negative
+
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -79,9 +77,8 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
-
-
 ## Stop Cryptid from copying Negative
+
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -118,9 +115,8 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
-
-
 ## Velvet Purse implementation
+
 [[patches]]
 [patches.pattern]
 target = 'functions/state_events.lua' # The file you want to patch.
@@ -147,6 +143,7 @@ position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this la
 payload = '''
 if next(SMODS.find_card("v_nancy_purse")) then
     SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, (v == G.play or v == G.hand) and scoring_hand or nil)
+    if v == G.hand then SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil) end
 else
     SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil)
 end
@@ -163,6 +160,7 @@ position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this la
 payload = '''
 if next(SMODS.find_card("v_nancy_purse")) then
     SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, (v == G.play or v == G.hand) and scoring_hand or nil)
+    if v == G.hand then SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, v == G.play and scoring_hand or nil) end
 else
     SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, v == G.play and scoring_hand or nil)
 end
