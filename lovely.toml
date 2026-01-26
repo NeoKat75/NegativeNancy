@@ -2,7 +2,9 @@
 version = "0.1.0"
 priority = 0 # Priority for loading the file
 
-## Stop DNA from copying Negative (description)
+
+
+## Stop DNA from copying Negative
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -24,7 +26,6 @@ elseif _c.name == 'DNA' then
 ''' # What code you want to replace it with.
 match_indent = true
 
-## Stop DNA from copying Negative (functionality)
 [[patches]]
 [patches.pattern]
 target = 'card.lua' # The file you want to patch.
@@ -39,7 +40,9 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
-## Stop Death from copying Negative (description)
+
+
+## Stop Death from copying Negative
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -62,7 +65,6 @@ loc_vars = {cfg.max_highlighted}
 ''' # What code you want to replace it with.
 match_indent = true
 
-## Stop Death from copying Negative (functionality)
 [[patches]]
 [patches.pattern]
 target = 'card.lua' # The file you want to patch.
@@ -77,7 +79,9 @@ end
 ''' # What code you want to replace it with.
 match_indent = true
 
-## Stop Cryptid from copying Negative (description)
+
+
+## Stop Cryptid from copying Negative
 [[patches]]
 [patches.pattern]
 target = 'functions/common_events.lua' # The file you want to patch.
@@ -100,7 +104,6 @@ loc_vars = {cfg.extra}
 ''' # What code you want to replace it with.
 match_indent = true
 
-## Stop Cryptid from copying Negative (functionality)
 [[patches]]
 [patches.pattern]
 target = 'card.lua' # The file you want to patch.
@@ -111,6 +114,73 @@ position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this
 payload = '''
 if _card.edition and _card.edition.key == "e_negative" then
     _card:set_edition(nil, true, true)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+
+
+## Velvet Purse implementation
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua' # The file you want to patch.
+pattern = '''
+-- TARGET: adding to hand effects
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if next(SMODS.find_card("v_nancy_purse")) then
+    for _, _card in ipairs(G.hand.cards) do
+        if _card.edition and _card.edition.key == "e_negative" then table.insert(final_scoring_hand, _card) end
+    end
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua' # The file you want to patch.
+pattern = '''
+SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil)
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if next(SMODS.find_card("v_nancy_purse")) then
+    SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, (v == G.play or v == G.hand) and scoring_hand or nil)
+else
+    SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua' # The file you want to patch.
+pattern = '''
+SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, v == G.play and scoring_hand or nil)
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if next(SMODS.find_card("v_nancy_purse")) then
+    SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, (v == G.play or v == G.hand) and scoring_hand or nil)
+else
+    SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, v == G.play and scoring_hand or nil)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua' # The file you want to patch.
+pattern = '''
+-- TARGET: effects after hand debuffed by blind
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+if next(SMODS.find_card("v_nancy_purse")) then
+    for i=1, #scoring_hand do
+        highlight_card(scoring_hand[i],(i-0.999)/5,'down')
+    end
 end
 ''' # What code you want to replace it with.
 match_indent = true

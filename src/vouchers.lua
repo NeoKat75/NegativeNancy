@@ -31,11 +31,5 @@ SMODS.Voucher {
     requires = { 'v_nancy_scarf' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-    end,
-    redeem = function(self, card)
-
-    end,
-    calculate = function(self, card, context)
-
     end
 }
