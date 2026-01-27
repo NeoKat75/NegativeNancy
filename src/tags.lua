@@ -76,7 +76,7 @@ SMODS.Tag {
                     targets[#targets+1] = _card
                 end
             end
-            if next(targets) ~= nil then
+            if next(targets) then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         for _, _card in ipairs(targets) do
@@ -88,12 +88,12 @@ SMODS.Tag {
                 }))
             end
             tag:yep('+', G.C.RARITY[4], function()
-                if next(targets) ~= nil then
+                if next(targets) then
                     play_sound('gong', 0.94, 0.3)
                     play_sound('gong', 0.94*1.5, 0.3)
                 end
                 -- Trigger Shredder Tags if no Exposure Therapy to do it instead
-                if G.GAME.tags and next(SMODS.find_card("j_nancy_exposuretherapy")) == nil then
+                if G.GAME.tags and not next(SMODS.find_card("j_nancy_exposuretherapy")) then
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             for _, _tag in ipairs(G.GAME.tags) do
@@ -134,7 +134,7 @@ SMODS.Tag {
             for _, _card in ipairs(G.hand.cards) do
                 if _card.debuff then targets[#targets+1] = _card end
             end
-            if next(targets) ~= nil then
+            if next(targets) then
                 tag:yep('+', G.C.RED, function()
                     SMODS.destroy_cards(targets)
                     return true

@@ -129,7 +129,7 @@ SMODS.Joker {
                         end
                     end
                     -- If there are any, apply random edition
-                    if next(targets) ~= nil then
+                    if next(targets) then
                         local _card = pseudorandom_element(targets, "nancy_laminator")
                         local edition = poll_edition("nancy_laminator", nil, nil, true)
                         _card:set_edition(edition, true)
@@ -310,7 +310,7 @@ SMODS.Joker {
                 end
             end
             -- Do the thing if there are any targets
-            if next(targets) ~= nil then NegaNancy.makenegatives(targets) end
+            if next(targets) then NegaNancy.makenegatives(targets) end
         end
     end
 }
@@ -523,7 +523,7 @@ SMODS.Joker {
                 end
             end
             -- Select random eligible cards 
-            if next(targets) ~= nil then
+            if next(targets) then
                 local finaltargets = {}
                 if card.ability.extra.amount >= #targets then
                     finaltargets = targets
@@ -647,7 +647,7 @@ SMODS.Joker {
     config = { extra = { used = false }, },
     calculate = function(self, card, context)
         -- When hand is drawn and you got da cards
-        if context.hand_drawn and next(G.consumeables.cards) ~= nil and not card.juice and not context.blueprint then
+        if context.hand_drawn and next(G.consumeables.cards) and not card.juice and not context.blueprint then
             -- Wiggle while used = false
             local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
@@ -664,7 +664,7 @@ SMODS.Joker {
                             targets[#targets + 1] = _card
                         end
                     end
-                    if next(targets) ~= nil then
+                    if next(targets) then
                         local _card = pseudorandom_element(targets, "nancy_cutoffcard")
                         _card.ability.nancy_cutoff = true
                         SMODS.destroy_cards(_card, nil, true)
@@ -730,13 +730,13 @@ SMODS.Joker {
                 end
             end
             -- If sevens, upgrade once for each 7
-            if next(card.ability.extra.sevens) ~= nil then
+            if next(card.ability.extra.sevens) then
                 card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.gain * #card.ability.extra.sevens)
                 return { message = localize('k_upgrade_ex') }
             end
         end
         -- If sevens, debuff them and clear table
-        if context.after and not context.blueprint and next(card.ability.extra.sevens) ~= nil then
+        if context.after and not context.blueprint and next(card.ability.extra.sevens) then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     -- print("after")
@@ -1182,7 +1182,7 @@ SMODS.Joker {
                     targets[#targets+1] = _card
                 end
             end
-            if next(targets) ~= nil then
+            if next(targets) then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         play_sound('gong', 0.94, 0.5)
@@ -1208,7 +1208,7 @@ SMODS.Joker {
                 return { message = localize("nancy_exposed") }
             end
             -- Trigger Shredder Tags even if no cards were drawn cuz they won't trigger themselves if this Joker is present
-            if next(targets) == nil then
+            if not next(targets) then
                 if G.GAME.tags then
                     G.E_MANAGER:add_event(Event({
                         func = function()

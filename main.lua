@@ -7,6 +7,12 @@ NegaNancy.optional_features = {
 }
 
 function NegaNancy.calculate(self, context)
+    -- Prevent Edition Tags from triggering if there are Booster Tags left
+    if context.prevent_tag_trigger and context.prevent_tag_trigger.config.type == 'store_joker_modify' then
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag.config.type == 'new_blind_choice' then return { prevent_trigger = true } end
+        end
+    end
     -- Use Booster Tags when entering shop
     if context.starting_shop and G.GAME.tags then
         for _, tag in ipairs(G.GAME.tags) do
@@ -15,15 +21,9 @@ function NegaNancy.calculate(self, context)
     end
     -- Use Edition Tags when exiting a booster pack
     if context.ending_booster and G.GAME.tags and G.shop_jokers and G.shop_jokers.cards then
-        local doneboostering = true
-        for _, tag in ipairs(G.GAME.tags) do
-            if tag.config.type == 'new_blind_choice' then doneboostering = false; break end
-        end
-        if doneboostering then
-            for k, card in ipairs(G.shop_jokers.cards) do
-                for kk, tag in ipairs(G.GAME.tags) do
-                    if tag:apply_to_run{type = 'store_joker_modify', card = card} then break end
-                end
+        for k, card in ipairs(G.shop_jokers.cards) do
+            for kk, tag in ipairs(G.GAME.tags) do
+                if tag:apply_to_run{type = 'store_joker_modify', card = card} then break end
             end
         end
     end
@@ -34,7 +34,7 @@ function NegaNancy.calculate(self, context)
         for _, tag in ipairs(G.GAME.tags) do
             if tag.key == 'tag_nancy_priority' then priority = true; break end
         end
-        if next(SMODS.find_card("j_nancy_exposuretherapy")) == nil and (not priority or not context.first_hand_drawn) then
+        if not next(SMODS.find_card("j_nancy_exposuretherapy")) and (not priority or not context.first_hand_drawn) then
             for _, tag in ipairs(G.GAME.tags) do
                 if tag:apply_to_run{type = 'nancy_shredder'} then break end
             end
@@ -94,7 +94,7 @@ function NegaNancy.uniquecards(cardarea)
         end
     until not restart
     -- If there are stones, remove duplicate stones from 'stones'
-    if next(stones) ~= nil then
+    if next(stones) then
         repeat
             local restart = false
             for index1, card1 in ipairs(stones) do
