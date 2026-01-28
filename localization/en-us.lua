@@ -5,7 +5,16 @@ return {
                 name = "Nancy Deck",
                 text = {
                     "Start run with",
-                    "{C:enhanced,T:j_nancy_negativenancy}#1#"
+                    "{C:attention,T:j_nancy_negativenancy}#1#"
+                }
+            },
+            b_nancy_twister = {
+                name = "Twister Deck",
+                text = {
+                    "{C:enhanced}Editions{} on playing",
+                    "cards are {C:green}randomized",
+                    "when entering shop",
+                    "{s:0.85}Start run with {C:attention,T:j_nancy_laminator,s:0.85}#1#"
                 }
             }
         },
@@ -447,6 +456,7 @@ return {
             nancy_raritytag = "+1 Rarity Tag",
             nancy_downgrade = "Downgrade!",
             nancy_d6tag = "+1 D6 Tag",
+            nancy_twisted = "Twisted!",
             nancy_usefuljoker_clone = "My clone???",
             -- When scoring
             nancy_usefuljoker_1 = "I'm helping!",
