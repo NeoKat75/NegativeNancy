@@ -1,6 +1,14 @@
 return {
     descriptions = {
-        Back={},
+        Back = {
+            b_nancy_nancy = {
+                name = "Nancy Deck",
+                text = {
+                    "Start run with",
+                    "{C:attention,T:j_nancy_negativenancy}#1#"
+                }
+            }
+        },
         Blind={},
         Edition={},
         Enhanced={},
