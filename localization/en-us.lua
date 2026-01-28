@@ -25,6 +25,14 @@ return {
                     "in deck are {C:green}randomized",
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
                 }
+            },
+            b_nancy_crumpled = {
+                name = "Crumpled Deck",
+                text = {
+                    "{C:legendary,E:1}Unlimited{} Joker slots",
+                    "{C:red}#1#{} hand size",
+                    "per held Joker"
+                }
             }
         },
         Blind={},

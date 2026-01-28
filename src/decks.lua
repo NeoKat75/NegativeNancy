@@ -120,3 +120,26 @@ SMODS.Back {
         }))
     end
 }
+
+-- Crumpled Deck
+SMODS.Back {
+    key = "crumpled",
+    atlas = "nancy_decks",
+    pos = { x = 3, y = 0 },
+    discovered = true,
+    config = { joker_slot = -4, extra = { hsize = -1 } },
+    loc_vars = function(self, info_queue, back)
+        return { vars = { self.config.extra.hsize } }
+    end,
+    calculate = function(self, back, context)
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
+        if context.card_added and context.card.ability.set == "Joker" then
+            G.jokers:change_size(1)
+            G.hand:change_size(self.config.extra.hsize)
+        end
+        if (context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker" then
+            G.jokers:change_size(-1)
+            G.hand:change_size(-self.config.extra.hsize)
+        end
+    end
+}
