@@ -5,7 +5,7 @@ return {
                 name = "Nancy Deck",
                 text = {
                     "Start run with",
-                    "{C:attention,T:j_nancy_negativenancy}#1#"
+                    "{C:enhanced,T:j_nancy_negativenancy}#1#"
                 }
             }
         },
