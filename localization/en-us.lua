@@ -16,6 +16,15 @@ return {
                     "when entering shop",
                     "{s:0.85}Start run with {C:attention,T:j_nancy_laminator,s:0.85}#1#"
                 }
+            },
+            b_nancy_chaotic = {
+                name = "Chaotic Deck",
+                text = {
+                    "All {C:enhanced}Enhancements{},",
+                    "{C:enhanced}Editions{} and {C:enhanced}Seals",
+                    "in deck are {C:green}randomized",
+                    "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
+                }
             }
         },
         Blind={},

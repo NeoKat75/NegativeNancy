@@ -11,8 +11,8 @@ SMODS.Back {
     key = "nancy",
     atlas = "nancy_decks",
     pos = { x = 0, y = 0 },
-    config = { jokers = {'j_nancy_negativenancy'} },
     discovered = true,
+    config = { jokers = {'j_nancy_negativenancy'} },
     loc_vars = function(self, info_queue, back)
         return { vars = { localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
     end
@@ -23,8 +23,8 @@ SMODS.Back {
     key = "twister",
     atlas = "nancy_decks",
     pos = { x = 1, y = 0 },
-    config = { jokers = {'j_nancy_laminator'} },
     discovered = true,
+    config = { jokers = {'j_nancy_laminator'} },
     loc_vars = function(self, info_queue, back)
         return { vars = { localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
     end,
@@ -49,5 +49,74 @@ SMODS.Back {
                 return { message = localize('nancy_twisted') }
             end
         end
+    end
+}
+
+-- Chaotic Deck
+SMODS.Back {
+    key = "chaotic",
+    atlas = "nancy_decks",
+    pos = { x = 2, y = 0 },
+    discovered = true,
+    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } },
+    loc_vars = function(self, info_queue, back)
+        return { vars = { self.config.ante_scaling } }
+    end,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for _, _card in ipairs(G.playing_cards) do
+                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.enh_chance) then
+                        local pool = get_current_pool('Enhanced')
+                        -- Remove invalid items from pool
+                        repeat
+                            local restart = false
+                            for i, enh in ipairs(pool) do
+                                if enh == 'UNAVAILABLE' then
+                                    table.remove(pool, i)
+                                    restart = true
+                                    break
+                                end
+                            end
+                        until not restart
+                        local enh = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        _card:set_ability(enh)
+                    end
+                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.edi_chance) then
+                        local pool = get_current_pool('Edition')
+                        -- Remove invalid items from pool
+                        repeat
+                            local restart = false
+                            for i, enh in ipairs(pool) do
+                                if enh == 'UNAVAILABLE' then
+                                    table.remove(pool, i)
+                                    restart = true
+                                    break
+                                end
+                            end
+                        until not restart
+                        local edi = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        _card:set_edition(edi, true, true)
+                    end
+                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.seal_chance) then
+                        local pool = get_current_pool('Seal')
+                        -- Remove invalid items from pool
+                        repeat
+                            local restart = false
+                            for i, enh in ipairs(pool) do
+                                if enh == 'UNAVAILABLE' then
+                                    table.remove(pool, i)
+                                    restart = true
+                                    break
+                                end
+                            end
+                        until not restart
+                        local seal = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        _card:set_seal(seal, true, true)
+                    end
+                end
+                return true
+            end
+        }))
     end
 }
