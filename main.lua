@@ -1,12 +1,6 @@
 NegaNancy = SMODS.current_mod
 
 function NegaNancy.calculate(self, context)
-    -- Prevent Edition Tags from triggering if there are Booster Tags left
-    if context.prevent_tag_trigger and context.prevent_tag_trigger.config.type == 'store_joker_modify' then
-        for _, tag in ipairs(G.GAME.tags) do
-            if tag.config.type == 'new_blind_choice' then return { prevent_trigger = true } end
-        end
-    end
     -- Use Booster Tags when entering shop
     if context.starting_shop and G.GAME.tags then
         for _, tag in ipairs(G.GAME.tags) do
@@ -19,6 +13,12 @@ function NegaNancy.calculate(self, context)
             for kk, tag in ipairs(G.GAME.tags) do
                 if tag:apply_to_run{type = 'store_joker_modify', card = card} then break end
             end
+        end
+    end
+    -- Prevent Edition Tags from triggering if there are Booster Tags left
+    if context.prevent_tag_trigger and context.prevent_tag_trigger.config.type == 'store_joker_modify' then
+        for _, tag in ipairs(G.GAME.tags) do
+            if tag.config.type == 'new_blind_choice' then return { prevent_trigger = true } end
         end
     end
     -- Shredder Tag (only triggered if no Exposure Therapy & no potential Priority Tags)
