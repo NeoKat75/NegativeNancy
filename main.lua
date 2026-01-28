@@ -2,10 +2,6 @@
 
 NegaNancy = SMODS.current_mod
 
-NegaNancy.optional_features = {
-	cardareas = { deck = true , discard = true }
-}
-
 function NegaNancy.calculate(self, context)
     -- Prevent Edition Tags from triggering if there are Booster Tags left
     if context.prevent_tag_trigger and context.prevent_tag_trigger.config.type == 'store_joker_modify' then
