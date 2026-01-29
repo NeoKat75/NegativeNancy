@@ -70,16 +70,18 @@ SMODS.Back {
     atlas = "nancy_decks",
     pos = { x = 2, y = 0 },
     discovered = true,
-    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance to apply
+    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.ante_scaling } }
     end,
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
-                local enhpool = get_current_pool('Enhanced')
-                local edipool = get_current_pool('Edition')
-                local sealpool = get_current_pool('Seal')
+                -- Shallow copies are copies of a table unlinked from the original table object
+                -- This is used because get_current_pool() returns the same table object every time
+                local enhpool = SMODS.shallow_copy(get_current_pool('Enhanced'))
+                local edipool = SMODS.shallow_copy(get_current_pool('Edition'))
+                local sealpool = SMODS.shallow_copy(get_current_pool('Seal'))
                 -- Remove invalid items from each pool
                 for _, pool in ipairs{enhpool, edipool, sealpool} do
                     repeat
