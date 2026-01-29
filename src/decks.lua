@@ -35,9 +35,21 @@ SMODS.Back {
                 if _card.edition then targets[#targets+1] = _card end
             end
             if next(targets) then
+                local edipool = get_current_pool('Edition')
+                -- Remove invalid items from pool
+                repeat
+                    local restart = false
+                    for i, item in ipairs(edipool) do
+                        if item == 'UNAVAILABLE' then
+                            table.remove(edipool, i)
+                            restart = true
+                            break
+                        end
+                    end
+                until not restart
                 for _, _card in ipairs(targets) do
-                    local edition = poll_edition('nancy_twisterdeck'..G.GAME.round_resets.ante, nil, nil, true)
-                    _card:set_edition(edition, true, true)
+                    local edi = pseudorandom_element(edipool, 'nancy_twisterdeck'..G.GAME.round_resets.ante)
+                    _card:set_edition(edi, true, true)
                 end
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -58,60 +70,40 @@ SMODS.Back {
     atlas = "nancy_decks",
     pos = { x = 2, y = 0 },
     discovered = true,
-    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } },
+    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance to apply to each card
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.ante_scaling } }
     end,
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
+                local enhpool = get_current_pool('Enhanced')
+                local edipool = get_current_pool('Edition')
+                local sealpool = get_current_pool('Seal')
+                -- Remove invalid items from each pool
+                for _, pool in ipairs{enhpool, edipool, sealpool} do
+                    repeat
+                        local restart = false
+                        for i, item in ipairs(pool) do
+                            if item == 'UNAVAILABLE' then
+                                table.remove(pool, i)
+                                restart = true
+                                break
+                            end
+                        end
+                    until not restart
+                end
                 for _, _card in ipairs(G.playing_cards) do
                     if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.enh_chance) then
-                        local pool = get_current_pool('Enhanced')
-                        -- Remove invalid items from pool
-                        repeat
-                            local restart = false
-                            for i, enh in ipairs(pool) do
-                                if enh == 'UNAVAILABLE' then
-                                    table.remove(pool, i)
-                                    restart = true
-                                    break
-                                end
-                            end
-                        until not restart
-                        local enh = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        local enh = pseudorandom_element(enhpool, 'nancy_chaoticdeck')
                         _card:set_ability(enh)
                     end
                     if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.edi_chance) then
-                        local pool = get_current_pool('Edition')
-                        -- Remove invalid items from pool
-                        repeat
-                            local restart = false
-                            for i, enh in ipairs(pool) do
-                                if enh == 'UNAVAILABLE' then
-                                    table.remove(pool, i)
-                                    restart = true
-                                    break
-                                end
-                            end
-                        until not restart
-                        local edi = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        local edi = pseudorandom_element(edipool, 'nancy_chaoticdeck')
                         _card:set_edition(edi, true, true)
                     end
                     if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.seal_chance) then
-                        local pool = get_current_pool('Seal')
-                        -- Remove invalid items from pool
-                        repeat
-                            local restart = false
-                            for i, enh in ipairs(pool) do
-                                if enh == 'UNAVAILABLE' then
-                                    table.remove(pool, i)
-                                    restart = true
-                                    break
-                                end
-                            end
-                        until not restart
-                        local seal = pseudorandom_element(pool, 'nancy_chaoticdeck')
+                        local seal = pseudorandom_element(sealpool, 'nancy_chaoticdeck')
                         _card:set_seal(seal, true, true)
                     end
                 end
@@ -132,7 +124,6 @@ SMODS.Back {
         return { vars = { self.config.extra.hsize } }
     end,
     calculate = function(self, back, context)
-        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
         if context.card_added and context.card.ability.set == "Joker" then
             G.jokers:change_size(1)
             G.hand:change_size(self.config.extra.hsize)
@@ -141,5 +132,6 @@ SMODS.Back {
             G.jokers:change_size(-1)
             G.hand:change_size(-self.config.extra.hsize)
         end
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end
 }
