@@ -1,5 +1,12 @@
 NegaNancy = SMODS.current_mod
 
+SMODS.Atlas({
+    key = "modicon",
+    path = "icon.png",
+    px = 32,
+    py = 32
+})
+
 function NegaNancy.calculate(self, context)
     -- Use Booster Tags when entering shop
     if context.starting_shop and G.GAME.tags then

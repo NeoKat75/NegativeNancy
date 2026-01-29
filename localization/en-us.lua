@@ -33,6 +33,14 @@ return {
                     "{C:red}#1#{} hand size",
                     "per held Joker"
                 }
+            },
+            b_nancy_creative = {
+                name = "Creative Deck",
+                text = {
+                    "Start run with",
+                    "an {V:1}Eternal{} Joker",
+                    "of {C:legendary,E:1}your choice"
+                }
             }
         },
         Blind={},

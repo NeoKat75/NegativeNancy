@@ -137,3 +137,17 @@ SMODS.Back {
         G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end
 }
+
+-- Creative Deck
+SMODS.Back {
+    key = "creative",
+    atlas = "nancy_decks",
+    pos = { x = 4, y = 0 },
+    discovered = true,
+    loc_vars = function(self, info_queue, back)
+        return { vars = { colours = { G.C.ETERNAL } } }
+    end,
+    apply = function(self, back)
+        
+    end
+}
