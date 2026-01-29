@@ -70,7 +70,7 @@ SMODS.Back {
     atlas = "nancy_decks",
     pos = { x = 2, y = 0 },
     discovered = true,
-    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance to apply to each card
+    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance to apply
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.ante_scaling } }
     end,
