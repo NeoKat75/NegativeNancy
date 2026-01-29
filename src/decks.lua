@@ -70,7 +70,7 @@ SMODS.Back {
     atlas = "nancy_decks",
     pos = { x = 2, y = 0 },
     discovered = true,
-    config = { ante_scaling = 2, extra = { enh_chance = 2, edi_chance = 2, seal_chance = 2 } }, -- 1 in N chance
+    config = { ante_scaling = 2 },
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.ante_scaling } }
     end,
@@ -95,16 +95,24 @@ SMODS.Back {
                         end
                     until not restart
                 end
+                -- Determine chances of each modifier
+                local enh_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
+                local edi_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
+                local seal_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
+                --print('Enh chance: 1 in '..enh_chance)
+                --print('Edi chance: 1 in '..edi_chance)
+                --print('Seal chance: 1 in '..seal_chance)
+                -- Do the thing
                 for _, _card in ipairs(G.playing_cards) do
-                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.enh_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, enh_chance) then
                         local enh = pseudorandom_element(enhpool, 'nancy_chaoticdeck')
                         _card:set_ability(enh)
                     end
-                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.edi_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, edi_chance) then
                         local edi = pseudorandom_element(edipool, 'nancy_chaoticdeck')
                         _card:set_edition(edi, true, true)
                     end
-                    if SMODS.pseudorandom_probability(nil, 'nancy_chaoticdeck', 1, self.config.extra.seal_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, seal_chance) then
                         local seal = pseudorandom_element(sealpool, 'nancy_chaoticdeck')
                         _card:set_seal(seal, true, true)
                     end
