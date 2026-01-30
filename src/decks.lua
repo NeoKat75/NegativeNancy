@@ -96,9 +96,9 @@ SMODS.Back {
                     until not restart
                 end
                 -- Determine chances of each modifier
-                local enh_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
-                local edi_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
-                local seal_chance = pseudorandom('nancy_chaoticdeck', 2, 9)
+                local enh_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
+                local edi_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
+                local seal_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
                 --print('Enh chance: 1 in '..enh_chance)
                 --print('Edi chance: 1 in '..edi_chance)
                 --print('Seal chance: 1 in '..seal_chance)
