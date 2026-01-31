@@ -35,12 +35,13 @@ return {
                     "{s:0.85}Start run with {C:attention,T:j_nancy_initiation,s:0.85}#2#"
                 }
             },
-            b_nancy_creative = {
-                name = "Creative Deck",
+            b_nancy_hoarder = {
+                name = "Hoarder Deck",
                 text = {
-                    "Start run with",
-                    "an {V:1}Eternal{} Joker",
-                    "of {C:legendary,E:1}your choice"
+                    "After defeating",
+                    "each {C:attention}Boss Blind{},",
+                    "a random Joker becomes",
+                    "{C:dark_edition}Negative{} and {V:1}Rental"
                 }
             }
         },
@@ -478,6 +479,7 @@ return {
         challenge_names={},
         collabs={},
         dictionary = {
+            nancy_notarget = "No Target!",
             nancy_exposed = "Exposed!",
             nancy_raritytag = "+1 Rarity Tag",
             nancy_downgrade = "Downgrade!",

@@ -146,16 +146,38 @@ SMODS.Back {
     end
 }
 
--- Creative Deck
+-- Hoarder Deck
 SMODS.Back {
-    key = "creative",
+    key = "hoarder",
     atlas = "nancy_decks",
     pos = { x = 4, y = 0 },
     discovered = true,
     loc_vars = function(self, info_queue, back)
-        return { vars = { colours = { G.C.ETERNAL } } }
+        return { vars = { colours = { G.C.RENTAL } } }
     end,
-    apply = function(self, back)
-        
+    calculate = function(self, back, context)
+        if context.end_of_round and context.game_over == false and context.main_eval and context.beat_boss then
+            local editionless_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
+            if next(editionless_jokers) then
+                local eligible_card = pseudorandom_element(editionless_jokers, 'nancy_hoarderdeck')
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        eligible_card:set_edition('e_negative', true)
+                        return true
+                    end
+                }))
+                delay(1)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('gold_seal', 1.2, 0.4)
+                        eligible_card:juice_up()
+                        eligible_card:set_rental(true)
+                        return true
+                    end
+                }))
+            else
+                return { message = localize('nancy_notarget') }
+            end
+        end
     end
 }
