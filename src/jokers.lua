@@ -874,6 +874,11 @@ SMODS.Joker {
         if context.joker_main and G.GAME.nancy_jokerlist then
             return { mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain }
         end
+        if context.card_added and context.card.ability.set == "Joker"
+            and G.GAME.nancy_jokerlist and not G.GAME.nancy_jokerlist[context.card.config.center.key]
+        then
+            return { message = localize('k_upgrade_ex') }
+        end
     end
 }
 

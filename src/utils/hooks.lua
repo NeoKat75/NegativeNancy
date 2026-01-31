@@ -27,7 +27,7 @@ function Card:add_to_deck(from_debuff)
     G.GAME.nancy_jokerlist = G.GAME.nancy_jokerlist or {}
     if not from_debuff -- If the card wasn't added by being undebuffed
         and self.ability.set == "Joker" -- and the card (`self` in this case) is a Joker
-        and G.GAME.nancy_jokerlist[self.config.center.key] == nil -- and it's not already in the jokerlist
+        and not G.GAME.nancy_jokerlist[self.config.center.key] -- and it's not already in the jokerlist
     then
         G.GAME.nancy_jokerlist[self.config.center.key] = true
     end
