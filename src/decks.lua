@@ -70,9 +70,9 @@ SMODS.Back {
     atlas = "nancy_decks",
     pos = { x = 3, y = 0 },
     discovered = true,
-    config = { joker_slot = -4, jokers = {'j_nancy_stairwell'}, extra = { hsize = -1 } },
+    config = { joker_slot = -4, extra = { hsize = -1 } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.extra.hsize, localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
+        return { vars = { self.config.extra.hsize } }
     end,
     calculate = function(self, back, context)
         if context.card_added and context.card.ability.set == "Joker" then

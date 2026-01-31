@@ -31,8 +31,7 @@ return {
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
-                    "per held Joker",
-                    "{s:0.85}Start run with {C:attention,T:j_nancy_stairwell,s:0.85}#2#"
+                    "per held Joker"
                 }
             },
             b_nancy_creative = {
