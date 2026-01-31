@@ -189,7 +189,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { amount = 2, tally = 0, growth = 1 }, },
+    config = { extra = { amount = 3, tally = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
         info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
@@ -322,7 +322,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { percard = 20 }, },
+    config = { extra = { percard = 15 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local negacards = 0
@@ -651,8 +651,8 @@ SMODS.Joker {
             juice_card_until(card, eval, true)
         end
         -- Do the thing (nancy_cutoff is for blueprint compat, destroying cards happens later)
-        if context.selling_card and context.card.ability.consumeable and card.ability.extra.used == false
-            and G.hand and #G.hand.cards > 0
+        if context.selling_card and card.ability.extra.used == false and G.GAME.blind.in_blind
+            and context.card.ability.consumeable and G.hand and #G.hand.cards > 0
         then
             G.E_MANAGER:add_event(Event({
                 func = function()
