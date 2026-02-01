@@ -727,9 +727,9 @@ SMODS.Joker {
                     card.ability.extra.sevens[#card.ability.extra.sevens+1] = _card
                 end
             end
-            -- If sevens, upgrade once for each 7
+            -- If sevens, upgrade
             if next(card.ability.extra.sevens) then
-                card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.gain * #card.ability.extra.sevens)
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
                 return { message = localize('k_upgrade_ex') }
             end
         end
