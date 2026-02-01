@@ -189,7 +189,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { amount = 3, tally = 0, growth = 1 }, },
+    config = { extra = { amount = 2, tally = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_TAGS.tag_top_up
         info_queue[#info_queue + 1] = G.P_TAGS.tag_uncommon
