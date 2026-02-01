@@ -347,6 +347,12 @@ return {
                     "to win on {C:attention}Emerald",
                     "{C:attention}Stake{} difficulty",
                 }
+            },
+            nancy_baneful = {
+                name = "Baneful",
+                text = {
+                    "{C:red}#1#{} hand size"
+                }
             }
         },
         Planet={},
@@ -559,7 +565,9 @@ return {
             nancy_usefuljoker_45 = "I'm the fool..."
         },
         high_scores={},
-        labels={},
+        labels = {
+            nancy_baneful = "Baneful"
+        },
         poker_hand_descriptions={},
         poker_hands={},
         quips={},
