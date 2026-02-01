@@ -340,6 +340,15 @@ return {
                     "{C:attention}Buffoon{} Tag"
                 }
             },
+            nancy_raritytags = {
+                name = "Rarity Tags",
+                text = {
+                    "{C:common}Top-up{} Tag",
+                    "{C:uncommon}Uncommon{} Tag",
+                    "{C:rare}Rare{} Tag",
+                    "{C:legendary,E:1}?????"
+                }
+            },
             nancy_emerald_sticker = {
                 name = "Emerald Sticker",
                 text = {

@@ -44,11 +44,11 @@ end
 local card_add_to_deck_ref = Card.add_to_deck
 function Card:add_to_deck(from_debuff)
     -- before the orig function
-    ---- do nothing!
+    if not self.added_to_deck and self.ability.nancy_baneful and G.hand then G.hand:change_size(-1) end
     -- execute and save the orig function's return
     local ret = card_add_to_deck_ref(self, from_debuff)
     -- after the orig function
-    if self.ability.set == "Joker" and self.ability.nancy_baneful and G.hand then G.hand:change_size(-1) end
+    ---- do nothing!
     -- actually return the orig function's return
     return ret
 end
@@ -58,11 +58,11 @@ end
 local card_remove_from_deck_ref = Card.remove_from_deck
 function Card:remove_from_deck(from_debuff)
     -- before the orig function
-    ---- do nothing!
+    if self.added_to_deck and self.ability.nancy_baneful and G.hand then G.hand:change_size(1) end
     -- execute and save the orig function's return
     local ret = card_remove_from_deck_ref(self, from_debuff)
     -- after the orig function
-    if self.ability.set == "Joker" and self.ability.nancy_baneful and G.hand then G.hand:change_size(1) end
+    ---- do nothing!
     -- actually return the orig function's return
     return ret
 end
