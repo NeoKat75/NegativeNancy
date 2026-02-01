@@ -14,11 +14,11 @@ self.children.area_uibox = UIBox{
 ''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
 position = "before" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
 payload = '''
-if G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' and self == G.jokers then
+if G.GAME.selected_back.effect.center.key == 'b_nancy_baneful' and self == G.jokers then
     card_count = not self.config.no_card_count and self ~= G.shop_vouchers and {n=G.UIT.R, config={align = self == G.jokers and 'cl' or self == G.hand and 'cm' or 'cr', padding = 0.03, no_fill = true}, nodes={
         {n=G.UIT.B, config={w = 0.1,h=0.1}},
         {n=G.UIT.T, config={text = 'Hand size: ', scale = 0.3, colour = G.C.WHITE}},
-        {n=G.UIT.T, config={ref_table = G.GAME, ref_value = 'nancy_crumpledslots', scale = 0.3, colour = G.C.WHITE}},
+        {n=G.UIT.T, config={ref_table = G.GAME, ref_value = 'nancy_banefulslots', scale = 0.3, colour = G.C.WHITE}},
         {n=G.UIT.B, config={w = 0.1,h=0.1}}
     }} or nil
 end
@@ -37,7 +37,7 @@ if self.ability.name == 'Riff-raff' and not (context.blueprint_card or self).get
 ''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
 position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
 payload = '''
-if self.ability.name == 'Riff-raff' and not (context.blueprint_card or self).getting_sliced and ((#G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled') then
+if self.ability.name == 'Riff-raff' and not (context.blueprint_card or self).getting_sliced and ((#G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_baneful') then
 ''' # What code you want to replace it with.
 match_indent = true
 
@@ -49,7 +49,7 @@ local jokers_to_create = math.min(2, G.jokers.config.card_limit - (#G.jokers.car
 ''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
 position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
 payload = '''
-if G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' then jokers_to_create = 2 end
+if G.GAME.selected_back.effect.center.key == 'b_nancy_baneful' then jokers_to_create = 2 end
 ''' # What code you want to replace it with.
 match_indent = true
 
@@ -65,6 +65,6 @@ if G.jokers and #G.jokers.cards < G.jokers.config.card_limit then
 ''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
 position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
 payload = '''
-if (G.jokers and #G.jokers.cards < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' then
+if (G.jokers and #G.jokers.cards < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_baneful' then
 ''' # What code you want to replace it with.
 match_indent = true

@@ -26,8 +26,8 @@ return {
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
                 }
             },
-            b_nancy_crumpled = {
-                name = "Crumpled Deck",
+            b_nancy_baneful = {
+                name = "Baneful Deck",
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
@@ -39,9 +39,9 @@ return {
                 name = "Hoarder Deck",
                 text = {
                     "After defeating",
-                    "each {C:attention}Boss Blind{},",
-                    "a random Joker becomes",
-                    "{C:dark_edition}Negative{} and {V:1}Rental"
+                    "each {C:attention}Boss Blind{}, a",
+                    "random Joker becomes",
+                    "{C:dark_edition}Negative{} & {V:1}Rental"
                 }
             }
         },
@@ -323,7 +323,7 @@ return {
                 name = "Junkie Joker",
                 text = {
                     "Earn {C:money}$#1#{} if played hand",
-                    "contains exactly {C:attention}#2#",
+                    "contains exactly {C:attention}one",
                     "{C:attention}unscored{} card"
                 }
             }
