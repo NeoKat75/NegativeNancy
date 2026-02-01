@@ -1,0 +1,58 @@
+[manifest] # Header for the file, this should only be here once at the beginning
+version = "0.1.0"
+priority = 0 # Priority for loading the file
+
+
+## Baneful sticker spawning
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua' # The file you want to patch.
+pattern = '''
+if G.GAME.modifiers.enable_rentals_in_shop and pseudorandom((area == G.pack_cards and 'packssjr' or 'ssjr')..G.GAME.round_resets.ante) > 0.7 and not SMODS.Stickers["rental"].should_apply then
+    card:set_rental(true)
+end
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+local rental_baneful_poll = pseudorandom((area == G.pack_cards and 'packssjr' or 'ssjr')..G.GAME.round_resets.ante)
+if G.GAME.modifiers.enable_rentals_in_shop and rental_baneful_poll > 0.7 and not SMODS.Stickers["rental"].should_apply then
+    card:set_rental(true)
+elseif G.GAME.modifiers.nancy_enable_banefuls_in_shop and ((rental_baneful_poll > 0.4) and (rental_baneful_poll <= 0.7)) and not SMODS.Stickers["nancy_baneful"].should_apply then
+    card:nancy_set_baneful(true)
+end
+''' # What code you want to replace it with.
+match_indent = true
+
+
+## nancy_set_baneful() function
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua' # The file you want to patch.
+pattern = '''
+function Card:set_rental(_rental)
+    self.ability.rental = _rental
+    self:set_cost()
+end
+''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
+position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+payload = '''
+function Card:set_rental(_rental)
+    self.ability.rental = nil
+    if not self.ability.nancy_baneful then
+        self.ability.rental = _rental
+        self:set_cost()
+    end
+end
+
+function Card:nancy_set_baneful(_baneful)
+    self.ability.nancy_baneful = nil
+    if not self.ability.rental then
+        self.ability.nancy_baneful = _baneful
+    end
+end
+''' # What code you want to replace it with.
+match_indent = true

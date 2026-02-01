@@ -351,7 +351,7 @@ return {
             nancy_baneful = {
                 name = "Baneful",
                 text = {
-                    "{C:red}#1#{} hand size"
+                    "{C:red}-1{} hand size"
                 }
             }
         },
