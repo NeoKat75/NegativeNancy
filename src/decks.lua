@@ -1,6 +1,6 @@
 -- Deck atlas
 SMODS.Atlas {
-    key = "nancy_decks",
+    key = "decks",
     path = "decks.png",
     px = 71,
     py = 95
@@ -9,7 +9,7 @@ SMODS.Atlas {
 -- Nancy Deck
 SMODS.Back {
     key = "nancy",
-    atlas = "nancy_decks",
+    atlas = "decks",
     pos = { x = 0, y = 0 },
     discovered = true,
     config = { jokers = {'j_nancy_negativenancy'} },
@@ -21,7 +21,7 @@ SMODS.Back {
 -- Twister Deck
 SMODS.Back {
     key = "twister",
-    atlas = "nancy_decks",
+    atlas = "decks",
     pos = { x = 1, y = 0 },
     discovered = true,
     config = { jokers = {'j_nancy_laminator'} },
@@ -67,7 +67,7 @@ SMODS.Back {
 -- Hoarder Deck
 SMODS.Back {
     key = "hoarder",
-    atlas = "nancy_decks",
+    atlas = "decks",
     pos = { x = 4, y = 0 },
     discovered = true,
     loc_vars = function(self, info_queue, back)
@@ -103,7 +103,7 @@ SMODS.Back {
 -- Baneful Deck
 SMODS.Back {
     key = "baneful",
-    atlas = "nancy_decks",
+    atlas = "decks",
     pos = { x = 3, y = 0 },
     discovered = true,
     config = { joker_slot = -4, jokers = {'j_nancy_initiation'}, extra = { hsize = -1 } },
@@ -126,7 +126,7 @@ SMODS.Back {
 -- Chaotic Deck
 SMODS.Back {
     key = "chaotic",
-    atlas = "nancy_decks",
+    atlas = "decks",
     pos = { x = 2, y = 0 },
     discovered = true,
     config = { ante_scaling = 2 },

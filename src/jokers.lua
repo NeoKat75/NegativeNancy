@@ -1,6 +1,6 @@
 -- Joker atlas
 SMODS.Atlas {
-    key = "nancy_jokers",
+    key = "jokers",
     path = "jokers.png",
     px = 71,
     py = 95
@@ -9,7 +9,7 @@ SMODS.Atlas {
 -- Window Shopping
 SMODS.Joker {
     key = "windowshopping",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 0 },
     rarity = 1,
     blueprint_compat = true,
@@ -28,7 +28,7 @@ SMODS.Joker {
 -- Golden Fingers
 SMODS.Joker {
     key = "goldenfingers",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 0 },
     rarity = 1,
     blueprint_compat = true,
@@ -62,7 +62,7 @@ SMODS.Joker {
 -- Count Jokula
 SMODS.Joker {
     key = "countjokula",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 0 },
     rarity = 2,
     blueprint_compat = true,
@@ -102,7 +102,7 @@ SMODS.Joker {
 -- Laminator
 SMODS.Joker {
     key = "laminator",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 0 },
     rarity = 2,
     blueprint_compat = true,
@@ -144,7 +144,7 @@ SMODS.Joker {
 -- Frugal Joker
 SMODS.Joker {
     key = "frugaljoker",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 0 },
     rarity = 2,
     blueprint_compat = true,
@@ -183,7 +183,7 @@ SMODS.Joker {
 -- Return Policy
 SMODS.Joker {
     key = "returnpolicy",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 1 },
     rarity = 1,
     blueprint_compat = true,
@@ -264,7 +264,7 @@ SMODS.Joker {
 -- Collector
 SMODS.Joker {
     key = "collector",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 1 },
     rarity = 1,
     blueprint_compat = true,
@@ -288,7 +288,7 @@ SMODS.Joker {
 -- Negative Nancy
 SMODS.Joker {
     key = "negativenancy",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 1 },
     rarity = 3,
     blueprint_compat = true,
@@ -316,7 +316,7 @@ SMODS.Joker {
 -- Post-Modern Joker
 SMODS.Joker {
     key = "postmodernjoker",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 1 },
     rarity = 1,
     blueprint_compat = true,
@@ -355,7 +355,7 @@ SMODS.Joker {
 -- Expired Coupon
 SMODS.Joker {
     key = "expiredcoupon",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 1 },
     rarity = 1,
     blueprint_compat = true,
@@ -406,7 +406,7 @@ SMODS.Joker {
 -- Deep Ocean
 SMODS.Joker {
     key = "deepocean",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 2 },
     rarity = 3,
     blueprint_compat = true,
@@ -451,7 +451,7 @@ SMODS.Joker {
 -- Double Take
 SMODS.Joker {
     key = "doubletake",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 2 },
     rarity = 3,
     blueprint_compat = true,
@@ -487,7 +487,7 @@ SMODS.Joker {
 -- Stairwell
 SMODS.Joker {
     key = "stairwell",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 2 },
     rarity = 2,
     blueprint_compat = true,
@@ -542,7 +542,7 @@ SMODS.Joker {
 -- Exorcist
 SMODS.Joker {
     key = "exorcist",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 2 },
     rarity = 3,
     blueprint_compat = true,
@@ -588,7 +588,7 @@ SMODS.Joker {
 -- Initiation
 SMODS.Joker {
     key = "initiation",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 2 },
     rarity = 2,
     blueprint_compat = false,
@@ -636,7 +636,7 @@ SMODS.Joker {
 -- Cutoff Card
 SMODS.Joker {
     key = "cutoffcard",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 3 },
     rarity = 2,
     blueprint_compat = true,
@@ -684,7 +684,7 @@ SMODS.Joker {
 -- Quality of Life
 SMODS.Joker {
     key = "qualityoflife",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 3 },
     rarity = 1,
     blueprint_compat = true,
@@ -705,7 +705,7 @@ SMODS.Joker {
 -- Slot Machine
 SMODS.Joker {
     key = "slotmachine",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 3 },
     rarity = 2,
     blueprint_compat = true,
@@ -767,7 +767,7 @@ SMODS.Joker {
 -- Pump & Dump
 SMODS.Joker {
     key = "pumpdump",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 3 },
     rarity = 3,
     blueprint_compat = false,
@@ -819,7 +819,7 @@ SMODS.Joker {
 -- Junkie Joker
 SMODS.Joker {
     key = "junkiejoker",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 3 },
     rarity = 1,
     blueprint_compat = true,
@@ -858,7 +858,7 @@ SMODS.Joker {
 -- Pack of Buffoons
 SMODS.Joker {
     key = "packofbuffoons",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 4 },
     rarity = 2,
     blueprint_compat = true,
@@ -885,7 +885,7 @@ SMODS.Joker {
 -- Lack of the Draw
 SMODS.Joker {
     key = "lackofthedraw",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 4 },
     rarity = 2,
     blueprint_compat = true,
@@ -941,7 +941,7 @@ SMODS.Joker {
 -- Street Art
 SMODS.Joker {
     key = "streetart",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 4 },
     rarity = 3,
     blueprint_compat = true,
@@ -990,7 +990,7 @@ SMODS.Joker {
 -- Stimulus Cheque
 SMODS.Joker {
     key = "stimuluscheque",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 4 },
     rarity = 1,
     blueprint_compat = true,
@@ -1038,7 +1038,7 @@ SMODS.Joker {
 -- Useful Joker
 SMODS.Joker {
     key = "usefuljoker",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 4 },
     rarity = 1,
     blueprint_compat = true,
@@ -1094,7 +1094,7 @@ SMODS.Joker {
 -- Decorative Joker
 SMODS.Joker {
     key = "decorativejoker",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 0, y = 5 },
     rarity = 1,
     blueprint_compat = true,
@@ -1127,7 +1127,7 @@ SMODS.Joker {
 -- Snack Tray
 SMODS.Joker {
     key = "snacktray",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 1, y = 5 },
     rarity = 2,
     blueprint_compat = false,
@@ -1166,7 +1166,7 @@ SMODS.Joker {
 -- Exposure Therapy
 SMODS.Joker {
     key = "exposuretherapy",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 2, y = 5 },
     soul_pos = { x = 2, y = 6 },
     rarity = 4,
@@ -1230,7 +1230,7 @@ SMODS.Joker {
 -- On the House
 SMODS.Joker {
     key = "onthehouse",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 3, y = 5 },
     rarity = 2,
     blueprint_compat = true,
@@ -1273,7 +1273,7 @@ SMODS.Joker {
 -- Consolation Prize
 SMODS.Joker {
     key = "consolationprize",
-    atlas = "nancy_jokers",
+    atlas = "jokers",
     pos = { x = 4, y = 5 },
     rarity = 3,
     blueprint_compat = true,

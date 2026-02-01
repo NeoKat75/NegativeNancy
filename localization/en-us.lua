@@ -339,6 +339,14 @@ return {
                     "{C:spectral}Ethereal{} Tag",
                     "{C:attention}Buffoon{} Tag"
                 }
+            },
+            nancy_emerald_sticker = {
+                name = "Emerald Sticker",
+                text = {
+                    "Used this Joker",
+                    "to win on {C:attention}Emerald",
+                    "{C:attention}Stake{} difficulty",
+                }
             }
         },
         Planet={},
@@ -380,7 +388,16 @@ return {
                 }
             }
         },
-        Stake={},
+        Stake = {
+            stake_nancy_emerald = {
+                name = "Emerald Stake",
+                text = {
+                    "Shop can have {C:attention}Baneful{} Jokers",
+                    "{C:inactive,s:0.8}({C:red,s:0.8}-1 {C:inactive,s:0.8}hand size)",
+                    "{s:0.8}Applies all previous Stakes",
+                },
+            }
+        },
         Tag = {
             tag_nancy_secret = {
                 name = "Secret Tag",

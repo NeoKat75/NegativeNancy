@@ -1,6 +1,6 @@
 -- Consumable atlas
 SMODS.Atlas {
-    key = "nancy_consumables",
+    key = "consumables",
     path = "consumables.png",
     px = 71,
     py = 95
@@ -11,7 +11,7 @@ SMODS.Consumable {
     key = 'downpour',
     set = 'Tarot',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 0, y = 0 },
     config = { extra = { max_highlighted = 1 } },
     loc_vars = function(self, info_queue, card)
@@ -65,7 +65,7 @@ SMODS.Consumable {
     key = 'trainee',
     set = 'Tarot',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 1, y = 0 },
     config = { extra = { max_highlighted = 2, min_highlighted = 2 } },
     loc_vars = function(self, info_queue, card)
@@ -175,7 +175,7 @@ SMODS.Consumable {
     key = 'offering',
     set = 'Tarot',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 2, y = 0 },
     config = { extra = { max_highlighted = 1 } },
     loc_vars = function(self, info_queue, card)
@@ -250,7 +250,7 @@ SMODS.Consumable {
     key = 'flood',
     set = 'Spectral',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 0, y = 1 },
     config = { extra = { hsize = -1 } },
     loc_vars = function(self, info_queue, card)
@@ -292,7 +292,7 @@ SMODS.Consumable {
     key = 'mastery',
     set = 'Spectral',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 1, y = 1 },
     -- Partially from Vanilla Remade's Sigil
     use = function(self, card, area, copier)
@@ -367,7 +367,7 @@ SMODS.Consumable {
     key = 'sacrifice',
     set = 'Spectral',
     discovered = true,
-    atlas = "nancy_consumables",
+    atlas = "consumables",
     pos = { x = 2, y = 1 },
     config = { extra = { scaling = 2 } },
     loc_vars = function(self, info_queue, card)

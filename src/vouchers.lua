@@ -1,6 +1,6 @@
 -- Voucher atlas
 SMODS.Atlas {
-    key = "nancy_vouchers",
+    key = "vouchers",
     path = "vouchers.png",
     px = 71,
     py = 95
@@ -9,7 +9,7 @@ SMODS.Atlas {
 -- Dainty Scarf
 SMODS.Voucher {
     key = 'scarf',
-    atlas = 'nancy_vouchers',
+    atlas = 'vouchers',
     pos = { x = 0, y = 0 },
     discovered = true,
     loc_vars = function(self, info_queue, card)
@@ -25,7 +25,7 @@ SMODS.Voucher {
 -- Velvet Purse
 SMODS.Voucher {
     key = 'purse',
-    atlas = 'nancy_vouchers',
+    atlas = 'vouchers',
     pos = { x = 1, y = 0 },
     discovered = true,
     requires = { 'v_nancy_scarf' },

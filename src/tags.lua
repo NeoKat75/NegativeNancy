@@ -1,6 +1,6 @@
 -- Tag atlas
 SMODS.Atlas {
-    key = "nancy_tags",
+    key = "tags",
     path = "tags.png",
     px = 34,
     py = 34
@@ -9,7 +9,7 @@ SMODS.Atlas {
 -- Secret Tag
 SMODS.Tag {
     key = "secret",
-    atlas = "nancy_tags",
+    atlas = "tags",
     pos = { x = 0, y = 0 },
     no_collection = true,
     in_pool = function(self, args)
@@ -20,7 +20,7 @@ SMODS.Tag {
 -- Accolades Tag
 SMODS.Tag {
     key = "accolades",
-    atlas = "nancy_tags",
+    atlas = "tags",
     pos = { x = 1, y = 0 },
     discovered = true,
     config = { money = 4 },
@@ -61,7 +61,7 @@ SMODS.Tag {
 -- Priority Tag
 SMODS.Tag {
     key = "priority",
-    atlas = "nancy_tags",
+    atlas = "tags",
     pos = { x = 2, y = 0 },
     discovered = true,
     loc_vars = function(self, info_queue, tag)
@@ -122,7 +122,7 @@ SMODS.Tag {
 -- Shredder Tag
 SMODS.Tag {
     key = "shredder",
-    atlas = "nancy_tags",
+    atlas = "tags",
     pos = { x = 3, y = 0 },
     discovered = true,
     loc_vars = function(self, info_queue, tag)

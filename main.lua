@@ -1,11 +1,11 @@
 NegaNancy = SMODS.current_mod
 
-SMODS.Atlas({
-    key = "modicon",
+SMODS.Atlas {
+    key = "icon",
     path = "icon.png",
     px = 32,
     py = 32
-})
+}
 
 function NegaNancy.calculate(self, context)
     -- Use Booster Tags when entering shop
@@ -57,3 +57,5 @@ assert(SMODS.load_file("src/consumables.lua"))()
 assert(SMODS.load_file("src/vouchers.lua"))()
 assert(SMODS.load_file("src/tags.lua"))()
 assert(SMODS.load_file("src/decks.lua"))()
+assert(SMODS.load_file("src/stakes.lua"))()
+assert(SMODS.load_file("src/stickers.lua"))()
