@@ -5,7 +5,8 @@ return {
                 name = "Nancy Deck",
                 text = {
                     "Start run with",
-                    "{C:attention,T:j_nancy_negativenancy}#1#"
+                    "{C:attention,T:j_nancy_negativenancy}#1#{} and the",
+                    "{C:dark_edition,T:v_nancy_scarf}#2#{} voucher"
                 }
             },
             b_nancy_twister = {
@@ -41,7 +42,8 @@ return {
                     "After defeating",
                     "each {C:attention}Boss Blind{}, a",
                     "random Joker becomes",
-                    "{C:dark_edition}Negative{} & {V:1}Rental"
+                    "{C:dark_edition}Negative{} & {V:1}Rental",
+                    "{C:inactive,s:0.85}(Costs {C:money,s:0.85}$3{C:inactive,s:0.85} per round)"
                 }
             }
         },

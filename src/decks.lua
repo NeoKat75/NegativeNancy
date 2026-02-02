@@ -12,9 +12,12 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 0, y = 0 },
     discovered = true,
-    config = { jokers = {'j_nancy_negativenancy'} },
+    config = { jokers = {'j_nancy_negativenancy'}, voucher = 'v_nancy_scarf' },
     loc_vars = function(self, info_queue, back)
-        return { vars = { localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
+        return { vars = {
+            localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'},
+            localize{type = 'name_text', key = self.config.voucher, set = 'Voucher'}
+        } }
     end
 }
 
