@@ -50,7 +50,7 @@ end
 
 function Card:nancy_set_baneful(_baneful)
     self.ability.nancy_baneful = nil
-    if not self.ability.rental then
+    if not self.config.center.nancy_baneful_incompat and not self.ability.rental then
         self.ability.nancy_baneful = _baneful
     end
 end
