@@ -81,16 +81,26 @@ SMODS.Back {
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         eligible_card:set_edition('e_negative', true)
+                        if G.deck and next(G.deck.cards) then
+                            G.deck.cards[1]:juice_up()
+                        else
+                            G.deck:juice_up()
+                        end
                         return true
                     end
                 }))
-                if not eligible_card.ability.rental and not eligible_card.ability.nancy_baneful then
+                if not eligible_card.ability.rental and not eligible_card.ability.nancy_binding then
                     delay(1)
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             play_sound('gold_seal', 1.2, 0.4)
-                            eligible_card:juice_up()
                             eligible_card:set_rental(true)
+                            eligible_card:juice_up()
+                            if G.deck and next(G.deck.cards) then
+                                G.deck.cards[1]:juice_up()
+                            else
+                                G.deck:juice_up()
+                            end
                             return true
                         end
                     }))
