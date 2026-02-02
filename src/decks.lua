@@ -84,15 +84,17 @@ SMODS.Back {
                         return true
                     end
                 }))
-                delay(1)
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('gold_seal', 1.2, 0.4)
-                        eligible_card:juice_up()
-                        eligible_card:set_rental(true)
-                        return true
-                    end
-                }))
+                if not eligible_card.ability.rental and not eligible_card.ability.nancy_baneful then
+                    delay(1)
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('gold_seal', 1.2, 0.4)
+                            eligible_card:juice_up()
+                            eligible_card:set_rental(true)
+                            return true
+                        end
+                    }))
+                end
             else
                 return { message = localize('nancy_notarget') }
             end
