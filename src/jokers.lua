@@ -642,11 +642,12 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 6,
     discovered = true,
-    config = { extra = { used = false }, },
+    config = { extra = { used = false, wiggling = false }, },
     calculate = function(self, card, context)
         -- When hand is drawn and you got da cards
-        if context.hand_drawn and next(G.consumeables.cards) and not card.juice and not context.blueprint then
+        if context.hand_drawn and next(G.consumeables.cards) and not card.ability.extra.wiggling and not context.blueprint then
             -- Wiggle while used = false
+            card.ability.extra.wiggling = true
             local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
         end
@@ -673,10 +674,9 @@ SMODS.Joker {
             }))
         end
          -- At end of round if var is true
-        if context.end_of_round and context.main_eval and not context.game_over
-            and card.ability.extra.used == true and not context.blueprint
-        then
-            card.ability.extra.used = false
+        if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
+            card.ability.extra.wiggling = false
+            if card.ability.extra.used == true then card.ability.extra.used = false end
         end
     end
 }
