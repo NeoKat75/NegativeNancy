@@ -6,6 +6,14 @@ SMODS.Atlas {
     py = 29
 }
 
+-- Sticker atlas
+SMODS.Atlas {
+    key = "stickers",
+    path = "stickers.png",
+    px = 71,
+    py = 95
+}
+
 SMODS.Stake {
     key = "emerald",
     prefix_config = { applied_stakes = { mod = false }, above_stake = { mod = false } },
@@ -20,4 +28,13 @@ SMODS.Stake {
     modifiers = function()
         G.GAME.modifiers.nancy_enable_banefuls_in_shop = true
     end
+}
+
+-- Functionality and Rental intercompatibility handled via Lovely patches
+SMODS.Sticker {
+    key = "baneful",
+    badge_colour = HEX('068b54'),
+    atlas = "stickers",
+    pos = { x = 0, y = 0 },
+    should_apply = false
 }
