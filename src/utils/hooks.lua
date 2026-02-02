@@ -39,12 +39,12 @@ end
 
 
 
----- Baneful sticker functionality (obtaining or undebuffing Joker)
+---- Binding sticker functionality (obtaining or undebuffing Joker)
 -- save the orig function (no executing)
 local card_add_to_deck_ref = Card.add_to_deck
 function Card:add_to_deck(from_debuff)
     -- before the orig function
-    if not self.added_to_deck and self.ability.nancy_baneful and G.hand then G.hand:change_size(-1) end
+    if not self.added_to_deck and self.ability.nancy_binding and G.hand then G.hand:change_size(-1) end
     -- execute and save the orig function's return
     local ret = card_add_to_deck_ref(self, from_debuff)
     -- after the orig function
@@ -53,12 +53,12 @@ function Card:add_to_deck(from_debuff)
     return ret
 end
 
----- Baneful sticker functionality (removing or debuffing Joker)
+---- Binding sticker functionality (removing or debuffing Joker)
 -- save the orig function (no executing)
 local card_remove_from_deck_ref = Card.remove_from_deck
 function Card:remove_from_deck(from_debuff)
     -- before the orig function
-    if self.added_to_deck and self.ability.nancy_baneful and G.hand then G.hand:change_size(1) end
+    if self.added_to_deck and self.ability.nancy_binding and G.hand then G.hand:change_size(1) end
     -- execute and save the orig function's return
     local ret = card_remove_from_deck_ref(self, from_debuff)
     -- after the orig function

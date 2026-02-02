@@ -26,13 +26,13 @@ SMODS.Stake {
     colour = HEX('068b54'),
     shiny = true,
     modifiers = function()
-        G.GAME.modifiers.nancy_enable_banefuls_in_shop = true
+        G.GAME.modifiers.nancy_enable_bindings_in_shop = true
     end
 }
 
 -- Functionality and Rental intercompatibility handled via Lovely patches
 SMODS.Sticker {
-    key = "baneful",
+    key = "binding",
     badge_colour = HEX('068b54'),
     atlas = "stickers",
     pos = { x = 0, y = 0 },

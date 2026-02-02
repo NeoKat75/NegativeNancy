@@ -26,8 +26,8 @@ return {
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
                 }
             },
-            b_nancy_baneful = {
-                name = "Baneful Deck",
+            b_nancy_crumpled = {
+                name = "Crumpled Deck",
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
@@ -357,8 +357,8 @@ return {
                     "{C:attention}Stake{} difficulty",
                 }
             },
-            nancy_baneful = {
-                name = "Baneful",
+            nancy_binding = {
+                name = "Binding",
                 text = {
                     "{C:red}-1{} hand size"
                 }
@@ -407,7 +407,7 @@ return {
             stake_nancy_emerald = {
                 name = "Emerald Stake",
                 text = {
-                    "Shop can have {C:attention}Baneful{} Jokers",
+                    "Shop can have {C:attention}Binding{} Jokers",
                     "{C:inactive,s:0.8}({C:red,s:0.8}-1 {C:inactive,s:0.8}hand size)",
                     "{s:0.8}Applies all previous Stakes",
                 },
@@ -575,7 +575,7 @@ return {
         },
         high_scores={},
         labels = {
-            nancy_baneful = "Baneful"
+            nancy_binding = "Binding"
         },
         poker_hand_descriptions={},
         poker_hands={},

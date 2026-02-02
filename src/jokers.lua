@@ -291,7 +291,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     eternal_compat = false,
-    nancy_baneful_incompat = true,
+    nancy_binding_incompat = true,
     cost = 9,
     discovered = true,
     loc_vars = function(self, info_queue, card)
@@ -491,7 +491,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     eternal_compat = false,
-    nancy_baneful_incompat = true,
+    nancy_binding_incompat = true,
     cost = 7,
     discovered = true,
     config = { extra = { amount = 2, growth = 1 }, },

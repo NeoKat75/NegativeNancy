@@ -102,9 +102,9 @@ SMODS.Back {
     end
 }
 
--- Baneful Deck
+-- Crumpled Deck
 SMODS.Back {
-    key = "baneful",
+    key = "crumpled",
     atlas = "decks",
     pos = { x = 3, y = 0 },
     discovered = true,
@@ -121,7 +121,7 @@ SMODS.Back {
             G.jokers:change_size(-1)
             G.hand:change_size(-self.config.extra.hsize)
         end
-        G.GAME.nancy_banefulslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end
 }
 
