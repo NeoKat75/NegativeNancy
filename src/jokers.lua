@@ -1045,7 +1045,7 @@ SMODS.Joker {
     cost = 2,
     discovered = true,
     add_to_deck = function(self, card, from_debuff)
-        -- Equalize cost and sell value
+        -- Equalize cost and sell value (doesn't account for editions...)
         card.ability.extra_value = math.ceil(self.cost / 2)
         card:set_cost()
         -- Say a funny when obtained, say a special funny if it's a copy
