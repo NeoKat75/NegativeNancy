@@ -6,7 +6,7 @@ local polledition = poll_edition
 -- overwrite the orig function
 function poll_edition(_key, _mod, _no_neg, _guaranteed)
     -- before the orig function
-    if _key == 'standard_edition'..G.GAME.round_resets.ante or 'illusion' then _no_neg = false end
+    if _key == 'standard_edition'..G.GAME.round_resets.ante or _key == 'illusion' then _no_neg = false end
     -- execute and save the orig function's return
     local ret = polledition(_key, _mod, _no_neg, _guaranteed)
     -- after the orig function
