@@ -54,6 +54,13 @@ return {
                     "Editioned playing",
                     "cards are debuffed"
                 }
+            },
+            bl_nancy_filter = {
+                name = "The Filter",
+                text = {
+                    "Editioned playing cards",
+                    "are drawn face down"
+                }
             }
         },
         Edition={},

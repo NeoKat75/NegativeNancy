@@ -7,8 +7,8 @@
 	"prefix": "nancy",
 	"main_file": "main.lua",
 	"priority": 0,
-	"badge_colour": "900090",
+	"badge_colour": "A000A0",
 	"badge_text_colour": "FFFFFF",
 	"version": "0.1.0",
-	"dependencies": ["Steamodded (>=1.0.0~BETA-1224a)"]
+	"dependencies": ["Balatro (==1.0.1o-FULL)", "Steamodded (>=1.0.0~BETA-1224a)"]
 }
