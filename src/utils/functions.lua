@@ -98,6 +98,7 @@ function NegaNancy.makenegatives(targets)
                     handsize = G.hand.config.card_limit
                     targets[currentcard]:set_edition("e_negative", true)
                     targets[currentcard]:juice_up()
+                    SMODS.recalc_debuff(targets[currentcard])
                     G.hand:remove_from_highlighted(targets[currentcard])
                     currentcard = currentcard + 1
                     checkevent()

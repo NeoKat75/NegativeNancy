@@ -132,6 +132,7 @@ SMODS.Joker {
                         local edition = poll_edition("nancy_laminator", nil, nil, true)
                         _card:set_edition(edition, true)
                         _card:juice_up()
+                        SMODS.recalc_debuff(_card)
                         joker:juice_up()
                     end
                     return true

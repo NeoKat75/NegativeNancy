@@ -47,7 +47,15 @@ return {
                 }
             }
         },
-        Blind={},
+        Blind = {
+            bl_nancy_desert = {
+                name = "The Desert",
+                text = {
+                    "Editioned playing",
+                    "cards are debuffed"
+                }
+            }
+        },
         Edition={},
         Enhanced={},
         Joker = {
