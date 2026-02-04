@@ -32,8 +32,17 @@ SMODS.Blind {
                 G.hand.cards[i]:flip()
             end
         end
-        for _, _card in ipairs(G.playing_cards) do
-            _card.ability.wheel_flipped = nil
+        for _, card in ipairs(G.playing_cards) do
+            card.ability.wheel_flipped = nil
         end
     end
+}
+
+-- The Purse
+SMODS.Blind {
+    key = "purse",
+    discovered = true,
+    boss = { min = 1 },
+    boss_colour = HEX("A000A0")
+    -- Functionality handled in a CardArea:shuffle() hook
 }

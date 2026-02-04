@@ -58,8 +58,16 @@ return {
             bl_nancy_filter = {
                 name = "The Filter",
                 text = {
-                    "Editioned playing cards",
-                    "are drawn face down"
+                    "Editioned cards are",
+                    "drawn face down"
+                }
+            },
+            bl_nancy_purse = {
+                name = "The Purse",
+                text = {
+                    "Editioned cards",
+                    "are shuffled to",
+                    "bottom of deck"
                 }
             }
         },

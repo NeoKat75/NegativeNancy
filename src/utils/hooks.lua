@@ -17,6 +17,38 @@ end
 
 
 
+---- The Purse functionality
+-- save the orig function (no executing)
+local shuffle = CardArea.shuffle
+function CardArea:shuffle(_seed)
+    -- before the orig function
+    ---- do nothing!
+    -- execute and save the orig function's return
+    local ret = shuffle(self, _seed)
+    -- after the orig function
+    if G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_nancy_purse' and not G.GAME.blind.disabled then
+        -- I took this from All in Jest's Headstone.
+        -- I don't understand why my code was crashing and failing to index 'card',
+        -- but this doesn't crash when it's basically the exact same thing...
+        -- UPDATE: maybe it's because I was using ipairs() and the i wasn't the same as the i in this code???
+        local targets = {}
+        for i = #self.cards, 1, -1 do
+            local card = self.cards[i]
+            if card.edition then
+                table.insert(targets, card)
+                table.remove(self.cards, i)
+            end
+        end
+        for _, card in ipairs(targets) do
+            table.insert(self.cards, 1, card)
+        end
+    end
+    -- actually return the orig function's return
+    return ret
+end
+
+
+
 ---- Add joker to jokerlist if it's unique when it's added (mostly taken from Vanilla Remade)
 -- save the orig function (no executing)
 local card_add_to_deck_ref = Card.add_to_deck
