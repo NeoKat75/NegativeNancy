@@ -26,7 +26,7 @@ function CardArea:shuffle(_seed)
     -- execute and save the orig function's return
     local ret = shuffle(self, _seed)
     -- after the orig function
-    if G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_nancy_purse' and not G.GAME.blind.disabled then
+    if G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_nancy_purse' and not next(SMODS.find_card('j_chicot')) then
         -- I took this from All in Jest's Headstone.
         -- I don't understand why my code was crashing and failing to index 'card',
         -- but this doesn't crash when it's basically the exact same thing...
