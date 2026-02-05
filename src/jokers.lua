@@ -382,7 +382,7 @@ SMODS.Joker {
             ease_dollars(-money)
             -- Calc chip reduction and do it, wiggle blind
             local chipmod = G.GAME.blind.chips * ((money * card.ability.extra.reduction) / 100)
-            G.GAME.blind.chips = math.floor(G.GAME.blind.chips - chipmod)
+            G.GAME.blind.chips = math.ceil(G.GAME.blind.chips - chipmod)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             G.GAME.blind:wiggle()
             -- Win blind if enough score (from Vanilla Remade wiki)

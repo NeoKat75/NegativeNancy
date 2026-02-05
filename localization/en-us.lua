@@ -69,6 +69,14 @@ return {
                     "are shuffled to",
                     "bottom of deck"
                 }
+            },
+            bl_nancy_dam = {
+                name = "The Dam",
+                text = {
+                    "Score requirement",
+                    "increases by 1%",
+                    "per card drawn"
+                }
             }
         },
         Edition={},

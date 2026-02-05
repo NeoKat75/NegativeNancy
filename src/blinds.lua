@@ -46,3 +46,32 @@ SMODS.Blind {
     boss_colour = HEX("A000A0")
     -- Functionality handled in a CardArea:shuffle() hook
 }
+
+-- The Dam
+SMODS.Blind {
+    key = "dam",
+    discovered = true,
+    boss = { min = 1 },
+    boss_colour = HEX("A000A0"),
+    config = { extra = { inc = 0, base = 0 } },
+    calculate = function(self, blind, context)
+        if context.setting_blind then
+            blind.effect.extra.base = blind.chips
+            blind.effect.extra.inc = math.ceil(blind.chips / 100) -- 1% of base requirement
+        end
+        if not blind.disabled then
+            if context.hand_drawn then
+                local chipmod = #context.hand_drawn * blind.effect.extra.inc
+                blind.chips = math.ceil(blind.chips + chipmod)
+                blind.chip_text = number_format(blind.chips)
+                blind:wiggle()
+            end
+        end
+    end,
+    disable = function(self)
+        G.GAME.blind.chips = G.GAME.blind.effect.extra.base
+        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+        G.GAME.blind:wiggle()
+        -- Checking for if blind is won is actually unnecessary here, it does it on its own
+    end
+}
