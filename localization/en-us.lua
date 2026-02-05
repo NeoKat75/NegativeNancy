@@ -77,6 +77,22 @@ return {
                     "increases by 1%",
                     "per card drawn"
                 }
+            },
+            bl_nancy_crowd = {
+                name = "The Crowd",
+                text = {
+                    "Unscored cards are",
+                    "returned to hand",
+                    "after played"
+                }
+            },
+            bl_nancy_wrench = {
+                name = "The Wrench",
+                text = {
+                    "#1# in #2# chance for each",
+                    "scored card to be",
+                    "destroyed after played"
+                }
             }
         },
         Edition={},

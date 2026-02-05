@@ -75,3 +75,55 @@ SMODS.Blind {
         -- Checking for if blind is won is actually unnecessary here, it does it on its own
     end
 }
+
+-- The Crowd
+SMODS.Blind {
+    key = "crowd",
+    discovered = true,
+    boss = { min = 1 },
+    boss_colour = HEX("A000A0"),
+    calculate = function(self, blind, context)
+        -- Waiting for next smods version to do this!
+        if not blind.disabled then
+            
+        end
+    end
+}
+
+-- The Wrench
+SMODS.Blind {
+    key = "wrench",
+    discovered = true,
+    boss = { min = 1 },
+    boss_colour = HEX("A000A0"),
+    config = { extra = { odds = 4, wiggle = false } },
+    loc_vars = function(self)
+        local num, denom = SMODS.get_probability_vars(self, 1, self.config.extra.odds, 'nancy_wrench')
+        return { vars = { num, denom } }
+    end,
+    collection_loc_vars = function(self)
+        return { vars = { 1, self.config.extra.odds } }
+    end,
+    calculate = function(self, blind, context)
+        if not blind.disabled then
+            if context.before then
+                blind.effect.extra.wiggle = false
+            end
+            if context.destroying_card
+                and SMODS.pseudorandom_probability(blind, 'nancy_wrench', 1, blind.effect.extra.odds)
+            then
+                return { remove = true, func =
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            if not blind.effect.extra.wiggle then
+                                blind.effect.extra.wiggle = true
+                                G.GAME.blind:wiggle()
+                            end
+                            return true
+                        end
+                    }))
+                }
+            end
+        end
+    end
+}
