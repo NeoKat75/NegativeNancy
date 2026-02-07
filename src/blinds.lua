@@ -1,3 +1,5 @@
+---@diagnostic disable: param-type-mismatch
+
 -- The Desert
 SMODS.Blind {
     key = "desert",
@@ -118,11 +120,46 @@ SMODS.Blind {
                             if not blind.effect.extra.wiggle then
                                 blind.effect.extra.wiggle = true
                                 G.GAME.blind:wiggle()
+                                blind.triggered = true
                             end
                             return true
                         end
                     }))
                 }
+            end
+        end
+    end
+}
+
+-- The File
+SMODS.Blind {
+    key = "file",
+    discovered = true,
+    boss = { min = 1 },
+    boss_colour = HEX("A000A0"),
+    calculate = function(self, blind, context)
+        if not blind.disabled then
+            if context.after then
+                -- From Vanilla Remade's Vampire
+                local enhanced = {}
+                for _, scored_card in ipairs(context.scoring_hand) do
+                    if next(SMODS.get_enhancements(scored_card)) and not scored_card.debuff and not scored_card.vampired then
+                        enhanced[#enhanced + 1] = scored_card
+                        scored_card.vampired = true
+                        scored_card:set_ability('c_base', nil, true)
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                scored_card:juice_up()
+                                scored_card.vampired = nil
+                                return true
+                            end
+                        }))
+                    end
+                end
+                if #enhanced > 0 then
+                    G.GAME.blind:wiggle()
+                    blind.triggered = true
+                end
             end
         end
     end

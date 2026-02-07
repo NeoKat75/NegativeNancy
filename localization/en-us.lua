@@ -93,6 +93,14 @@ return {
                     "scored card to be",
                     "destroyed after played"
                 }
+            },
+            bl_nancy_file = {
+                name = "The File",
+                text = {
+                    "All scored cards",
+                    "lose enhancements",
+                    "after played"
+                }
             }
         },
         Edition={},
