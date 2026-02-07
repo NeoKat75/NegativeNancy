@@ -67,6 +67,7 @@ SMODS.Blind {
                 blind.chips = math.ceil(blind.chips + chipmod)
                 blind.chip_text = number_format(blind.chips)
                 blind:wiggle()
+                if not G.CONTROLLER.locks.nancy_makenegatives then blind.triggered = true end
             end
         end
     end,
@@ -119,7 +120,7 @@ SMODS.Blind {
                         func = function()
                             if not blind.effect.extra.wiggle then
                                 blind.effect.extra.wiggle = true
-                                G.GAME.blind:wiggle()
+                                blind:wiggle()
                                 blind.triggered = true
                             end
                             return true
@@ -157,10 +158,54 @@ SMODS.Blind {
                     end
                 end
                 if #enhanced > 0 then
-                    G.GAME.blind:wiggle()
-                    blind.triggered = true
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            blind:wiggle()
+                            blind.triggered = true
+                            return true
+                        end
+                    }))
                 end
             end
+        end
+    end
+}
+
+-- Tourmaline Sun
+SMODS.Blind {
+    key = "final_sun",
+    discovered = true,
+    boss = { showdown = true },
+    boss_colour = HEX("A000A0"),
+    calculate = function(self, blind, context)
+        if not blind.disabled then
+            if context.before then
+                local yum = false
+                for _, area in ipairs{G.play, G.hand} do
+                    for _, card in ipairs(area.cards) do
+                        if not NegaNancy.isintable(context.scoring_hand, card) and not card.ability.nancy_tourmalinedebuff then
+                            card.ability.nancy_tourmalinedebuff = true
+                            SMODS.recalc_debuff(card)
+                            card:juice_up()
+                            yum = true
+                        end
+                    end
+                end
+                if yum then blind:wiggle(); blind.triggered = true end
+            end
+        end
+    end,
+    recalc_debuff = function(self, card, from_blind)
+        if card.ability.nancy_tourmalinedebuff then return true else return false end
+    end,
+    disable = function(self)
+        for _, card in ipairs(G.playing_cards) do
+            card.ability.nancy_tourmalinedebuff = nil
+        end
+    end,
+    defeat = function(self)
+        for _, card in ipairs(G.playing_cards) do
+            card.ability.nancy_tourmalinedebuff = nil
         end
     end
 }

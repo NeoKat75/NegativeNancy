@@ -89,9 +89,10 @@ return {
             bl_nancy_wrench = {
                 name = "The Wrench",
                 text = {
-                    "#1# in #2# chance for each",
-                    "scored card to be",
-                    "destroyed after played"
+                    "#1# in #2# chance for",
+                    "each scored card",
+                    "to be destroyed",
+                    "after played"
                 }
             },
             bl_nancy_file = {
@@ -100,6 +101,15 @@ return {
                     "All scored cards",
                     "lose enhancements",
                     "after played"
+                }
+            },
+            bl_nancy_final_sun = {
+                name = "Tourmaline Sun",
+                text = {
+                    "All cards not",
+                    "in scoring hand",
+                    "are debuffed",
+                    "when hand is played"
                 }
             }
         },

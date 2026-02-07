@@ -1,3 +1,14 @@
+---@param table table table to check against
+---@param item table|Card item to check for
+---@return boolean
+---- Utility function for checking if a table contains an item
+function NegaNancy.isintable(table, item)
+    for _, _item in pairs(table) do
+        if _item == item then return true end
+    end
+    return false
+end
+
 ---@param table table target table
 ---@return number
 ---- Utility function for getting the amount of items in a table (from the internet)
