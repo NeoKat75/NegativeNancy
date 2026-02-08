@@ -1,3 +1,14 @@
+---@diagnostic disable: need-check-nil
+
+---- SMODS.juice_up_blind() if it was good (has sounds now)
+function NegaNancy.wiggle_blind()
+    local ui_elem = G.HUD_blind:get_UIE_by_ID('HUD_blind_debuff')
+    for _, v in ipairs(ui_elem.children) do
+        v.children[1]:juice_up(0.3, 0)
+    end
+    G.GAME.blind:wiggle()
+end
+
 ---@param table table table to check against
 ---@param item table|Card item to check for
 ---@return boolean

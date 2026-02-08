@@ -1,8 +1,19 @@
 ---@diagnostic disable: param-type-mismatch
 
+-- Blind atlas
+SMODS.Atlas {
+    key = "blinds",
+    path = "blinds.png",
+    atlas_table = "ANIMATION_ATLAS",
+    px = 34,
+    py = 34
+}
+
 -- The Desert
 SMODS.Blind {
     key = "desert",
+    atlas = "blinds",
+    pos = { x = 0, y = 0 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -18,6 +29,8 @@ SMODS.Blind {
 -- The Filter
 SMODS.Blind {
     key = "filter",
+    atlas = "blinds",
+    pos = { x = 0, y = 1 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -43,6 +56,8 @@ SMODS.Blind {
 -- The Purse
 SMODS.Blind {
     key = "purse",
+    atlas = "blinds",
+    pos = { x = 0, y = 2 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0")
@@ -52,6 +67,8 @@ SMODS.Blind {
 -- The Dam
 SMODS.Blind {
     key = "dam",
+    atlas = "blinds",
+    pos = { x = 0, y = 3 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -66,7 +83,7 @@ SMODS.Blind {
                 local chipmod = #context.hand_drawn * blind.effect.extra.inc
                 blind.chips = math.ceil(blind.chips + chipmod)
                 blind.chip_text = number_format(blind.chips)
-                blind:wiggle()
+                NegaNancy.wiggle_blind()
                 if not G.CONTROLLER.locks.nancy_makenegatives then blind.triggered = true end
             end
         end
@@ -74,7 +91,7 @@ SMODS.Blind {
     disable = function(self)
         G.GAME.blind.chips = G.GAME.blind.effect.extra.base
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-        G.GAME.blind:wiggle()
+        NegaNancy.wiggle_blind()
         -- Checking for if blind is won is actually unnecessary here, it does it on its own
     end
 }
@@ -82,6 +99,8 @@ SMODS.Blind {
 -- The Crowd
 SMODS.Blind {
     key = "crowd",
+    atlas = "blinds",
+    pos = { x = 0, y = 4 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -96,6 +115,8 @@ SMODS.Blind {
 -- The Wrench
 SMODS.Blind {
     key = "wrench",
+    atlas = "blinds",
+    pos = { x = 0, y = 5 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -120,7 +141,7 @@ SMODS.Blind {
                         func = function()
                             if not blind.effect.extra.wiggle then
                                 blind.effect.extra.wiggle = true
-                                blind:wiggle()
+                                NegaNancy.wiggle_blind()
                                 blind.triggered = true
                             end
                             return true
@@ -135,6 +156,8 @@ SMODS.Blind {
 -- The File
 SMODS.Blind {
     key = "file",
+    atlas = "blinds",
+    pos = { x = 0, y = 6 },
     discovered = true,
     boss = { min = 1 },
     boss_colour = HEX("A000A0"),
@@ -160,7 +183,7 @@ SMODS.Blind {
                 if #enhanced > 0 then
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            blind:wiggle()
+                            NegaNancy.wiggle_blind()
                             blind.triggered = true
                             return true
                         end
@@ -174,6 +197,8 @@ SMODS.Blind {
 -- Tourmaline Sun
 SMODS.Blind {
     key = "final_sun",
+    atlas = "blinds",
+    pos = { x = 0, y = 7 },
     discovered = true,
     boss = { showdown = true },
     boss_colour = HEX("A000A0"),
@@ -191,7 +216,7 @@ SMODS.Blind {
                         end
                     end
                 end
-                if yum then blind:wiggle(); blind.triggered = true end
+                if yum then NegaNancy.wiggle_blind(); blind.triggered = true end
             end
         end
     end,

@@ -384,7 +384,7 @@ SMODS.Joker {
             local chipmod = G.GAME.blind.chips * ((money * card.ability.extra.reduction) / 100)
             G.GAME.blind.chips = math.ceil(G.GAME.blind.chips - chipmod)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-            G.GAME.blind:wiggle()
+            NegaNancy.wiggle_blind()
             -- Win blind if enough score (from Vanilla Remade wiki)
             if G.GAME.chips >= G.GAME.blind.chips then
                 G.E_MANAGER:add_event(Event({
