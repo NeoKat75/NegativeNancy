@@ -9,13 +9,13 @@ SMODS.Atlas {
 
 function NegaNancy.calculate(self, context)
     -- Use Booster Tags when entering shop
-    if context.starting_shop and G.GAME.tags then
+    if context.starting_shop and next(G.GAME.tags) then
         for _, tag in ipairs(G.GAME.tags) do
             if tag:apply_to_run{type = 'new_blind_choice'} then break end
         end
     end
     -- Use Edition Tags when exiting a booster pack
-    if context.ending_booster and G.GAME.tags and G.shop_jokers and G.shop_jokers.cards then
+    if context.ending_booster and next(G.GAME.tags) and G.shop_jokers and G.shop_jokers.cards then
         for k, card in ipairs(G.shop_jokers.cards) do
             for kk, tag in ipairs(G.GAME.tags) do
                 if tag:apply_to_run{type = 'store_joker_modify', card = card} then break end
@@ -28,23 +28,10 @@ function NegaNancy.calculate(self, context)
             if tag.config.type == 'new_blind_choice' then return { prevent_trigger = true } end
         end
     end
-    -- Shredder Tag (only triggered if no Exposure Therapy & no potential Priority Tags)
-    -- If those are present, they trigger Shredder Tags themselves after doing their thing
-    if (context.hand_drawn or context.other_drawn) and G.GAME.tags then
-        local priority = false
+    -- Shredder Tag
+    if (context.hand_drawn or context.other_drawn) and next(G.GAME.tags) then
         for _, tag in ipairs(G.GAME.tags) do
-            if tag.key == 'tag_nancy_priority' then priority = true; break end
-        end
-        if not next(SMODS.find_card("j_nancy_exposuretherapy")) and (not priority or not context.first_hand_drawn) then
-            for _, tag in ipairs(G.GAME.tags) do
-                if tag:apply_to_run{type = 'nancy_shredder'} then break end
-            end
-        end
-    end
-    -- Priority Tag
-    if context.first_hand_drawn and G.GAME.tags then
-        for _, tag in ipairs(G.GAME.tags) do
-            if tag:apply_to_run{type = 'nancy_priority'} then break end
+            if tag:apply_to_run{type = 'nancy_shredder'} then break end
         end
     end
 end

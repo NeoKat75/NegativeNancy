@@ -1178,51 +1178,29 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     calculate = function(self, card, context)
-        if (context.hand_drawn or context.other_drawn) and not context.blueprint then
+        if (context.nancy_exposuretherapy or (context.open_booster and context.booster.draw_hand))
+            and not context.blueprint
+        then
             local targets = {}
-            for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" and not _card.ability.nancy_exposed then
-                    _card.ability.nancy_exposed = true
-                    targets[#targets+1] = _card
+            for i = #G.deck.cards, 1, -1 do
+                local _card = G.deck.cards[i]
+                if _card.edition and _card.edition.key == 'e_negative' then
+                    table.insert(targets, _card)
+                    table.remove(G.deck.cards, i)
                 end
+            end
+            for _, _card in ipairs(targets) do
+                table.insert(G.deck.cards, #G.deck.cards, _card)
             end
             if next(targets) then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         play_sound('gong', 0.94, 0.5)
                         play_sound('gong', 0.94*1.5, 0.5)
-                        for _, _card in ipairs(targets) do
-                            draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
-                            _card.ability.nancy_exposed = nil
-                        end
-                        -- Trigger Shredder Tags after drawing cards
-                        if G.GAME.tags then
-                            G.E_MANAGER:add_event(Event({
-                                func = function()
-                                    for _, _tag in ipairs(G.GAME.tags) do
-                                        if _tag:apply_to_run{type = 'nancy_shredder'} then break end
-                                    end
-                                    return true
-                                end
-                            }))
-                        end
                         return true
                     end
                 }))
                 return { message = localize("nancy_exposed") }
-            end
-            -- Trigger Shredder Tags even if no cards were drawn cuz they won't trigger themselves if this Joker is present
-            if not next(targets) then
-                if G.GAME.tags then
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            for _, _tag in ipairs(G.GAME.tags) do
-                                if _tag:apply_to_run{type = 'nancy_shredder'} then break end
-                            end
-                            return true
-                        end
-                    }))
-                end
             end
         end
     end

@@ -68,40 +68,22 @@ SMODS.Tag {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     apply = function(self, tag, context)
-        if context.type == 'nancy_priority' then
+        if context.type == 'nancy_priority' and not next(SMODS.find_card('j_nancy_exposuretherapy')) then
             local targets = {}
-            for _, _card in ipairs(G.deck.cards) do
-                if _card.edition and _card.edition.key == "e_negative" and not _card.ability.nancy_exposed then
-                    _card.ability.nancy_exposed = true
-                    targets[#targets+1] = _card
+            for i = #G.deck.cards, 1, -1 do
+                local card = G.deck.cards[i]
+                if card.edition and card.edition.key == 'e_negative' then
+                    table.insert(targets, card)
+                    table.remove(G.deck.cards, i)
                 end
             end
-            if next(targets) then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        for _, _card in ipairs(targets) do
-                            draw_card(G.deck, G.hand, nil, nil, G.GAME.sort, _card)
-                            _card.ability.nancy_exposed = nil
-                        end
-                        return true
-                    end
-                }))
+            for _, card in ipairs(targets) do
+                table.insert(G.deck.cards, #G.deck.cards, card)
             end
             tag:yep('+', G.C.RARITY[4], function()
                 if next(targets) then
                     play_sound('gong', 0.94, 0.3)
                     play_sound('gong', 0.94*1.5, 0.3)
-                end
-                -- Trigger Shredder Tags if no Exposure Therapy to do it instead
-                if G.GAME.tags and not next(SMODS.find_card("j_nancy_exposuretherapy")) then
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            for _, _tag in ipairs(G.GAME.tags) do
-                                if _tag:apply_to_run{type = 'nancy_shredder'} then break end
-                            end
-                            return true
-                        end
-                    }))
                 end
                 return true
             end)

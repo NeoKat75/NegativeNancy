@@ -26,7 +26,8 @@ function CardArea:shuffle(_seed)
     -- execute and save the orig function's return
     local ret = shuffle(self, _seed)
     -- after the orig function
-    if self == G.deck and G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_nancy_purse'
+    if self == G.deck and _seed == 'nr'..G.GAME.round_resets.ante
+        and G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_nancy_purse'
         and not G.GAME.blind.disabled and not next(SMODS.find_card('j_chicot'))
         -- blind.disabled check is reduntant for vanilla-only content, but just incase
     then
@@ -44,6 +45,27 @@ function CardArea:shuffle(_seed)
         end
         for _, card in ipairs(targets) do
             table.insert(self.cards, 1, card)
+        end
+    end
+    -- actually return the orig function's return
+    return ret
+end
+
+---- Exposure Therapy and Priority Tag
+-- save the orig function (no executing)
+local shuffle = CardArea.shuffle
+function CardArea:shuffle(_seed)
+    -- before the orig function
+    ---- do nothing!
+    -- execute and save the orig function's return
+    local ret = shuffle(self, _seed)
+    -- after the orig function
+    if self == G.deck and _seed == 'nr'..G.GAME.round_resets.ante then
+        SMODS.calculate_context{nancy_exposuretherapy = true}
+        if next(G.GAME.tags) then
+            for _, tag in ipairs(G.GAME.tags) do
+                if tag:apply_to_run{type = 'nancy_priority'} then break end
+            end
         end
     end
     -- actually return the orig function's return
