@@ -15,7 +15,7 @@ SMODS.Blind {
     atlas = "blinds",
     pos = { x = 0, y = 0 },
     discovered = true,
-    boss = { min = 1 },
+    boss = { min = 3 },
     boss_colour = HEX("ab7b27"),
     calculate = function(self, blind, context)
         if not blind.disabled then
@@ -32,7 +32,7 @@ SMODS.Blind {
     atlas = "blinds",
     pos = { x = 0, y = 1 },
     discovered = true,
-    boss = { min = 1 },
+    boss = { min = 3 },
     boss_colour = HEX("007aad"),
     calculate = function(self, blind, context)
         if not blind.disabled then
@@ -57,9 +57,9 @@ SMODS.Blind {
 SMODS.Blind {
     key = "purse",
     atlas = "blinds",
-    pos = { x = 0, y = 2 },
+    pos = { x = 0, y = 3 },
     discovered = true,
-    boss = { min = 1 },
+    boss = { min = 3 },
     boss_colour = HEX("a000a0")
     -- Functionality handled in a CardArea:shuffle() hook
 }
@@ -118,7 +118,7 @@ SMODS.Blind {
     atlas = "blinds",
     pos = { x = 0, y = 5 },
     discovered = true,
-    boss = { min = 1 },
+    boss = { min = 5 },
     boss_colour = HEX("bb3100"),
     config = { extra = { odds = 4, wiggle = false } },
     loc_vars = function(self)
@@ -159,7 +159,7 @@ SMODS.Blind {
     atlas = "blinds",
     pos = { x = 0, y = 6 },
     discovered = true,
-    boss = { min = 1 },
+    boss = { min = 5 },
     boss_colour = HEX("730082"),
     calculate = function(self, blind, context)
         if not blind.disabled then

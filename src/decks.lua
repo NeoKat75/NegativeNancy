@@ -12,12 +12,20 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 0, y = 0 },
     discovered = true,
-    config = { jokers = {'j_nancy_negativenancy'}, voucher = 'v_nancy_scarf' },
+    config = { voucher = 'v_nancy_scarf', extra = { joker = 'j_nancy_negativenancy' } },
     loc_vars = function(self, info_queue, back)
         return { vars = {
-            localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'},
+            localize{type = 'name_text', key = back.config.extra.joker, set = 'Joker'},
             localize{type = 'name_text', key = self.config.voucher, set = 'Voucher'}
         } }
+    end,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                SMODS.add_card{key = back.config.extra.joker, no_edition = true}
+                return true
+            end
+        }))
     end
 }
 
@@ -27,9 +35,9 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 1, y = 0 },
     discovered = true,
-    config = { jokers = {'j_nancy_laminator'} },
+    config = { vouchers = { 'v_hone', 'v_glow_up' } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
+        return { vars = { localize{type = 'name_text', key = self.config.vouchers[2], set = 'Voucher'} } }
     end,
     calculate = function(self, back, context)
         if context.starting_shop then
@@ -115,29 +123,6 @@ SMODS.Back {
     end
 }
 
--- Crumpled Deck
-SMODS.Back {
-    key = "crumpled",
-    atlas = "decks",
-    pos = { x = 3, y = 0 },
-    discovered = true,
-    config = { joker_slot = -4, jokers = {'j_nancy_initiation'}, extra = { hsize = -1 } },
-    loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.extra.hsize, localize{type = 'name_text', key = self.config.jokers[1], set = 'Joker'} } }
-    end,
-    calculate = function(self, back, context)
-        if context.card_added and context.card.ability.set == "Joker" then
-            G.jokers:change_size(1)
-            G.hand:change_size(self.config.extra.hsize)
-        end
-        if (context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker" then
-            G.jokers:change_size(-1)
-            G.hand:change_size(-self.config.extra.hsize)
-        end
-        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
-    end
-}
-
 -- Chaotic Deck
 SMODS.Back {
     key = "chaotic",
@@ -194,5 +179,28 @@ SMODS.Back {
                 return true
             end
         }))
+    end
+}
+
+-- Crumpled Deck
+SMODS.Back {
+    key = "crumpled",
+    atlas = "decks",
+    pos = { x = 3, y = 0 },
+    discovered = true,
+    config = { joker_slot = -4, extra = { hsize = -1 } },
+    loc_vars = function(self, info_queue, back)
+        return { vars = { self.config.extra.hsize } }
+    end,
+    calculate = function(self, back, context)
+        if context.card_added and context.card.ability.set == "Joker" then
+            G.jokers:change_size(1)
+            G.hand:change_size(self.config.extra.hsize)
+        end
+        if (context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker" then
+            G.jokers:change_size(-1)
+            G.hand:change_size(-self.config.extra.hsize)
+        end
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end
 }
