@@ -23,6 +23,7 @@ SMODS.Back {
         G.E_MANAGER:add_event(Event({
             func = function()
                 SMODS.add_card{key = self.config.extra.joker, no_edition = true}
+                play_sound('timpani')
                 return true
             end
         }))
