@@ -392,6 +392,21 @@ return {
                     "contains exactly {C:attention}one",
                     "{C:attention}unscored{} card"
                 }
+            },
+            -- Can't really patch it to consider debuff sources so this'll do...
+            j_matador = {
+                name = "Matador",
+                text = {
+                    "Earn {C:money}$#1#{} if played",
+                    "hand triggers the",
+                    "{C:attention}Boss Blind{} ability",
+                    "{s:0.85}or has a {C:attention,s:0.85}debuffed {s:0.85}card"
+                },
+                unlock = {
+                    "Defeat a Boss Blind",
+                    "in {E:1,C:attention}1 hand{} without",
+                    "using any discards",
+                }
             }
         },
         Other = {
