@@ -57,7 +57,7 @@ SMODS.Blind {
 SMODS.Blind {
     key = "purse",
     atlas = "blinds",
-    pos = { x = 0, y = 3 },
+    pos = { x = 0, y = 2 },
     discovered = true,
     boss = { min = 3 },
     boss_colour = HEX("a000a0")
