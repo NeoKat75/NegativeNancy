@@ -15,14 +15,14 @@ SMODS.Back {
     config = { voucher = 'v_nancy_scarf', extra = { joker = 'j_nancy_negativenancy' } },
     loc_vars = function(self, info_queue, back)
         return { vars = {
-            localize{type = 'name_text', key = back.config.extra.joker, set = 'Joker'},
+            localize{type = 'name_text', key = self.config.extra.joker, set = 'Joker'},
             localize{type = 'name_text', key = self.config.voucher, set = 'Voucher'}
         } }
     end,
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
-                SMODS.add_card{key = back.config.extra.joker, no_edition = true}
+                SMODS.add_card{key = self.config.extra.joker, no_edition = true}
                 return true
             end
         }))
