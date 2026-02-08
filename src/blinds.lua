@@ -16,7 +16,7 @@ SMODS.Blind {
     pos = { x = 0, y = 0 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("ab7b27"),
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.debuff_card and context.debuff_card.area ~= G.jokers and context.debuff_card.edition then
@@ -33,7 +33,7 @@ SMODS.Blind {
     pos = { x = 0, y = 1 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("007aad"),
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.stay_flipped and context.to_area == G.hand and context.other_card.edition then
@@ -60,7 +60,7 @@ SMODS.Blind {
     pos = { x = 0, y = 2 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0")
+    boss_colour = HEX("a000a0")
     -- Functionality handled in a CardArea:shuffle() hook
 }
 
@@ -71,7 +71,7 @@ SMODS.Blind {
     pos = { x = 0, y = 3 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("0092c7"),
     config = { extra = { inc = 0, base = 0 } },
     calculate = function(self, blind, context)
         if context.setting_blind then
@@ -103,7 +103,7 @@ SMODS.Blind {
     pos = { x = 0, y = 4 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("1d6d00"),
     calculate = function(self, blind, context)
         -- Waiting for next smods version to do this!
         if not blind.disabled then
@@ -119,7 +119,7 @@ SMODS.Blind {
     pos = { x = 0, y = 5 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("bb3100"),
     config = { extra = { odds = 4, wiggle = false } },
     loc_vars = function(self)
         local num, denom = SMODS.get_probability_vars(self, 1, self.config.extra.odds, 'nancy_wrench')
@@ -160,7 +160,7 @@ SMODS.Blind {
     pos = { x = 0, y = 6 },
     discovered = true,
     boss = { min = 1 },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("730082"),
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.after then
@@ -201,7 +201,7 @@ SMODS.Blind {
     pos = { x = 0, y = 7 },
     discovered = true,
     boss = { showdown = true },
-    boss_colour = HEX("A000A0"),
+    boss_colour = HEX("4d4d4d"),
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.before then
