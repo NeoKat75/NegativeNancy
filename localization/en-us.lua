@@ -590,7 +590,8 @@ return {
         achievement_names={},
         blind_states={},
         challenge_names = {
-            c_nancy_showcase = "Nancy's Showcase"
+            c_nancy_showcase = "Nancy's Showcase",
+            c_nancy_groceries = "Jimbo Gets Groceries"
         },
         collabs={},
         dictionary = {
@@ -669,7 +670,9 @@ return {
         v_dictionary={},
         v_text = {
             ch_c_nancy_showcase_1 = { "Fight {C:attention}only{} the new {C:attention}Boss Blinds" },
-            ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" }
+            ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" },
+            ch_c_nancy_groceries_1 = { "Help {C:attention}Jimbo{} shop at the supermarket!" },
+            ch_c_nancy_groceries_2 = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
         }
     }
 }
