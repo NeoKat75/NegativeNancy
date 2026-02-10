@@ -591,7 +591,8 @@ return {
         blind_states={},
         challenge_names = {
             c_nancy_showcase = "Nancy's Showcase",
-            c_nancy_groceries = "Jimbo Gets Groceries"
+            c_nancy_groceries = "Jimbo Gets Groceries",
+            c_nancy_vandalism = "Vandalism"
         },
         collabs={},
         dictionary = {

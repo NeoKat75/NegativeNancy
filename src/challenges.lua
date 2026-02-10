@@ -66,3 +66,20 @@ SMODS.Challenge {
         end
     end
 }
+
+SMODS.Challenge {
+    key = 'vandalism',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_nancy_streetart', eternal = true } },
+    restrictions = { banned_cards = {
+        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' },
+        { id = 'j_runner' }, { id = 'j_blue_joker' }, { id = 'j_green_joker' },
+        { id = 'j_red_card' }, { id = 'j_square' }, { id = 'j_erosion' },
+        { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_bull' },
+        { id = 'j_flash' }, { id = 'j_trousers' }, { id = 'j_castle' },
+        { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_bootstraps' },
+        { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_collector' }, { id = 'j_nancy_postmodernjoker' },
+        { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
+        { id = 'j_nancy_decorativejoker' }
+    } }
+}
