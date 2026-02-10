@@ -589,7 +589,9 @@ return {
         achievement_descriptions={},
         achievement_names={},
         blind_states={},
-        challenge_names={},
+        challenge_names = {
+            c_nancy_showcase = "Nancy's Showcase"
+        },
         collabs={},
         dictionary = {
             nancy_notarget = "No Target!",
@@ -665,6 +667,9 @@ return {
         suits_singular={},
         tutorial={},
         v_dictionary={},
-        v_text={}
+        v_text = {
+            ch_c_nancy_showcase_1 = { "Fight {C:attention}only{} the new {C:attention}Boss Blinds" },
+            ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" }
+        }
     }
 }

@@ -39,3 +39,5 @@ assert(SMODS.load_file("src/tags.lua"))()
 assert(SMODS.load_file("src/decks.lua"))()
 assert(SMODS.load_file("src/stakes.lua"))()
 assert(SMODS.load_file("src/blinds.lua"))()
+
+assert(SMODS.load_file("src/challenges.lua"))()
