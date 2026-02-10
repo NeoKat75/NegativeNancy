@@ -593,7 +593,8 @@ return {
             c_nancy_showcase = "Nancy's Showcase",
             c_nancy_groceries = "Jimbo Gets Groceries",
             c_nancy_vandalism = "Vandalism",
-            c_nancy_stairway = "Stairway To Heaven"
+            c_nancy_stairway = "Stairway To Heaven",
+            c_nancy_printing = "Printing Factory"
         },
         collabs={},
         dictionary = {
@@ -676,6 +677,7 @@ return {
             ch_c_nancy_groceries_1 = { "Help {C:attention}Jimbo{} shop at the supermarket!" },
             ch_c_nancy_groceries_2 = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
             ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
+            ch_c_nancy_printing = { "Cards cannot have {C:enhanced}Enhancements" },
         }
     }
 }

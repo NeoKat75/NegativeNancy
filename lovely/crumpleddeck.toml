@@ -1,6 +1,6 @@
-[manifest] # Header for the file, this should only be here once at the beginning
+[manifest]
 version = "0.1.0"
-priority = 0 # Priority for loading the file
+priority = 0
 
 
 ## Joker cardarea hand size counter
@@ -8,11 +8,11 @@ priority = 0 # Priority for loading the file
 
 [[patches]]
 [patches.pattern]
-target = 'cardarea.lua' # The file you want to patch.
+target = 'cardarea.lua'
 pattern = '''
 self.children.area_uibox = UIBox{
-''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
-position = "before" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+'''
+position = "before"
 payload = '''
 if G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' and self == G.jokers then
     card_count = not self.config.no_card_count and self ~= G.shop_vouchers and {n=G.UIT.R, config={align = self == G.jokers and 'cl' or self == G.hand and 'cm' or 'cr', padding = 0.03, no_fill = true}, nodes={
@@ -22,7 +22,7 @@ if G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' and self == G.jo
         {n=G.UIT.B, config={w = 0.1,h=0.1}}
     }} or nil
 end
-''' # What code you want to replace it with.
+'''
 match_indent = true
 
 
@@ -31,26 +31,26 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = 'card.lua' # The file you want to patch.
+target = 'card.lua'
 pattern = '''
 if self.ability.name == 'Riff-raff' and not (context.blueprint_card or self).getting_sliced and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
-''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
-position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+'''
+position = "at"
 payload = '''
 if self.ability.name == 'Riff-raff' and not (context.blueprint_card or self).getting_sliced and ((#G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled') then
-''' # What code you want to replace it with.
+'''
 match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = 'card.lua' # The file you want to patch.
+target = 'card.lua'
 pattern = '''
 local jokers_to_create = math.min(2, G.jokers.config.card_limit - (#G.jokers.cards + G.GAME.joker_buffer))
-''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
-position = "after" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+'''
+position = "after"
 payload = '''
 if G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' then jokers_to_create = 2 end
-''' # What code you want to replace it with.
+'''
 match_indent = true
 
 
@@ -59,12 +59,12 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = 'tag.lua' # The file you want to patch.
+target = 'tag.lua'
 pattern = '''
 if G.jokers and #G.jokers.cards < G.jokers.config.card_limit then
-''' # The line(s) you want to patch. In pattern patches it should be the whole line(s). Make sure it's unique in that file.
-position = "at" # Where you want to patch it: 'before', 'after' or 'at' (this last one replaces the whole pattern)
+''' 
+position = "at"
 payload = '''
 if (G.jokers and #G.jokers.cards < G.jokers.config.card_limit) or G.GAME.selected_back.effect.center.key == 'b_nancy_crumpled' then
-''' # What code you want to replace it with.
+'''
 match_indent = true

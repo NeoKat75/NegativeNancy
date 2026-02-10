@@ -108,3 +108,35 @@ SMODS.Challenge {
         }))
     end
 }
+
+SMODS.Challenge {
+    key = 'printing',
+    button_colour = HEX('A000A0'),
+    jokers = {
+        { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' },
+        { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }
+    },
+    vouchers = { { id = 'v_magic_trick' } },
+    rules = { custom = { { id = 'nancy_printing' } } },
+    restrictions = {
+        banned_cards = {
+            { id = 'j_midas_mask' }, { id = 'v_illusion' }, { id = 'c_magician' },
+            { id = 'c_empress' }, { id = 'c_heirophant' }, { id = 'c_lovers' },
+            { id = 'c_chariot' }, { id = 'c_justice' }, { id = 'c_devil' },
+            { id = 'c_tower' }, { id = 'c_familiar' }, { id = 'c_grim' },
+            { id = 'c_incantation' }, { id = 'c_nancy_mastery' },
+            { id = 'p_standard_normal_1', ids = {
+                'p_standard_normal_1', 'p_standard_normal_2',
+                'p_standard_normal_3', 'p_standard_normal_4',
+                'p_standard_jumbo_1', 'p_standard_jumbo_2',
+                'p_standard_mega_1', 'p_standard_mega_2'
+            } }
+        },
+        banned_other = { { id = 'bl_nancy_file', type = 'blind' } }
+    },
+    calculate = function(self, context)
+        if context.setting_ability and context.other_card.playing_card and context.new ~= 'c_base' then
+            context.other_card:set_ability('c_base')
+        end
+    end
+}
