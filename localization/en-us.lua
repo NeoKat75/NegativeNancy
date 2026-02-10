@@ -592,7 +592,8 @@ return {
         challenge_names = {
             c_nancy_showcase = "Nancy's Showcase",
             c_nancy_groceries = "Jimbo Gets Groceries",
-            c_nancy_vandalism = "Vandalism"
+            c_nancy_vandalism = "Vandalism",
+            c_nancy_stairway = "Stairway To Heaven"
         },
         collabs={},
         dictionary = {
@@ -674,6 +675,7 @@ return {
             ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" },
             ch_c_nancy_groceries_1 = { "Help {C:attention}Jimbo{} shop at the supermarket!" },
             ch_c_nancy_groceries_2 = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
+            ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
         }
     }
 }

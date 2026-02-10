@@ -83,3 +83,28 @@ SMODS.Challenge {
         { id = 'j_nancy_decorativejoker' }
     } }
 }
+
+SMODS.Challenge {
+    key = 'stairway',
+    button_colour = HEX('A000A0'),
+    jokers = {
+        { id = 'j_nancy_stairwell' }, { id = 'j_nancy_stairwell' }, { id = 'j_joker' },
+        { id = 'j_nancy_stairwell' }, { id = 'j_nancy_stairwell' }
+    },
+    rules = { custom = { { id = 'nancy_stairway' } } },
+    restrictions = { banned_other = {
+        { id = 'bl_nancy_desert', type = 'blind' },
+        { id = 'bl_nancy_filter', type = 'blind' },
+        { id = 'bl_nancy_purse', type = 'blind' }
+    } },
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for _, card in ipairs(G.playing_cards) do
+                    SMODS.debuff_card(card, true, 'nancy_stairway')
+                end
+                return true
+            end
+        }))
+    end
+}
