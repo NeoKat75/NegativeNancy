@@ -140,3 +140,16 @@ SMODS.Challenge {
         end
     end
 }
+
+SMODS.Challenge {
+    key = 'victory',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' } },
+    consumeables = { { id = 'c_nancy_flood' }, { id = 'c_nancy_mastery' } },
+    vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
+    rules = { custom = { { id = 'nancy_victory' } } },
+    apply = function(self)
+        G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
+        SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
+    end
+}

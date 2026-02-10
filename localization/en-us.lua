@@ -433,8 +433,8 @@ return {
                 name = "Emerald Sticker",
                 text = {
                     "Used this Joker",
-                    "to win on {C:attention}Emerald",
-                    "{C:attention}Stake{} difficulty",
+                    "to win on {C:nancy_emerald}Emerald",
+                    "{C:nancy_emerald}Stake{} difficulty",
                 }
             },
             nancy_binding = {
@@ -487,7 +487,7 @@ return {
             stake_nancy_emerald = {
                 name = "Emerald Stake",
                 text = {
-                    "Shop can have {C:attention}Binding{} Jokers",
+                    "Shop can have {C:nancy_emerald}Binding{} Jokers",
                     "{C:inactive,s:0.8}({C:red,s:0.8}-1 {C:inactive,s:0.8}hand size)",
                     "{s:0.8}Applies all previous Stakes",
                 },
@@ -594,7 +594,8 @@ return {
             c_nancy_groceries = "Jimbo Gets Groceries",
             c_nancy_vandalism = "Vandalism",
             c_nancy_stairway = "Stairway To Heaven",
-            c_nancy_printing = "Printing Factory"
+            c_nancy_printing = "Printing Factory",
+            c_nancy_victory = "Victory Lap"
         },
         collabs={},
         dictionary = {
@@ -678,6 +679,7 @@ return {
             ch_c_nancy_groceries_2 = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
             ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
             ch_c_nancy_printing = { "Cards cannot have {C:enhanced}Enhancements" },
+            ch_c_nancy_victory = { "{C:nancy_emerald}Emerald Stake{} and below are applied" },
         }
     }
 }

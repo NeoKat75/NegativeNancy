@@ -29,6 +29,9 @@ function NegaNancy.calculate(self, context)
     end
 end
 
+loc_colour()
+G.ARGS.LOC_COLOURS.nancy_emerald = HEX('068b54')
+
 assert(SMODS.load_file("src/utils/functions.lua"))()
 assert(SMODS.load_file("src/utils/hooks.lua"))()
 
