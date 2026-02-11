@@ -86,6 +86,15 @@ SMODS.Challenge {
                 return true
             end
         }))
+    end,
+    calculate = function(self, context)
+        if context.playing_card_added then
+            for _, card in ipairs(context.cards) do
+                if not (card.edition and card.edition.key == "e_negative") then
+                    SMODS.debuff_card(card, true, 'nancy_stairway')
+                end
+            end
+        end
     end
 }
 
