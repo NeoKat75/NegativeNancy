@@ -678,8 +678,7 @@ return {
         v_text = {
             ch_c_nancy_showcase_1 = { "Fight {C:attention}only{} the new {C:attention}Boss Blinds" },
             ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" },
-            ch_c_nancy_groceries_1 = { "Help {C:attention}Jimbo{} shop at the supermarket!" },
-            ch_c_nancy_groceries_2 = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
+            ch_c_nancy_groceries = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
             ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
             ch_c_nancy_printing = { "Cards cannot have {C:enhanced}Enhancements" },
             ch_c_nancy_victory = { "{C:nancy_emerald}Emerald Stake{} and below are applied" },

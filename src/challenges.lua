@@ -54,10 +54,7 @@ SMODS.Challenge {
     key = 'groceries',
     button_colour = HEX('A000A0'),
     jokers = { { id = 'j_nancy_usefuljoker', eternal = true } },
-    rules = { custom = {
-        { id = 'nancy_groceries_1' },
-        { id = 'nancy_groceries_2' }
-    } },
+    rules = { custom = { { id = 'nancy_groceries' } } },
     apply = function(self)
         for k, v in pairs(G.P_CENTERS) do
             if v.set == "Joker" and v.rarity ~= 4 and not (v.pools or {}).nancy_groceries then
