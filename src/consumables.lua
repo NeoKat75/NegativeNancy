@@ -56,7 +56,6 @@ SMODS.Consumable {
     end,
     can_use = function(self, card)
         return G.hand and #G.hand.highlighted <= card.ability.extra.max_highlighted and #G.hand.highlighted > 0
-            and not G.hand.highlighted[1].debuff
     end
 }
 
