@@ -68,20 +68,53 @@ SMODS.Challenge {
 }
 
 SMODS.Challenge {
-    key = 'vandalism',
+    key = 'lowp',
     button_colour = HEX('A000A0'),
-    jokers = { { id = 'j_nancy_streetart', eternal = true } },
-    restrictions = { banned_cards = {
-        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' },
-        { id = 'j_runner' }, { id = 'j_blue_joker' }, { id = 'j_green_joker' },
-        { id = 'j_red_card' }, { id = 'j_square' }, { id = 'j_erosion' },
-        { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_bull' },
-        { id = 'j_flash' }, { id = 'j_trousers' }, { id = 'j_castle' },
-        { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_bootstraps' },
-        { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_collector' }, { id = 'j_nancy_postmodernjoker' },
-        { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
-        { id = 'j_nancy_decorativejoker' }
-    } }
+    rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
+    config = { extra = 0 },
+    calculate = function(self, context)
+        if context.first_hand_drawn and self.config.extra > 0 then
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            NegaNancy.wiggle_blind()
+            if G.deck and next(G.deck.cards) then
+                G.deck.cards[1]:juice_up()
+            else
+                G.deck:juice_up()
+            end
+        end
+        if context.end_of_round and context.main_eval then
+            self.config.extra = G.GAME.chips - G.GAME.blind.chips
+            if self.config.extra < 0 then self.config.extra = 0 end
+            if G.deck and next(G.deck.cards) then
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
+            else
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
+            end
+        end
+    end
+}
+
+SMODS.Challenge {
+    key = 'high',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
+    rules = { custom = { { id = 'nancy_high' } } },
+    calculate = function(self, context)
+        if context.debuff_hand and context.scoring_name ~= "High Card" then
+            local deck
+            if G.deck and next(G.deck.cards) then
+                deck = G.deck.cards[1]
+            else
+                deck = G.deck
+            end
+            return {
+                debuff = true,
+                debuff_text = "Only High Card is allowed!",
+                debuff_source = deck
+            }
+        end
+    end
 }
 
 SMODS.Challenge {
@@ -119,17 +152,15 @@ SMODS.Challenge {
     rules = { custom = { { id = 'nancy_printing' } } },
     restrictions = {
         banned_cards = {
-            { id = 'j_midas_mask' }, { id = 'v_illusion' }, { id = 'c_magician' },
-            { id = 'c_empress' }, { id = 'c_heirophant' }, { id = 'c_lovers' },
-            { id = 'c_chariot' }, { id = 'c_justice' }, { id = 'c_devil' },
-            { id = 'c_tower' }, { id = 'c_familiar' }, { id = 'c_grim' },
-            { id = 'c_incantation' }, { id = 'c_nancy_mastery' },
+            { id = 'j_midas_mask' }, { id = 'c_magician' }, { id = 'c_empress' }, { id = 'c_heirophant' },
+            { id = 'v_illusion' }, { id = 'c_lovers' }, { id = 'c_chariot' }, { id = 'c_justice' },
+            { id = 'c_devil' }, { id = 'c_tower' }, { id = 'c_familiar' }, { id = 'c_grim' },
             { id = 'p_standard_normal_1', ids = {
                 'p_standard_normal_1', 'p_standard_normal_2',
                 'p_standard_normal_3', 'p_standard_normal_4',
                 'p_standard_jumbo_1', 'p_standard_jumbo_2',
                 'p_standard_mega_1', 'p_standard_mega_2'
-            } }
+            } }, { id = 'c_incantation' }, { id = 'c_nancy_mastery' }
         },
         banned_other = { { id = 'bl_nancy_file', type = 'blind' } }
     },
@@ -141,44 +172,20 @@ SMODS.Challenge {
 }
 
 SMODS.Challenge {
-    key = 'victory',
+    key = 'vandalism',
     button_colour = HEX('A000A0'),
-    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' } },
-    consumeables = { { id = 'c_nancy_flood' }, { id = 'c_nancy_mastery' } },
-    vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
-    rules = { custom = { { id = 'nancy_victory' } } },
-    apply = function(self)
-        G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
-        SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
-    end
-}
-
-SMODS.Challenge {
-    key = 'lowp',
-    button_colour = HEX('A000A0'),
-    rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
-    config = { extra = 0 },
-    calculate = function(self, context)
-        if context.first_hand_drawn and self.config.extra > 0 then
-            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
-            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-            NegaNancy.wiggle_blind()
-            if G.deck and next(G.deck.cards) then
-                G.deck.cards[1]:juice_up()
-            else
-                G.deck:juice_up()
-            end
-        end
-        if context.end_of_round and context.main_eval then
-            self.config.extra = G.GAME.chips - G.GAME.blind.chips
-            if self.config.extra < 0 then self.config.extra = 0 end
-            if G.deck and next(G.deck.cards) then
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
-            else
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
-            end
-        end
-    end
+    jokers = { { id = 'j_nancy_streetart', eternal = true } },
+    restrictions = { banned_cards = {
+        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' },
+        { id = 'j_runner' }, { id = 'j_blue_joker' }, { id = 'j_green_joker' },
+        { id = 'j_red_card' }, { id = 'j_square' }, { id = 'j_erosion' },
+        { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_bull' },
+        { id = 'j_flash' }, { id = 'j_trousers' }, { id = 'j_castle' },
+        { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_bootstraps' },
+        { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_collector' }, { id = 'j_nancy_postmodernjoker' },
+        { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
+        { id = 'j_nancy_decorativejoker' }
+    } }
 }
 
 SMODS.Challenge {
@@ -236,5 +243,18 @@ SMODS.Challenge {
                 SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck)
             end
         end
+    end
+}
+
+SMODS.Challenge {
+    key = 'victory',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' } },
+    consumeables = { { id = 'c_nancy_flood' }, { id = 'c_nancy_mastery' } },
+    vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
+    rules = { custom = { { id = 'nancy_victory' } } },
+    apply = function(self)
+        G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
+        SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
     end
 }
