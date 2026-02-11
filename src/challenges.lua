@@ -23,7 +23,6 @@ SMODS.ObjectType {
         j_nancy_windowshopping = true,
         j_nancy_returnpolicy = true,
         j_nancy_expiredcoupon = true,
-        j_nancy_junkiejoker = true,
         j_nancy_decorativejoker = true,
         j_nancy_snacktray = true,
         j_nancy_onthehouse = true
