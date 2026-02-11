@@ -184,6 +184,7 @@ SMODS.Challenge {
     button_colour = HEX('A000A0'),
     jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
     rules = { custom = { { id = 'nancy_high' } } },
+    restrictions = { banned_other = { { id = 'bl_nancy_crowd', type = 'blind' } } },
     calculate = function(self, context)
         if context.debuff_hand and context.scoring_name ~= "High Card" then
             local deck
