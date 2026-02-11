@@ -593,12 +593,13 @@ return {
             c_nancy_showcase = "Nancy's Showcase",
             c_nancy_groceries = "Jimbo Gets Groceries",
             c_nancy_vandalism = "Vandalism",
-            c_nancy_stairway = "Stairway To Heaven",
+            c_nancy_stairway = "Stairway to Heaven",
             c_nancy_printing = "Printing Factory",
             c_nancy_victory = "Victory Lap",
             c_nancy_lowp = "Low% Run",
             c_nancy_dance = "Dance Floor",
-            c_nancy_high = "High Waves"
+            c_nancy_high = "High Waves",
+            c_nancy_reroll = "Coupon Fraud"
         },
         collabs={},
         dictionary = {
@@ -676,6 +677,7 @@ return {
         tutorial={},
         v_dictionary={},
         v_text = {
+            ch_m_reroll_cost = { "Rerolls start at {C:money}$#1#" },
             ch_c_nancy_showcase_1 = { "Fight {C:attention}only{} the new {C:attention}Boss Blinds" },
             ch_c_nancy_showcase_2 = { "introduced in the {C:dark_edition}Negative Nancy{} mod!" },
             ch_c_nancy_groceries = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
@@ -685,7 +687,7 @@ return {
             ch_c_nancy_lowp_1 = { "Chips scored {C:attention}above{} the score requirement" },
             ch_c_nancy_lowp_2 = { "are {C:attention}added{} to the next Blind's score requirement" },
             ch_c_nancy_dance = { "Only one {C:green}random {C:attention}poker hand{} is allowed each round" },
-            ch_c_nancy_high = { "Only {C:attention}High Card{} is allowed" },
+            ch_c_nancy_high = { "Only {C:attention}High Card{} is allowed" }
         }
     }
 }

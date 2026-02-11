@@ -65,56 +65,6 @@ SMODS.Challenge {
 }
 
 SMODS.Challenge {
-    key = 'lowp',
-    button_colour = HEX('A000A0'),
-    rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
-    config = { extra = 0 },
-    calculate = function(self, context)
-        if context.first_hand_drawn and self.config.extra > 0 then
-            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
-            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-            NegaNancy.wiggle_blind()
-            if G.deck and next(G.deck.cards) then
-                G.deck.cards[1]:juice_up()
-            else
-                G.deck:juice_up()
-            end
-        end
-        if context.end_of_round and context.main_eval then
-            self.config.extra = G.GAME.chips - G.GAME.blind.chips
-            if self.config.extra < 0 then self.config.extra = 0 end
-            if G.deck and next(G.deck.cards) then
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
-            else
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
-            end
-        end
-    end
-}
-
-SMODS.Challenge {
-    key = 'high',
-    button_colour = HEX('A000A0'),
-    jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
-    rules = { custom = { { id = 'nancy_high' } } },
-    calculate = function(self, context)
-        if context.debuff_hand and context.scoring_name ~= "High Card" then
-            local deck
-            if G.deck and next(G.deck.cards) then
-                deck = G.deck.cards[1]
-            else
-                deck = G.deck
-            end
-            return {
-                debuff = true,
-                debuff_text = "Only High Card is allowed!",
-                debuff_source = deck
-            }
-        end
-    end
-}
-
-SMODS.Challenge {
     key = 'stairway',
     button_colour = HEX('A000A0'),
     jokers = {
@@ -169,6 +119,13 @@ SMODS.Challenge {
 }
 
 SMODS.Challenge {
+    key = 'reroll',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_nancy_onthehouse' } },
+    rules = { modifiers = { { id = 'reroll_cost', value = 50 } } }
+}
+
+SMODS.Challenge {
     key = 'vandalism',
     button_colour = HEX('A000A0'),
     jokers = { { id = 'j_nancy_streetart', eternal = true } },
@@ -183,6 +140,56 @@ SMODS.Challenge {
         { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
         { id = 'j_nancy_decorativejoker' }
     } }
+}
+
+SMODS.Challenge {
+    key = 'lowp',
+    button_colour = HEX('A000A0'),
+    rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
+    config = { extra = 0 },
+    calculate = function(self, context)
+        if context.first_hand_drawn and self.config.extra > 0 then
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            NegaNancy.wiggle_blind()
+            if G.deck and next(G.deck.cards) then
+                G.deck.cards[1]:juice_up()
+            else
+                G.deck:juice_up()
+            end
+        end
+        if context.end_of_round and context.main_eval then
+            self.config.extra = G.GAME.chips - G.GAME.blind.chips
+            if self.config.extra < 0 then self.config.extra = 0 end
+            if G.deck and next(G.deck.cards) then
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
+            else
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
+            end
+        end
+    end
+}
+
+SMODS.Challenge {
+    key = 'high',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
+    rules = { custom = { { id = 'nancy_high' } } },
+    calculate = function(self, context)
+        if context.debuff_hand and context.scoring_name ~= "High Card" then
+            local deck
+            if G.deck and next(G.deck.cards) then
+                deck = G.deck.cards[1]
+            else
+                deck = G.deck
+            end
+            return {
+                debuff = true,
+                debuff_text = "Only High Card is allowed!",
+                debuff_source = deck
+            }
+        end
+    end
 }
 
 SMODS.Challenge {
