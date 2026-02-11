@@ -113,8 +113,7 @@ SMODS.Challenge {
     key = 'printing',
     button_colour = HEX('A000A0'),
     jokers = {
-        { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' },
-        { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }
+        { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }
     },
     vouchers = { { id = 'v_magic_trick' } },
     rules = { custom = { { id = 'nancy_printing' } } },
@@ -151,5 +150,33 @@ SMODS.Challenge {
     apply = function(self)
         G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
         SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
+    end
+}
+
+SMODS.Challenge {
+    key = 'lowp',
+    button_colour = HEX('A000A0'),
+    rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
+    config = { extra = 0 },
+    calculate = function(self, context)
+        if context.first_hand_drawn and self.config.extra > 0 then
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            NegaNancy.wiggle_blind()
+            if G.deck and next(G.deck.cards) then
+                G.deck.cards[1]:juice_up()
+            else
+                G.deck:juice_up()
+            end
+        end
+        if context.end_of_round and context.main_eval then
+            self.config.extra = G.GAME.chips - G.GAME.blind.chips
+            if self.config.extra < 0 then self.config.extra = 0 end
+            if G.deck and next(G.deck.cards) then
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra)}, G.deck.cards[1])
+            else
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra)}, G.deck)
+            end
+        end
     end
 }
