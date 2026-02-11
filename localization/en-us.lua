@@ -596,7 +596,8 @@ return {
             c_nancy_stairway = "Stairway To Heaven",
             c_nancy_printing = "Printing Factory",
             c_nancy_victory = "Victory Lap",
-            c_nancy_lowp = "Low%"
+            c_nancy_lowp = "Low%",
+            c_nancy_dance = "Dance Floor"
         },
         collabs={},
         dictionary = {
@@ -683,6 +684,7 @@ return {
             ch_c_nancy_victory = { "{C:nancy_emerald}Emerald Stake{} and below are applied" },
             ch_c_nancy_lowp_1 = { "Chips scored {C:attention}above{} the score requirement" },
             ch_c_nancy_lowp_2 = { "are {C:attention}added{} to the next Blind's score requirement" },
+            ch_c_nancy_dance = { "Only one {C:green}random {C:attention}poker hand{} is allowed each round" },
         }
     }
 }

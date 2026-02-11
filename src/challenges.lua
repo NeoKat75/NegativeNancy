@@ -173,9 +173,67 @@ SMODS.Challenge {
             self.config.extra = G.GAME.chips - G.GAME.blind.chips
             if self.config.extra < 0 then self.config.extra = 0 end
             if G.deck and next(G.deck.cards) then
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra)}, G.deck.cards[1])
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
             else
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra)}, G.deck)
+                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
+            end
+        end
+    end
+}
+
+SMODS.Challenge {
+    key = 'dance',
+    button_colour = HEX('A000A0'),
+    jokers = { { id = 'j_joker' } },
+    deck = { type = 'Challenge Deck', edition = 'negative' },
+    rules = { custom = { { id = 'nancy_dance' } } },
+    restrictions = { banned_other = {
+        { id = 'bl_psychic', type = 'blind' },
+        { id = 'bl_eye', type = 'blind' },
+        { id = 'bl_nancy_purse', type = 'blind' }
+    } },
+    config = { extra = "High Card" },
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                local _poker_hands = {}
+                for handname, _ in pairs(G.GAME.hands) do
+                    if SMODS.is_poker_hand_visible(handname) then
+                        _poker_hands[#_poker_hands + 1] = handname
+                    end
+                end
+                self.config.extra = pseudorandom_element(_poker_hands, 'nancy_dance')
+                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck.cards[1])
+                return true
+            end
+        }))
+    end,
+    calculate = function(self, context)
+        if context.debuff_hand and context.scoring_name ~= self.config.extra then
+            local deck
+            if G.deck and next(G.deck.cards) then
+                deck = G.deck.cards[1]
+            else
+                deck = G.deck
+            end
+            return {
+                debuff = true,
+                debuff_text = "Only "..self.config.extra.." is allowed!",
+                debuff_source = deck
+            }
+        end
+        if context.end_of_round and context.main_eval then
+            local _poker_hands = {}
+            for handname, _ in pairs(G.GAME.hands) do
+                if SMODS.is_poker_hand_visible(handname) and handname ~= self.config.extra then
+                    _poker_hands[#_poker_hands + 1] = handname
+                end
+            end
+            self.config.extra = pseudorandom_element(_poker_hands, 'nancy_dance')
+            if G.deck and next(G.deck.cards) then
+                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck.cards[1])
+            else
+                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck)
             end
         end
     end
