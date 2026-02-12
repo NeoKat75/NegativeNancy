@@ -29,6 +29,14 @@ function NegaNancy.calculate(self, context)
     end
     -- Velvet Dreams achievement
     if context.after and #context.scoring_hand == #G.playing_cards then check_for_unlock{type = "nancy_scoredeck"} end
+    -- In a Real Bind achievement
+    if context.end_of_round and context.main_eval then
+        local count = 0
+        for _, joker in ipairs(G.jokers.cards) do
+            if joker.ability.nancy_binding then count = count + 1 end
+        end
+        if count >= 5 then check_for_unlock{type = "nancy_inabind"} end
+    end
 end
 
 loc_colour()
