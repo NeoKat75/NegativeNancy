@@ -601,8 +601,12 @@ return {
             ach_nancy_qolstrush = "Upgrade the Straight Flush with Quality of Life",
             ach_nancy_inabind = { "Defeat a Blind while having", "5 Binding Jokers" },
             ach_nancy_initiation = "Become worthy of Initiation",
-            ach_nancy_sacrifice = "Perform a Sacrifice",
-            ach_nancy_handsize = "Reach hand size 22"
+            ach_nancy_handsize = "Reach hand size 22",
+            ach_nancy_nancywin = { "Win a run with", "the Nancy Deck" },
+            ach_nancy_emeraldwin = { "Win a run on", "Emerald Stake difficulty" },
+            ach_nancy_challengewin = { "Win a run in a", "Negative Nancy challenge" },
+            ach_nancy_alldeckswin = { "Win a run with every", "Negative Nancy deck" },
+            ach_nancy_allchallengeswin = { "Win a run in every", "Negative Nancy challenge" }
         },
         achievement_names = {
             ach_nancy_secrettag = "Point-of-Sale Error",
@@ -611,8 +615,12 @@ return {
             ach_nancy_qolstrush = "Ultra Comfort Deluxe",
             ach_nancy_inabind = "In a Real Bind",
             ach_nancy_initiation = "The Elite Circles",
-            ach_nancy_sacrifice = "Transfer of the Will",
-            ach_nancy_handsize = "Valued Handiwork"
+            ach_nancy_handsize = "Valued Handiwork",
+            ach_nancy_nancywin = "There's Achievements Too!",
+            ach_nancy_emeraldwin = "The Crown Jewel",
+            ach_nancy_challengewin = "Undefeatable",
+            ach_nancy_alldeckswin = "Nancy's Pride and Joy",
+            ach_nancy_allchallengeswin = "Nancy's Big Favorite!"
         },
         blind_states={},
         challenge_names = {
