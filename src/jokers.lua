@@ -400,6 +400,7 @@ SMODS.Joker {
                             G.STATE = G.STATES.HAND_PLAYED
                             G.STATE_COMPLETE = true
                             end_round()
+                            check_for_unlock{type = "nancy_lowerreq"}
                             return true
                         end
                     end

@@ -595,10 +595,12 @@ return {
     },
     misc = {
         achievement_descriptions = {
-            ach_nancy_secrettag = "Obtain the Secret Tag"
+            ach_nancy_secrettag = "Obtain the Secret Tag",
+            ach_nancy_lowerreq = "Defeat a Blind by lowering the score requirement"
         },
         achievement_names = {
-            ach_nancy_secrettag = "Point-of-Sale Error"
+            ach_nancy_secrettag = "Point-of-Sale Error",
+            ach_nancy_lowerreq = "Ego Check"
         },
         blind_states={},
         challenge_names = {

@@ -93,6 +93,7 @@ SMODS.Blind {
         G.GAME.blind.chips = G.GAME.blind.effect.extra.base
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
         NegaNancy.wiggle_blind()
+        if G.GAME.chips >= G.GAME.blind.chips then check_for_unlock{type = "nancy_lowerreq"} end
         -- Checking for if blind is won is actually unnecessary here, it does it on its own
     end
 }
