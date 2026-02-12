@@ -27,6 +27,8 @@ function NegaNancy.calculate(self, context)
             if tag:apply_to_run{type = 'nancy_shredder'} then break end
         end
     end
+    -- Velvet Dreams achievement
+    if context.after and #context.scoring_hand == #G.playing_cards then check_for_unlock{type = "nancy_scoredeck"} end
 end
 
 loc_colour()

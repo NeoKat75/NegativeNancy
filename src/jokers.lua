@@ -705,6 +705,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.other_drawn then
             local pokerhand = G.FUNCS.get_poker_hand_info(context.other_drawn)
+            if pokerhand == "Straight Flush" then check_for_unlock{type = "nancy_qolstrush"} end
             SMODS.upgrade_poker_hands({hands = {pokerhand}, level_up = card.ability.extra.levels, from = context.blueprint_card or card})
         end
     end
