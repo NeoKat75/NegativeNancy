@@ -429,6 +429,14 @@ return {
                     "{C:legendary,E:1}?????"
                 }
             },
+            nancy_raritytags_nolegend = {
+                name = "Rarity Tags",
+                text = {
+                    "{C:common}Top-up{} Tag",
+                    "{C:uncommon}Uncommon{} Tag",
+                    "{C:rare}Rare{} Tag"
+                }
+            },
             nancy_emerald_sticker = {
                 name = "Emerald Sticker",
                 text = {
@@ -586,8 +594,12 @@ return {
         }
     },
     misc = {
-        achievement_descriptions={},
-        achievement_names={},
+        achievement_descriptions = {
+            ach_nancy_secrettag = "Obtain the Secret Tag"
+        },
+        achievement_names = {
+            ach_nancy_secrettag = "Point-of-Sale Error"
+        },
         blind_states={},
         challenge_names = {
             c_nancy_showcase = "Nancy's Showcase",

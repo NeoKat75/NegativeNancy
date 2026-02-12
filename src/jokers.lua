@@ -192,7 +192,11 @@ SMODS.Joker {
     discovered = true,
     config = { extra = { amount = 2, tally = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'nancy_raritytags', set = 'Other' }
+        if G.ACHIEVEMENTS and G.ACHIEVEMENTS.ach_nancy_secrettag and G.ACHIEVEMENTS.ach_nancy_secrettag.earned then
+            info_queue[#info_queue + 1] = { key = 'nancy_raritytags_nolegend', set = 'Other' }
+        else
+            info_queue[#info_queue + 1] = { key = 'nancy_raritytags', set = 'Other' }
+        end
         return { vars = { card.ability.extra.amount, card.ability.extra.tally, card.ability.extra.growth } }
     end,
     calculate = function(self, card, context)
@@ -213,6 +217,8 @@ SMODS.Joker {
                         return true
                     end
                 }))
+                -- Achievement
+                if tag == "tag_nancy_secret" then check_for_unlock{type = "nancy_secrettag"} end
                 -- Apply if top-up tag
                 if tag == "tag_top_up" then
                     G.E_MANAGER:add_event(Event({
