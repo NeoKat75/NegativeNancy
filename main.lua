@@ -37,6 +37,8 @@ function NegaNancy.calculate(self, context)
         end
         if count >= 5 then check_for_unlock{type = "nancy_inabind"} end
     end
+    -- Valued Handiwork achievement
+    if (context.hand_drawn or context.other_drawn) then check_for_unlock{type = "nancy_handsize"} end
 end
 
 loc_colour()
