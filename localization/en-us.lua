@@ -599,14 +599,18 @@ return {
             ach_nancy_lowerreq = "Defeat a Blind by lowering the score requirement",
             ach_nancy_scoredeck = "Score every card in your deck in one hand",
             ach_nancy_qolstrush = "Upgrade the Straight Flush with Quality of Life",
-            ach_nancy_inabind = "Defeat a Blind while having 5 Binding Jokers"
+            ach_nancy_inabind = "Defeat a Blind while having 5 Binding Jokers",
+            ach_nancy_initiation = "Become worthy of Initiation",
+            ach_nancy_sacrifice = "Perform a Sacrifice"
         },
         achievement_names = {
             ach_nancy_secrettag = "Point-of-Sale Error",
             ach_nancy_lowerreq = "Ego Check",
             ach_nancy_scoredeck = "Velvet Dreams",
             ach_nancy_qolstrush = "Ultra Comfort Deluxe",
-            ach_nancy_inabind = "In a Real Bind"
+            ach_nancy_inabind = "In a Real Bind",
+            ach_nancy_initiation = "The Elite Circles",
+            ach_nancy_sacrifice = "Transfer of the Will"
         },
         blind_states={},
         challenge_names = {

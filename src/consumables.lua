@@ -421,6 +421,7 @@ SMODS.Consumable {
         }))
         -- Wario smash
         SMODS.destroy_cards(finaltargets)
+        check_for_unlock{type = "nancy_sacrifice"}
         delay(0.5)
     end,
     can_use = function(self, card)

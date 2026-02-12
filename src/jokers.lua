@@ -631,6 +631,7 @@ SMODS.Joker {
                     play_sound('gong', 0.94, 0.5)
                     play_sound('gong', 0.94*1.5, 0.5)
                     SMODS.destroy_cards(card)
+                    check_for_unlock{type = "nancy_initiation"}
                     return true
                 end
             }))
