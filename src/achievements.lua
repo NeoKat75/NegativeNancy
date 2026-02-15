@@ -21,10 +21,10 @@ SMODS.Achievement {
 SMODS.Achievement {
     key = 'challengewin',
     bypass_all_unlocked = true,
-    reset_on_startup = true,
+    -- reset_on_startup = true,
+    nancy_challengeachievement = true,
     unlock_condition = function(self, args)
         if args.type == 'win_challenge' then
-            print("meow")
             if string.sub(G.GAME.challenge, 1, 7) == "c_nancy" then return true end
         end
         return false
@@ -91,7 +91,8 @@ SMODS.Achievement {
 SMODS.Achievement {
     key = 'allchallengeswin',
     bypass_all_unlocked = true,
-    reset_on_startup = true,
+    -- reset_on_startup = true,
+    nancy_challengeachievement = true,
     unlock_condition = function(self, args)
         if args.type == 'win_challenge' then
             for _, ch in pairs(G.CHALLENGES) do
