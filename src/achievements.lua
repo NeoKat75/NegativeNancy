@@ -1,59 +1,32 @@
 SMODS.Achievement {
-    key = 'secrettag',
+    key = 'nancywin',
     bypass_all_unlocked = true,
     -- reset_on_startup = true,
     unlock_condition = function(self, args)
-        if args.type == "nancy_secrettag" then return true end
+        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0 then return true end
         return false
     end
 }
 
 SMODS.Achievement {
-    key = 'lowerreq',
+    key = 'emeraldwin',
     bypass_all_unlocked = true,
     -- reset_on_startup = true,
     unlock_condition = function(self, args)
-        if args.type == "nancy_lowerreq" then return true end
+        if args.type == 'win_stake' and get_deck_win_stake() >= G.P_STAKES.stake_nancy_emerald.order then return true end
         return false
     end
 }
 
 SMODS.Achievement {
-    key = 'scoredeck',
+    key = 'challengewin',
     bypass_all_unlocked = true,
-    -- reset_on_startup = true,
+    reset_on_startup = true,
     unlock_condition = function(self, args)
-        if args.type == "nancy_scoredeck" then return true end
-        return false
-    end
-}
-
-SMODS.Achievement {
-    key = 'qolstrush',
-    bypass_all_unlocked = true,
-    -- reset_on_startup = true,
-    unlock_condition = function(self, args)
-        if args.type == "nancy_qolstrush" then return true end
-        return false
-    end
-}
-
-SMODS.Achievement {
-    key = 'inabind',
-    bypass_all_unlocked = true,
-    -- reset_on_startup = true,
-    unlock_condition = function(self, args)
-        if args.type == "nancy_inabind" then return true end
-        return false
-    end
-}
-
-SMODS.Achievement {
-    key = 'initiation',
-    bypass_all_unlocked = true,
-    -- reset_on_startup = true,
-    unlock_condition = function(self, args)
-        if args.type == "nancy_initiation" then return true end
+        if args.type == 'win_challenge' then
+            print("meow")
+            if string.sub(G.GAME.challenge, 1, 7) == "c_nancy" then return true end
+        end
         return false
     end
 }
@@ -69,35 +42,21 @@ SMODS.Achievement {
 }
 
 SMODS.Achievement {
-    key = 'nancywin',
+    key = 'secrettag',
     bypass_all_unlocked = true,
-    reset_on_startup = true,
+    -- reset_on_startup = true,
     unlock_condition = function(self, args)
-        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0 then return true end
+        if args.type == "nancy_secrettag" then return true end
         return false
     end
 }
 
 SMODS.Achievement {
-    key = 'emeraldwin',
+    key = 'initiation',
     bypass_all_unlocked = true,
-    reset_on_startup = true,
+    -- reset_on_startup = true,
     unlock_condition = function(self, args)
-        if args.type == 'win_stake' and get_deck_win_stake() >= G.P_STAKES.stake_nancy_emerald.order then return true end
-        return false
-    end
-}
-
-SMODS.Achievement {
-    key = 'challengewin',
-    bypass_all_unlocked = true,
-    reset_on_startup = true,
-    unlock_condition = function(self, args)
-        if args.type == 'win_challenge' then
-            for _, ch in pairs(G.CHALLENGES) do
-                if ch.id == G.GAME.challenge and ch.original_mod and ch.original_mod.id == 'nancy' then return true end
-            end
-        end
+        if args.type == "nancy_initiation" then return true end
         return false
     end
 }
@@ -105,7 +64,7 @@ SMODS.Achievement {
 SMODS.Achievement {
     key = 'alldeckswin',
     bypass_all_unlocked = true,
-    reset_on_startup = true,
+    -- reset_on_startup = true,
     unlock_condition = function(self, args)
         if args.type == 'win_deck' then
             for _, deck in
@@ -115,6 +74,16 @@ SMODS.Achievement {
             end
             return true
         end
+        return false
+    end
+}
+
+SMODS.Achievement {
+    key = 'inabind',
+    bypass_all_unlocked = true,
+    -- reset_on_startup = true,
+    unlock_condition = function(self, args)
+        if args.type == "nancy_inabind" then return true end
         return false
     end
 }
@@ -132,6 +101,36 @@ SMODS.Achievement {
             end
             return true
         end
+        return false
+    end
+}
+
+SMODS.Achievement {
+    key = 'qolstrush',
+    bypass_all_unlocked = true,
+    -- reset_on_startup = true,
+    unlock_condition = function(self, args)
+        if args.type == "nancy_qolstrush" then return true end
+        return false
+    end
+}
+
+SMODS.Achievement {
+    key = 'scoredeck',
+    bypass_all_unlocked = true,
+    -- reset_on_startup = true,
+    unlock_condition = function(self, args)
+        if args.type == "nancy_scoredeck" then return true end
+        return false
+    end
+}
+
+SMODS.Achievement {
+    key = 'lowerreq',
+    bypass_all_unlocked = true,
+    -- reset_on_startup = true,
+    unlock_condition = function(self, args)
+        if args.type == "nancy_lowerreq" then return true end
         return false
     end
 }
