@@ -1224,14 +1224,17 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 8,
     discovered = true,
-    config = { extra = { fullhouse = false }, },
+    config = { extra = { fullhouse = false, wiggling = false }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_d_six', set = 'Tag' }
     end,
     calculate = function(self, card, context)
         -- When last hand is drawn
-        if context.hand_drawn and G.GAME.current_round.hands_left == 1 and not context.blueprint then
+        if context.hand_drawn and G.GAME.current_round.hands_left == 1
+            and not card.ability.extra.wiggling and not context.blueprint
+        then
             -- Wiggle while one hand left
+            card.ability.extra.wiggling = true
             local eval = function() return G.GAME.current_round.hands_left == 1 and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
         end
@@ -1244,16 +1247,19 @@ SMODS.Joker {
             end
         end
         -- At end of round, if last played hand contained a full house
-        if context.end_of_round and context.main_eval and not context.game_over and card.ability.extra.fullhouse then
-            -- Give tag
-            G.E_MANAGER:add_event(Event({
-                func = (function()
-                    add_tag(Tag('tag_d_six'))
-                    play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
-                    return true
-                end)
-            }))
-            return { message = localize("nancy_d6tag") }
+        if context.end_of_round and context.main_eval and not context.game_over then
+            card.ability.extra.wiggling = false
+            if card.ability.extra.fullhouse then
+                -- Give tag
+                G.E_MANAGER:add_event(Event({
+                    func = (function()
+                        add_tag(Tag('tag_d_six'))
+                        play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                        return true
+                    end)
+                }))
+                return { message = localize("nancy_d6tag") }
+            end
         end
     end
 }
