@@ -657,7 +657,7 @@ SMODS.Joker {
         if context.hand_drawn and next(G.consumeables.cards) and not card.ability.extra.wiggling and not context.blueprint then
             -- Wiggle while used = false
             card.ability.extra.wiggling = true
-            local eval = function() return card.ability.extra.used == false and not G.RESET_JIGGLES end
+            local eval = function() return card.ability.extra.used == false and next(G.consumeables.cards) and not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
         end
         -- Do the thing (nancy_cutoff is for blueprint compat, destroying cards happens later)
