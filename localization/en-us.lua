@@ -19,7 +19,7 @@ return {
                 },
                 unlock = {
                     "Win a run with",
-                    "the {C:enhanced}#1#{}",
+                    "{C:enhanced}#1#",
                     "on any difficulty"
                 }
             },
@@ -33,7 +33,7 @@ return {
                 },
                 unlock = {
                     "Win a run with",
-                    "the {C:enhanced}#1#{}",
+                    "{C:enhanced}#1#",
                     "on any difficulty"
                 }
             },
@@ -46,7 +46,7 @@ return {
                 },
                 unlock = {
                     "Win a run with",
-                    "the {C:enhanced}#1#{}",
+                    "{C:enhanced}#1#",
                     "on any difficulty"
                 }
             },
@@ -61,7 +61,7 @@ return {
                 },
                 unlock = {
                     "Win a run with",
-                    "the {C:enhanced}#1#{}",
+                    "{C:enhanced}#1#",
                     "on any difficulty"
                 }
             }

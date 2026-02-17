@@ -35,7 +35,7 @@ SMODS.Back {
     key = "twister",
     atlas = "decks",
     pos = { x = 1, y = 0 },
-    discovered = true,
+    unlocked = false,
     config = { vouchers = { 'v_hone', 'v_glow_up' } },
     loc_vars = function(self, info_queue, back)
         return { vars = { localize{type = 'name_text', key = self.config.vouchers[2], set = 'Voucher'} } }
@@ -75,14 +75,11 @@ SMODS.Back {
         end
     end,
     locked_loc_vars = function(self, info_queue, back)
-        local other_name = localize('k_unknown')
-        if G.P_CENTERS['b_nancy_nancy'].unlocked then
-            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'}
-        end
-        return { vars = { other_name } }
+        return { vars = { localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'} } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0
+        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0 then return true end
+        return false
     end
 }
 
@@ -91,7 +88,7 @@ SMODS.Back {
     key = "hoarder",
     atlas = "decks",
     pos = { x = 4, y = 0 },
-    discovered = true,
+    unlocked = false,
     loc_vars = function(self, info_queue, back)
         return { vars = { colours = { G.C.RENTAL } } }
     end,
@@ -133,14 +130,11 @@ SMODS.Back {
         end
     end,
     locked_loc_vars = function(self, info_queue, back)
-        local other_name = localize('k_unknown')
-        if G.P_CENTERS['b_nancy_nancy'].unlocked then
-            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'}
-        end
-        return { vars = { other_name } }
+        return { vars = { localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'} } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0
+        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0 then return true end
+        return false
     end
 }
 
@@ -149,7 +143,7 @@ SMODS.Back {
     key = "chaotic",
     atlas = "decks",
     pos = { x = 2, y = 0 },
-    discovered = true,
+    unlocked = false,
     config = { ante_scaling = 2 },
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.ante_scaling } }
@@ -209,7 +203,8 @@ SMODS.Back {
         return { vars = { other_name } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0
+        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0 then return true end
+        return false
     end
 }
 
@@ -218,7 +213,7 @@ SMODS.Back {
     key = "crumpled",
     atlas = "decks",
     pos = { x = 3, y = 0 },
-    discovered = true,
+    unlocked = false,
     config = { joker_slot = -4, extra = { hsize = -1 } },
     loc_vars = function(self, info_queue, back)
         return { vars = { self.config.extra.hsize } }
@@ -242,6 +237,7 @@ SMODS.Back {
         return { vars = { other_name } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0
+        if args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0 then return true end
+        return false
     end
 }
