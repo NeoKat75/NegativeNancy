@@ -73,6 +73,16 @@ SMODS.Back {
                 return { message = localize('nancy_twisted') }
             end
         end
+    end,
+    locked_loc_vars = function(self, info_queue, back)
+        local other_name = localize('k_unknown')
+        if G.P_CENTERS['b_nancy_nancy'].unlocked then
+            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'}
+        end
+        return { vars = { other_name } }
+    end,
+    check_for_unlock = function(self, args)
+        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0
     end
 }
 
@@ -121,6 +131,16 @@ SMODS.Back {
                 return { message = localize('nancy_notarget') }
             end
         end
+    end,
+    locked_loc_vars = function(self, info_queue, back)
+        local other_name = localize('k_unknown')
+        if G.P_CENTERS['b_nancy_nancy'].unlocked then
+            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_nancy'}
+        end
+        return { vars = { other_name } }
+    end,
+    check_for_unlock = function(self, args)
+        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_nancy') > 0
     end
 }
 
@@ -180,6 +200,16 @@ SMODS.Back {
                 return true
             end
         }))
+    end,
+    locked_loc_vars = function(self, info_queue, back)
+        local other_name = localize('k_unknown')
+        if G.P_CENTERS['b_nancy_hoarder'].unlocked then
+            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_hoarder'}
+        end
+        return { vars = { other_name } }
+    end,
+    check_for_unlock = function(self, args)
+        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0
     end
 }
 
@@ -203,5 +233,15 @@ SMODS.Back {
             G.hand:change_size(-self.config.extra.hsize)
         end
         G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
+    end,
+    locked_loc_vars = function(self, info_queue, back)
+        local other_name = localize('k_unknown')
+        if G.P_CENTERS['b_nancy_hoarder'].unlocked then
+            other_name = localize{type = 'name_text', set = 'Back', key = 'b_nancy_hoarder'}
+        end
+        return { vars = { other_name } }
+    end,
+    check_for_unlock = function(self, args)
+        return args.type == 'win_deck' and get_deck_win_stake('b_nancy_hoarder') > 0
     end
 }

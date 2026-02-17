@@ -16,6 +16,11 @@ return {
                     "cards are {C:green}randomized",
                     "when entering shop",
                     "{s:0.85}Start run with {C:dark_edition,T:v_glow_up,s:0.85}#1#"
+                },
+                unlock = {
+                    "Win a run with",
+                    "the {C:enhanced}#1#{}",
+                    "on any difficulty"
                 }
             },
             b_nancy_chaotic = {
@@ -25,6 +30,11 @@ return {
                     "{C:enhanced}Editions{} and {C:enhanced}Seals",
                     "in deck are {C:green}randomized",
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
+                },
+                unlock = {
+                    "Win a run with",
+                    "the {C:enhanced}#1#{}",
+                    "on any difficulty"
                 }
             },
             b_nancy_crumpled = {
@@ -33,6 +43,11 @@ return {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
                     "per held Joker"
+                },
+                unlock = {
+                    "Win a run with",
+                    "the {C:enhanced}#1#{}",
+                    "on any difficulty"
                 }
             },
             b_nancy_hoarder = {
@@ -43,6 +58,11 @@ return {
                     "random Joker becomes",
                     "{C:dark_edition}Negative{} & {V:1}Rental",
                     "{C:inactive,s:0.85}(Costs {C:money,s:0.85}$3{C:inactive,s:0.85} per round)"
+                },
+                unlock = {
+                    "Win a run with",
+                    "the {C:enhanced}#1#{}",
+                    "on any difficulty"
                 }
             }
         },

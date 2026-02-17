@@ -19,6 +19,14 @@ SMODS.Voucher {
         if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
             return { add_to_hand = true }
         end
+    end,
+    in_pool = function(self, args)
+        for _, _card in ipairs(G.playing_cards or {}) do
+            if _card.edition and _card.edition.key == "e_negative" then
+                return true
+            end
+        end
+        return false
     end
 }
 
