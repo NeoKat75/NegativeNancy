@@ -220,7 +220,6 @@ SMODS.Challenge {
                     end
                 end
                 self.config.extra = pseudorandom_element(_poker_hands, 'nancy_dance')
-                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck.cards[1])
                 return true
             end
         }))
@@ -247,6 +246,13 @@ SMODS.Challenge {
                 end
             end
             self.config.extra = pseudorandom_element(_poker_hands, 'nancy_dance')
+            if G.deck and next(G.deck.cards) then
+                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck.cards[1])
+            else
+                SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck)
+            end
+        end
+        if context.setting_blind then
             if G.deck and next(G.deck.cards) then
                 SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck.cards[1])
             else
