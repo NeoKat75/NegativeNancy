@@ -208,7 +208,6 @@ SMODS.Challenge {
     deck = { type = 'Challenge Deck', edition = 'negative' },
     rules = { custom = { { id = 'nancy_dance' } } },
     restrictions = { banned_other = {
-        { id = 'bl_eye', type = 'blind' },
         { id = 'bl_mouth', type = 'blind' },
         { id = 'bl_nancy_purse', type = 'blind' }
     } },
