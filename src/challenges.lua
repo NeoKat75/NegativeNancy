@@ -241,7 +241,7 @@ SMODS.Challenge {
                 debuff_source = deck
             }
         end
-        if context.end_of_round and context.main_eval then
+        if context.starting_shop then
             local _poker_hands = {}
             for handname, _ in pairs(G.GAME.hands) do
                 if SMODS.is_poker_hand_visible(handname) and handname ~= self.config.extra then
