@@ -135,12 +135,12 @@ SMODS.Challenge {
     button_colour = HEX('A000A0'),
     jokers = { { id = 'j_nancy_streetart', eternal = true } },
     restrictions = { banned_cards = {
-        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' },
+        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' }, { id = 'j_supernova' },
         { id = 'j_runner' }, { id = 'j_blue_joker' }, { id = 'j_green_joker' },
         { id = 'j_red_card' }, { id = 'j_square' }, { id = 'j_erosion' },
         { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_bull' },
         { id = 'j_flash' }, { id = 'j_trousers' }, { id = 'j_castle' },
-        { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_bootstraps' },
+        { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_shoot_the_moon' }, { id = 'j_bootstraps' },
         { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_collector' }, { id = 'j_nancy_postmodernjoker' },
         { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
         { id = 'j_nancy_decorativejoker' }
@@ -180,7 +180,10 @@ SMODS.Challenge {
     button_colour = HEX('A000A0'),
     jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
     rules = { custom = { { id = 'nancy_high' } } },
-    restrictions = { banned_other = { { id = 'bl_nancy_crowd', type = 'blind' } } },
+    restrictions = { banned_other = {
+        { id = 'bl_mouth', type = 'blind' },
+        { id = 'bl_nancy_crowd', type = 'blind' }
+    } },
     calculate = function(self, context)
         if context.debuff_hand and context.scoring_name ~= "High Card" then
             local deck
@@ -205,8 +208,8 @@ SMODS.Challenge {
     deck = { type = 'Challenge Deck', edition = 'negative' },
     rules = { custom = { { id = 'nancy_dance' } } },
     restrictions = { banned_other = {
-        { id = 'bl_psychic', type = 'blind' },
         { id = 'bl_eye', type = 'blind' },
+        { id = 'bl_mouth', type = 'blind' },
         { id = 'bl_nancy_purse', type = 'blind' }
     } },
     config = { extra = "High Card" },
