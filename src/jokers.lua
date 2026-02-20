@@ -514,7 +514,9 @@ SMODS.Joker {
             return { message = localize('k_upgrade_ex') }
         end
         -- Wiggle wiggle
-        if context.first_hand_drawn and card.ability.extra.amount >= G.hand.config.card_limit and not context.blueprint then
+        if context.setting_blind and not context.blueprint and G.hand
+            and card.ability.extra.amount >= G.hand.config.card_limit
+        then
             -- Wiggle when amount > hand size
             local eval = function() return not G.RESET_JIGGLES end
             juice_card_until(card, eval, true)
