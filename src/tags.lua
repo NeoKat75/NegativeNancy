@@ -68,25 +68,21 @@ SMODS.Tag {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     apply = function(self, tag, context)
-        if context.type == 'nancy_priority' and not next(SMODS.find_card('j_nancy_exposuretherapy')) then
+        if context.type == 'nancy_priority' then
             local targets = {}
-            for i = #G.deck.cards, 1, -1 do
-                local card = G.deck.cards[i]
-                if card.edition and card.edition.key == 'e_negative' then
-                    table.insert(targets, card)
-                    table.remove(G.deck.cards, i)
+            if not next(SMODS.find_card('v_nancy_purse')) then
+                for i = #G.deck.cards, 1, -1 do
+                    local card = G.deck.cards[i]
+                    if card.edition and card.edition.key == 'e_negative' then
+                        table.insert(targets, card)
+                        table.remove(G.deck.cards, i)
+                    end
+                end
+                for _, card in ipairs(targets) do
+                    table.insert(G.deck.cards, #G.deck.cards, card)
                 end
             end
-            for _, card in ipairs(targets) do
-                table.insert(G.deck.cards, #G.deck.cards, card)
-            end
-            tag:yep('+', G.C.RARITY[4], function()
-                if next(targets) then
-                    play_sound('gong', 0.94, 0.3)
-                    play_sound('gong', 0.94*1.5, 0.3)
-                end
-                return true
-            end)
+            tag:yep('+', G.C.RARITY[4], function() return true end)
             tag.triggered = true
             return true
         end

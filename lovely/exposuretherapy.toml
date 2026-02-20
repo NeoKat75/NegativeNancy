@@ -3,7 +3,7 @@ version = "0.1.0"
 priority = 0
 
 
-## Velvet Purse implementation
+## Exposure Therapy implementation
 
 
 [[patches]]
@@ -14,7 +14,7 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-if next(SMODS.find_card("v_nancy_purse")) then
+if next(SMODS.find_card("j_nancy_exposuretherapy")) then
     for _, _card in ipairs(G.hand.cards) do
         if _card.edition and _card.edition.key == "e_negative" then table.insert(final_scoring_hand, _card) end
     end
@@ -30,7 +30,7 @@ SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_ha
 '''
 position = "at"
 payload = '''
-if next(SMODS.find_card("v_nancy_purse")) then
+if next(SMODS.find_card("j_nancy_exposuretherapy")) then
     SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, (v == G.play or v == G.hand) and scoring_hand or nil)
     if v == G.hand then SMODS.calculate_main_scoring({cardarea = v, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands}, v == G.play and scoring_hand or nil) end
 else
@@ -47,7 +47,7 @@ SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scor
 '''
 position = "at"
 payload = '''
-if next(SMODS.find_card("v_nancy_purse")) then
+if next(SMODS.find_card("j_nancy_exposuretherapy")) then
     SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, (v == G.play or v == G.hand) and scoring_hand or nil)
     if v == G.hand then SMODS.calculate_destroying_cards({ full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, cardarea = v }, cards_destroyed, v == G.play and scoring_hand or nil) end
 else
@@ -64,7 +64,7 @@ pattern = '''
 '''
 position = "after"
 payload = '''
-if next(SMODS.find_card("v_nancy_purse")) then
+if next(SMODS.find_card("j_nancy_exposuretherapy")) then
     for i=1, #scoring_hand do
         highlight_card(scoring_hand[i],(i-0.999)/5,'down')
     end

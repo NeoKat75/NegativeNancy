@@ -138,8 +138,8 @@ return {
             j_nancy_exposuretherapy = {
                 name = "Exposure Therapy",
                 text = {
-                    "All {C:dark_edition}Negative{} cards in {C:attention}deck",
-                    "are always {C:legendary,E:1}drawn first"
+                    "All {C:attention}played{} and held {C:attention}in hand",
+                    "{C:dark_edition}Negative{} cards count in scoring"
                 }
             },
             j_nancy_streetart = {
@@ -540,7 +540,7 @@ return {
                 name = "Priority Tag",
                 text = {
                     "All {C:dark_edition}Negative{} cards in",
-                    "{C:attention}deck{} are {C:legendary}drawn first",
+                    "{C:attention}deck{} are drawn first",
                     "in the next round"
                 }
             },
@@ -600,15 +600,16 @@ return {
             v_nancy_scarf = {
                 name = "Dainty Scarf",
                 text = {
-                    "Every {C:attention}played{} {C:dark_edition}Negative",
-                    "card counts in {C:attention}scoring"
+                    "{C:dark_edition}Negative{} cards in {C:attention}deck",
+                    "are drawn first",
+                    "in {C:red}Booster Packs"
                 }
             },
             v_nancy_purse = {
                 name = "Velvet Purse",
                 text = {
-                    "All {C:dark_edition}Negative{} cards held",
-                    "{C:attention}in hand{} count in {C:attention}scoring"
+                    "{C:dark_edition}Negative{} cards in {C:attention}deck",
+                    "are {C:attention}always{} drawn first"
                 }
             }
         }

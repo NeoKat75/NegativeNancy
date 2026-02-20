@@ -16,8 +16,18 @@ SMODS.Voucher {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     calculate = function(self, card, context)
-        if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
-            return { add_to_hand = true }
+        if context.open_booster and context.booster.draw_hand then
+            local targets = {}
+            for i = #G.deck.cards, 1, -1 do
+                local _card = G.deck.cards[i]
+                if _card.edition and _card.edition.key == 'e_negative' then
+                    table.insert(targets, _card)
+                    table.remove(G.deck.cards, i)
+                end
+            end
+            for _, _card in ipairs(targets) do
+                table.insert(G.deck.cards, #G.deck.cards, _card)
+            end
         end
     end,
     in_pool = function(self, args)
@@ -39,5 +49,20 @@ SMODS.Voucher {
     requires = { 'v_nancy_scarf' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if context.nancy_velvetpurse then
+            local targets = {}
+            for i = #G.deck.cards, 1, -1 do
+                local _card = G.deck.cards[i]
+                if _card.edition and _card.edition.key == 'e_negative' then
+                    table.insert(targets, _card)
+                    table.remove(G.deck.cards, i)
+                end
+            end
+            for _, _card in ipairs(targets) do
+                table.insert(G.deck.cards, #G.deck.cards, _card)
+            end
+        end
     end
 }

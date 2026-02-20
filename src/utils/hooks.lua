@@ -61,12 +61,12 @@ function CardArea:shuffle(_seed)
     return ret
 end
 
--- Exposure Therapy and Priority Tag
+-- Velvet Purse and Priority Tag
 local shuffle = CardArea.shuffle
 function CardArea:shuffle(_seed)
     local ret = shuffle(self, _seed)
     if self == G.deck and _seed == 'nr'..G.GAME.round_resets.ante then
-        SMODS.calculate_context{nancy_exposuretherapy = true}
+        SMODS.calculate_context{nancy_velvetpurse = true}
         if next(G.GAME.tags) then
             for _, tag in ipairs(G.GAME.tags) do
                 if tag:apply_to_run{type = 'nancy_priority'} then break end

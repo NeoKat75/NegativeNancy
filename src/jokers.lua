@@ -1173,6 +1173,7 @@ SMODS.Joker {
     end
 }
 
+--[[
 -- Exposure Therapy
 SMODS.Joker {
     key = "exposuretherapy",
@@ -1202,6 +1203,43 @@ SMODS.Joker {
                 table.insert(G.deck.cards, #G.deck.cards, _card)
             end
             if next(targets) then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('gong', 0.94, 0.5)
+                        play_sound('gong', 0.94*1.5, 0.5)
+                        return true
+                    end
+                }))
+                return { message = localize("nancy_exposed") }
+            end
+        end
+    end
+}
+]]
+
+-- Exposure Therapy
+SMODS.Joker {
+    key = "exposuretherapy",
+    atlas = "jokers",
+    pos = { x = 2, y = 5 },
+    soul_pos = { x = 2, y = 6 },
+    rarity = 4,
+    blueprint_compat = false,
+    cost = 20,
+    discovered = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+    end,
+    calculate = function(self, card, context)
+        if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
+            return { add_to_hand = true }
+        end
+        if context.press_play then
+            local yes = false
+            for _, _card in ipairs(G.hand.cards) do
+                if _card.edition and _card.edition.key == "e_negative" then yes = true; break end
+            end
+            if yes then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         play_sound('gong', 0.94, 0.5)
