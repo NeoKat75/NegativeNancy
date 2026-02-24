@@ -299,7 +299,7 @@ SMODS.Joker {
     blueprint_compat = true,
     eternal_compat = false,
     nancy_binding_incompat = true,
-    cost = 9,
+    cost = 10,
     discovered = true,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -500,7 +500,7 @@ SMODS.Joker {
     blueprint_compat = true,
     eternal_compat = false,
     nancy_binding_incompat = true,
-    cost = 7,
+    cost = 8,
     discovered = true,
     config = { extra = { amount = 2, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
