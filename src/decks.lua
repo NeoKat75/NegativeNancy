@@ -12,12 +12,9 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 0, y = 0 },
     discovered = true,
-    config = { voucher = 'v_nancy_scarf', extra = { joker = 'j_nancy_negativenancy' } },
+    config = { extra = { joker = 'j_nancy_negativenancy' } },
     loc_vars = function(self, info_queue, back)
-        return { vars = {
-            localize{type = 'name_text', key = self.config.extra.joker, set = 'Joker'},
-            localize{type = 'name_text', key = self.config.voucher, set = 'Voucher'}
-        } }
+        return { vars = { localize{type = 'name_text', key = self.config.extra.joker, set = 'Joker'} } }
     end,
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
@@ -214,9 +211,18 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 3, y = 0 },
     unlocked = false,
-    config = { joker_slot = -4, extra = { hsize = -1 } },
+    config = { joker_slot = -4, extra = { hsize = -1, joker = 'j_troubadour' } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.extra.hsize } }
+        return { vars = { self.config.extra.hsize, localize{type = 'name_text', key = self.config.extra.joker, set = 'Joker'} } }
+    end,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                SMODS.add_card{key = self.config.extra.joker, no_edition = true}
+                play_sound('timpani')
+                return true
+            end
+        }))
     end,
     calculate = function(self, back, context)
         if context.card_added and context.card.ability.set == "Joker" then

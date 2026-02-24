@@ -5,8 +5,7 @@ return {
                 name = "Nancy Deck",
                 text = {
                     "Start run with",
-                    "{C:attention,T:j_nancy_negativenancy}#1#{} and the",
-                    "{C:dark_edition,T:v_nancy_scarf}#2#{} voucher"
+                    "{C:dark_edition,T:j_nancy_negativenancy}#1#"
                 }
             },
             b_nancy_twister = {
@@ -42,7 +41,8 @@ return {
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
-                    "per held Joker"
+                    "per held Joker",
+                    "{s:0.85}Start run with {C:attention,T:j_troubadour,s:0.85}#2#"
                 },
                 unlock = {
                     "Win a run with",
