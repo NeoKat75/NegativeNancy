@@ -1,5 +1,13 @@
 NegaNancy = SMODS.current_mod
 
+-- Mod icon atlas
+SMODS.Atlas {
+    key = "modicon",
+    path = "icon.png",
+    px = 32,
+    py = 32
+}
+
 function NegaNancy.menu_cards()
     return {
 		{ key = 'j_nancy_negativenancy' },
