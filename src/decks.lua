@@ -44,18 +44,7 @@ SMODS.Back {
                 if _card.edition then targets[#targets+1] = _card end
             end
             if next(targets) then
-                local edipool = get_current_pool('Edition')
-                -- Remove invalid items from pool
-                repeat
-                    local restart = false
-                    for i, item in ipairs(edipool) do
-                        if item == 'UNAVAILABLE' then
-                            table.remove(edipool, i)
-                            restart = true
-                            break
-                        end
-                    end
-                until not restart
+                local edipool = SMODS.get_clean_pool('Edition')
                 for _, _card in ipairs(targets) do
                     local edi = pseudorandom_element(edipool, 'nancy_twisterdeck'..G.GAME.round_resets.ante)
                     _card:set_edition(edi, true, true)
@@ -149,23 +138,10 @@ SMODS.Back {
         G.E_MANAGER:add_event(Event({
             func = function()
                 -- Shallow copies are copies of a table unlinked from the original table object
-                -- This is used because get_current_pool() returns the same table object every time
-                local enhpool = SMODS.shallow_copy(get_current_pool('Enhanced'))
-                local edipool = SMODS.shallow_copy(get_current_pool('Edition'))
-                local sealpool = SMODS.shallow_copy(get_current_pool('Seal'))
-                -- Remove invalid items from each pool
-                for _, pool in ipairs{enhpool, edipool, sealpool} do
-                    repeat
-                        local restart = false
-                        for i, item in ipairs(pool) do
-                            if item == 'UNAVAILABLE' then
-                                table.remove(pool, i)
-                                restart = true
-                                break
-                            end
-                        end
-                    until not restart
-                end
+                -- This is used because SMODS.get_clean_pool() returns the same table object every time
+                local enhpool = SMODS.shallow_copy(SMODS.get_clean_pool('Enhanced'))
+                local edipool = SMODS.shallow_copy(SMODS.get_clean_pool('Edition'))
+                local sealpool = SMODS.shallow_copy(SMODS.get_clean_pool('Seal'))
                 -- Determine chances of each modifier
                 local enh_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
                 local edi_chance = pseudorandom('nancy_chaoticdeck', 2, 8)

@@ -109,12 +109,8 @@ SMODS.Challenge {
         banned_other = { { id = 'bl_nancy_file', type = 'blind' } }
     },
     apply = function(self)
-        local pool = get_current_pool('Enhanced')
-        for _, enh in ipairs(pool) do
-            if enh ~= 'UNAVAILABLE' then
-                G.GAME.banned_keys[enh] = true
-            end
-        end
+        local pool = SMODS.get_clean_pool('Enhanced')
+        for _, enh in ipairs(pool) do G.GAME.banned_keys[enh] = true end
     end,
     calculate = function(self, context)
         if context.setting_ability and context.other_card.playing_card and context.new ~= 'c_base' then
