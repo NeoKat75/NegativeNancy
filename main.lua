@@ -1,5 +1,12 @@
 NegaNancy = SMODS.current_mod
 
+function NegaNancy.menu_cards()
+    return {
+		{ key = 'j_nancy_negativenancy' },
+        remove_original = true
+	}
+end
+
 function NegaNancy.calculate(self, context)
     -- Use Booster Tags when entering shop
     if context.starting_shop and next(G.GAME.tags) then
