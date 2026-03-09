@@ -107,9 +107,14 @@ SMODS.Blind {
     boss = { min = 1 },
     boss_colour = HEX("1d6d00"),
     calculate = function(self, blind, context)
-        -- Waiting for next smods version to do this!
         if not blind.disabled then
-            
+            if context.individual and context.cardarea == 'unscored' and context.other_card.ability then
+                context.other_card.ability.nancy_crowd = true
+            end
+            if context.stay_flipped and context.other_card.ability and context.other_card.ability.nancy_crowd then
+                context.other_card.ability.nancy_crowd = nil
+                return { modify = { to_area = G.hand } }
+            end
         end
     end
 }
