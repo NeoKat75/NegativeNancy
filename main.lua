@@ -4,8 +4,8 @@ NegaNancy = SMODS.current_mod
 SMODS.Atlas {
     key = "modicon",
     path = "icon.png",
-    px = 32,
-    py = 32
+    px = 34,
+    py = 34
 }
 
 function NegaNancy.menu_cards()
