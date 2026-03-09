@@ -1286,10 +1286,14 @@ SMODS.Joker {
                 card.ability.extra.fullhouse = false
             end
         end
-        -- At end of round, if last played hand contained a full house
+        -- At end of round
         if context.end_of_round and context.main_eval and not context.game_over then
+            -- Reset wiggles
             card.ability.extra.wiggling = false
+            -- If last played hand contained a full house
             if card.ability.extra.fullhouse then
+                -- Reset var
+                card.ability.extra.fullhouse = false
                 -- Give tag
                 G.E_MANAGER:add_event(Event({
                     func = (function()
