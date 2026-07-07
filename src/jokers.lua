@@ -266,9 +266,9 @@ SMODS.Joker {
     end
 }
 
--- Collector
+-- Keepsakes
 SMODS.Joker {
-    key = "collector",
+    key = "keepsakes",
     atlas = "jokers",
     pos = { x = 1, y = 1 },
     rarity = 1,

@@ -37,7 +37,7 @@ return {
                 }
             },
             b_nancy_crumpled = {
-                name = "Crumpled Deck",
+                name = "Vantablack Deck",
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
@@ -56,8 +56,7 @@ return {
                     "After defeating",
                     "each {C:attention}Boss Blind{}, a",
                     "random Joker becomes",
-                    "{C:dark_edition}Negative{} & {V:1}Rental",
-                    "{C:inactive,s:0.85}(Costs {C:money,s:0.85}$3{C:inactive,s:0.85} per round)"
+                    "{C:dark_edition}Negative{} & {V:1}Rental"
                 },
                 unlock = {
                     "Win a run with",
@@ -306,8 +305,8 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
-            j_nancy_collector = {
-                name = "Collector",
+            j_nancy_keepsakes = {
+                name = "Keepsakes",
                 text = {
                     "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
                     "in your {C:attention}full deck{}, including",
@@ -414,6 +413,7 @@ return {
                 }
             },
             -- Can't really patch it to consider debuff sources so this'll do...
+            --[[
             j_matador = {
                 name = "Matador",
                 text = {
@@ -428,6 +428,7 @@ return {
                     "using any discards",
                 }
             }
+            ]]--
         },
         Other = {
             nancy_boostertags = {

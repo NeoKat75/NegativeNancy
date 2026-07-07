@@ -181,7 +181,7 @@ SMODS.Back {
     end
 }
 
--- Crumpled Deck
+-- Vantablack Deck
 SMODS.Back {
     key = "crumpled",
     atlas = "decks",
