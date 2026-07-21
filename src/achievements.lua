@@ -129,7 +129,8 @@ SMODS.Achievement {
 SMODS.Achievement {
     key = 'scoredeck',
     bypass_all_unlocked = true,
-    -- reset_on_startup = true,
+    reset_on_startup = true,
+    nancy_challengeachievement = true,
     unlock_condition = function(self, args)
         if args.type == "nancy_scoredeck" then return true end
         return false
