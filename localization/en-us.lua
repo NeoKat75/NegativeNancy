@@ -227,7 +227,7 @@ return {
                 text = {
                     "At end of round, earn {C:money}$#1#",
                     "per {C:dark_edition}Negative{} playing card",
-                    "{C:attention}destroyed{} this Ante",
+                    "{C:attention}destroyed{} this run",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
                 }
             },

@@ -102,10 +102,8 @@ SMODS.Challenge {
     rules = { custom = { { id = 'nancy_printing' } } },
     restrictions = {
         banned_cards = {
-            { id = 'j_midas_mask' }, { id = 'c_magician' }, { id = 'c_empress' }, { id = 'c_heirophant' },
-            { id = 'v_illusion' }, { id = 'c_lovers' }, { id = 'c_chariot' }, { id = 'c_justice' },
-            { id = 'c_devil' }, { id = 'c_tower' }, { id = 'c_familiar' }, { id = 'c_grim' },
-            { id = 'c_incantation' }, { id = 'c_nancy_mastery' }
+            { id = 'j_midas_mask' }, { id = 'c_familiar' }, { id = 'c_grim' },
+            { id = 'c_incantation' }, { id = 'c_nancy_mastery' }, { id = 'v_illusion' }
         },
         banned_other = { { id = 'bl_nancy_file', type = 'blind' } }
     },
@@ -138,7 +136,7 @@ SMODS.Challenge {
         { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_bull' },
         { id = 'j_flash' }, { id = 'j_trousers' }, { id = 'j_castle' },
         { id = 'j_swashbuckler' }, { id = 'j_wee' }, { id = 'j_shoot_the_moon' }, { id = 'j_bootstraps' },
-        { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_collector' }, { id = 'j_nancy_postmodernjoker' },
+        { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_keepsakes' }, { id = 'j_nancy_postmodernjoker' },
         { id = 'j_nancy_deepocean' }, { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' },
         { id = 'j_nancy_decorativejoker' }
     } }

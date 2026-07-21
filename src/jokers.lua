@@ -811,6 +811,7 @@ SMODS.Joker {
             if yes then return { message = localize('k_upgrade_ex') } end
         end
         -- Reset when entering shop after beating boss blind
+        --[[
         if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.cards > 0 then
             card.ability.extra.reset = true
         end
@@ -819,6 +820,7 @@ SMODS.Joker {
             card.ability.extra.reset = false
             return { message = localize('k_reset') }
         end
+        ]]--
     end,
     -- Gives end of round money
     calc_dollar_bonus = function(self, card)
@@ -837,7 +839,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { dollars = 3, cards = 1 }, },
+    config = { extra = { dollars = 2, cards = 1 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
     end,
