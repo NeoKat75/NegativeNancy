@@ -209,6 +209,7 @@ SMODS.Blind {
     discovered = true,
     boss = { showdown = true },
     boss_colour = HEX("4d4d4d"),
+    dollars = 8,
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.before then
