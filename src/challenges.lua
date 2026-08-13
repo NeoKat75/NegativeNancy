@@ -266,6 +266,13 @@ SMODS.Challenge {
     consumeables = { { id = 'c_nancy_flood' }, { id = 'c_nancy_mastery' } },
     vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
     rules = { custom = { { id = 'nancy_victory' } } },
+    restrictions = { banned_other = {
+        { id = 'bl_final_acorn', type = 'blind' },
+        { id = 'bl_final_leaf', type = 'blind' },
+        { id = 'bl_final_vessel', type = 'blind' },
+        { id = 'bl_final_heart', type = 'blind' },
+        { id = 'bl_final_bell', type = 'blind' }
+    } },
     apply = function(self)
         G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
         SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
