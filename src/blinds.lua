@@ -212,7 +212,7 @@ SMODS.Blind {
     dollars = 8,
     calculate = function(self, blind, context)
         if not blind.disabled then
-            if context.before then
+            if context.after then
                 local yum = false
                 for _, area in ipairs{G.play, G.hand} do
                     for _, card in ipairs(area.cards) do

@@ -127,7 +127,7 @@ return {
                     "All cards not",
                     "in scoring hand",
                     "are debuffed",
-                    "when hand is played"
+                    "after hand is played"
                 }
             }
         },
@@ -740,7 +740,7 @@ return {
             ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
             ch_c_nancy_printing = { "Cards cannot have {C:enhanced}Enhancements" },
             ch_c_nancy_victory_1 = { "{C:nancy_emerald}Emerald Stake{} and below are applied" },
-            ch_c_nancy_victory_2 = { "{C:blind}Tourmaline Sun{} will be the Showdown Blind" },
+            ch_c_nancy_victory_2 = { "{C:blind,T_set:Blind,T:bl_nancy_final_sun}Tourmaline Sun{} will be the {C:attention}Showdown Blind" },
             ch_c_nancy_lowp_1 = { "Chips scored {C:attention}above{} the score requirement" },
             ch_c_nancy_lowp_2 = { "are {C:attention}added{} to the next Blind's score requirement" },
             ch_c_nancy_dance = { "Only one {C:green}random {C:attention}poker hand{} is allowed each round" },
