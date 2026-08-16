@@ -277,6 +277,7 @@ SMODS.Joker {
     discovered = true,
     config = { extra = { chips = 2 }, },
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'nancy_modifiers', set = 'Other' }
         if G.playing_cards and #G.playing_cards > 0 then
             return { vars = { card.ability.extra.chips, card.ability.extra.chips * NegaNancy.uniquecards(G.playing_cards) } }
         else

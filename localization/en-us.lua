@@ -25,9 +25,8 @@ return {
             b_nancy_chaotic = {
                 name = "Chaotic Deck",
                 text = {
-                    "All {C:enhanced}Enhancements{},",
-                    "{C:enhanced}Editions{} and {C:enhanced}Seals",
-                    "in deck are {C:green}randomized",
+                    "All {C:enhanced,T:nancy_modifiers}modifiers{} in",
+                    "deck are {C:green}randomized",
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
                 },
                 unlock = {
@@ -159,7 +158,7 @@ return {
                 text = {
                     "Once per round,",
                     "sell a {C:attention}consumable",
-                    "to destroy a random",
+                    "to {C:red}destroy{} a random",
                     "card held {C:attention}in hand"
                 }
             },
@@ -209,7 +208,7 @@ return {
                 text = {
                     "Create a random {C:tarot}Tarot",
                     "card if {C:attention}poker hand",
-                    "contains a {C:attention}debuffed{} card",
+                    "contains a {C:red}debuffed{} card",
                     "{C:inactive}(Must have room)"
                 }
             },
@@ -218,7 +217,7 @@ return {
                 text = {
                     "{X:mult,C:white}X#1#{} Mult if a {C:dark_edition}Negative",
                     "playing card has been",
-                    "{C:attention}destroyed{} this Ante",
+                    "{C:red}destroyed{} this Ante",
                     "{C:inactive}#2#"
                 }
             },
@@ -227,7 +226,7 @@ return {
                 text = {
                     "At end of round, earn {C:money}$#1#",
                     "per {C:dark_edition}Negative{} playing card",
-                    "{C:attention}destroyed{} this run",
+                    "{C:red}destroyed{} this run",
                     "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
                 }
             },
@@ -269,7 +268,7 @@ return {
             j_nancy_decorativejoker = {
                 name = "Decorative Joker",
                 text = {
-                    "{C:mult}+#1#{} Mult for each {C:attention}debuffed",
+                    "{C:mult}+#1#{} Mult for each {C:red}debuffed",
                     "card in your {C:attention}full deck",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
@@ -278,7 +277,7 @@ return {
                 name = "Stimulus Cheque",
                 text = {
                     "This Joker gives {C:money}$#1#{} per",
-                    "{C:attention}debuffed{} card {C:attention}in hand",
+                    "{C:red}debuffed{} card {C:attention}in hand",
                     "when hand is played"
                 }
             },
@@ -292,7 +291,7 @@ return {
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {
-                        "Permanently {C:attention}debuffs",
+                        "Permanently {C:red}debuffs",
                         "scored {C:attention}7{}s after played"
                     }
                 }
@@ -308,9 +307,8 @@ return {
             j_nancy_keepsakes = {
                 name = "Keepsakes",
                 text = {
-                    "{C:chips}+#1#{} Chips for each {C:attention}unique{} card",
-                    "in your {C:attention}full deck{}, including",
-                    "{C:enhanced}Enhancements{}, {C:enhanced}Editions{} and {C:enhanced}Seals",
+                    "{C:chips}+#1#{} Chips for each {C:attention}unique{} card in",
+                    "your {C:attention}full deck{}, including {C:enhanced}modifiers",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
                 }
             },
@@ -420,7 +418,7 @@ return {
                     "Earn {C:money}$#1#{} if played",
                     "hand triggers the",
                     "{C:attention}Boss Blind{} ability",
-                    "{s:0.85}or has a {C:attention,s:0.85}debuffed {s:0.85}card"
+                    "{s:0.85}or has a {C:red,s:0.85}debuffed {s:0.85}card"
                 },
                 unlock = {
                     "Defeat a Boss Blind",
@@ -439,6 +437,14 @@ return {
                     "{C:planet}Meteor{} Tag",
                     "{C:spectral}Ethereal{} Tag",
                     "{C:attention}Buffoon{} Tag"
+                }
+            },
+            nancy_modifiers = {
+                name = "Modifiers",
+                text = {
+                    "{C:enhanced}Enhancement",
+                    "{C:enhanced}Edition",
+                    "{C:enhanced}Seal"
                 }
             },
             nancy_raritytags = {
@@ -501,7 +507,7 @@ return {
                 name = "Sacrifice",
                 text = {
                     {
-                        "Destroy {C:attention}#1#{} random",
+                        "{C:red}Destroy {C:attention}#1#{} random",
                         "{C:dark_edition}Negative{} cards",
                         "held {C:attention}in hand"
                     },
@@ -548,7 +554,7 @@ return {
             tag_nancy_shredder = {
                 name = "Shredder Tag",
                 text = {
-                    "Destroys all {C:attention}debuffed",
+                    "{C:red}Destroys{} all {C:red}debuffed",
                     "cards {C:attention}in hand{} when",
                     "at least one is drawn"
                 }
@@ -564,7 +570,7 @@ return {
                         "card in your hand"
                     },
                     {
-                        "Permanently {C:attention}debuffs",
+                        "Permanently {C:red}debuffs",
                         "the selected card"
                     }
                 }
@@ -573,12 +579,13 @@ return {
                 name = "The Trainee",
                 text = {
                     {
-                        "Select {C:attention}#1#{} cards, give the {C:attention}left{} card",
-                        "the {C:attention}right{} card's {C:enhanced}Enhancement{}, {C:enhanced}Edition",
-                        "and/or {C:enhanced}Seal{} where it's {C:attention}applicable"
+                        "Select {C:attention}#1#{} cards, give the {C:attention}left",
+                        "card the {C:attention}right{} card's",
+                        "{C:enhanced}modifiers{} where {C:attention}applicable"
                     },
                     {
-                        "Permanently {C:attention}debuffs{} the {C:attention}right{} card"
+                        "Permanently {C:red}debuffs",
+                        "the {C:attention}right{} card"
                     }
                 }
             },
@@ -586,7 +593,7 @@ return {
                 name = "The Offering",
                 text = {
                     {
-                        "Permanently {C:attention}debuff",
+                        "Permanently {C:red}debuff",
                         "{C:attention}#1#{} selected {C:enhanced}Editioned",
                         "card in your hand"
                     },

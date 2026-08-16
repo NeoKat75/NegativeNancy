@@ -68,6 +68,7 @@ SMODS.Consumable {
     pos = { x = 1, y = 0 },
     config = { extra = { max_highlighted = 2, min_highlighted = 2 } },
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = 'nancy_modifiers', set = 'Other' }
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
         return { vars = { card.ability.extra.max_highlighted } }
     end,
