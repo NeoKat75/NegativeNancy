@@ -31,7 +31,7 @@ SMODS.ObjectType {
 
 SMODS.Challenge {
     key = 'showcase',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_negativenancy' } },
     rules = { custom = {
         { id = 'nancy_showcase_1' },
@@ -49,7 +49,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'groceries',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_usefuljoker', eternal = true } },
     rules = { custom = { { id = 'nancy_groceries' } } },
     apply = function(self)
@@ -63,7 +63,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'stairway',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = {
         { id = 'j_nancy_stairwell' }, { id = 'j_nancy_stairwell' }, { id = 'j_joker' },
         { id = 'j_nancy_stairwell' }, { id = 'j_nancy_stairwell' }
@@ -97,7 +97,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'printing',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' } },
     rules = { custom = { { id = 'nancy_printing' } } },
     restrictions = {
@@ -120,14 +120,14 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'reroll',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_onthehouse' } },
     rules = { modifiers = { { id = 'reroll_cost', value = 50 } } }
 }
 
 SMODS.Challenge {
     key = 'vandalism',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_streetart', eternal = true } },
     restrictions = { banned_cards = {
         { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' }, { id = 'j_supernova' },
@@ -144,7 +144,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'lowp',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
     config = { extra = 0 },
     calculate = function(self, context)
@@ -172,7 +172,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'high',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
     rules = { custom = { { id = 'nancy_high' } } },
     restrictions = { banned_other = {
@@ -198,7 +198,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'dance',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_joker' } },
     deck = { type = 'Challenge Deck', edition = 'negative' },
     rules = { custom = { { id = 'nancy_dance' } } },
@@ -261,7 +261,7 @@ SMODS.Challenge {
 
 SMODS.Challenge {
     key = 'victory',
-    button_colour = HEX('A000A0'),
+    button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' } },
     consumeables = { { id = 'c_nancy_flood' }, { id = 'c_nancy_mastery' } },
     vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },

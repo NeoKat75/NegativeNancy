@@ -213,18 +213,23 @@ SMODS.Blind {
     calculate = function(self, blind, context)
         if not blind.disabled then
             if context.after then
-                local yum = false
-                for _, area in ipairs{G.play, G.hand} do
-                    for _, card in ipairs(area.cards) do
-                        if not NegaNancy.isintable(context.scoring_hand, card) and not card.ability.nancy_tourmalinedebuff then
-                            card.ability.nancy_tourmalinedebuff = true
-                            SMODS.recalc_debuff(card)
-                            card:juice_up()
-                            yum = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        local yum = false
+                        for _, area in ipairs{G.play, G.hand} do
+                            for _, card in ipairs(area.cards) do
+                                if not NegaNancy.isintable(context.scoring_hand, card) and not card.ability.nancy_tourmalinedebuff then
+                                    card.ability.nancy_tourmalinedebuff = true
+                                    SMODS.recalc_debuff(card)
+                                    card:juice_up()
+                                    yum = true
+                                end
+                            end
                         end
+                        if yum then NegaNancy.wiggle_blind(); blind.triggered = true end
+                        return true
                     end
-                end
-                if yum then NegaNancy.wiggle_blind(); blind.triggered = true end
+                }))
             end
         end
     end,
