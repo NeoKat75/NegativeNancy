@@ -244,7 +244,8 @@ return {
                 text = {
                     "{C:green}#1# in #2#{} chance to",
                     "retrigger each",
-                    "{C:dark_edition}Negative{} {C:attention}playing card"
+                    "{C:dark_edition}Negative{} card {C:attention}played",
+                    "and held {C:attention}in hand"
                 }
             },
             j_nancy_lackofthedraw = {
