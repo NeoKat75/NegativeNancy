@@ -142,24 +142,17 @@ SMODS.Back {
                 local enhpool = SMODS.shallow_copy(SMODS.get_clean_pool('Enhanced'))
                 local edipool = SMODS.shallow_copy(SMODS.get_clean_pool('Edition'))
                 local sealpool = SMODS.shallow_copy(SMODS.get_clean_pool('Seal'))
-                -- Determine chances of each modifier
-                local enh_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
-                local edi_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
-                local seal_chance = pseudorandom('nancy_chaoticdeck', 2, 8)
-                --print('Enh chance: 1 in '..enh_chance)
-                --print('Edi chance: 1 in '..edi_chance)
-                --print('Seal chance: 1 in '..seal_chance)
                 -- Do the thing
                 for _, _card in ipairs(G.playing_cards) do
-                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, enh_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, 5) then
                         local enh = pseudorandom_element(enhpool, 'nancy_chaoticdeck')
                         _card:set_ability(enh)
                     end
-                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, edi_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, 5) then
                         local edi = pseudorandom_element(edipool, 'nancy_chaoticdeck')
                         _card:set_edition(edi, true, true)
                     end
-                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, seal_chance) then
+                    if SMODS.pseudorandom_probability(back, 'nancy_chaoticdeck', 1, 5) then
                         local seal = pseudorandom_element(sealpool, 'nancy_chaoticdeck')
                         _card:set_seal(seal, true, true)
                     end
@@ -181,7 +174,7 @@ SMODS.Back {
     end
 }
 
--- Vantablack Deck
+-- Crumpled Deck
 SMODS.Back {
     key = "crumpled",
     atlas = "decks",

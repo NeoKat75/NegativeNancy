@@ -25,7 +25,7 @@ return {
             b_nancy_chaotic = {
                 name = "Chaotic Deck",
                 text = {
-                    "All {C:enhanced,T:nancy_modifiers}modifiers{} in",
+                    "All card {C:enhanced,T:nancy_modifiers}modifiers{} in",
                     "deck are {C:green}randomized",
                     "{C:red,s:0.85}X#1# {s:0.85}base Blind size"
                 },
@@ -36,7 +36,7 @@ return {
                 }
             },
             b_nancy_crumpled = {
-                name = "Vantablack Deck",
+                name = "Crumpled Deck",
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size",
