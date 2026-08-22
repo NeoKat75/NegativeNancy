@@ -69,11 +69,17 @@ SMODS.Challenge {
         { id = 'j_nancy_stairwell' }, { id = 'j_nancy_stairwell' }
     },
     rules = { custom = { { id = 'nancy_stairway' } } },
-    restrictions = { banned_other = {
-        { id = 'bl_nancy_desert', type = 'blind' },
-        { id = 'bl_nancy_filter', type = 'blind' },
-        { id = 'bl_nancy_purse', type = 'blind' }
-    } },
+    restrictions = {
+        banned_cards = {
+            { id = 'j_nancy_decorativejoker' },
+            { id = 'c_ouija' }
+        },
+        banned_other = {
+            { id = 'bl_nancy_desert', type = 'blind' },
+            { id = 'bl_nancy_filter', type = 'blind' },
+            { id = 'bl_nancy_purse', type = 'blind' }
+        }
+    },
     apply = function(self)
         G.E_MANAGER:add_event(Event({
             func = function()
@@ -108,7 +114,7 @@ SMODS.Challenge {
     restrictions = {
         banned_cards = {
             { id = 'j_midas_mask' }, { id = 'c_familiar' }, { id = 'c_grim' },
-            { id = 'c_incantation' }, { id = 'c_nancy_mastery' }, { id = 'v_illusion' }
+            { id = 'c_incantation' }, { id = 'v_illusion' }
         },
         banned_other = { { id = 'bl_nancy_file', type = 'blind' } }
     },
