@@ -525,8 +525,8 @@ return {
                 text = {
                     "Shop can have {C:nancy_emerald}Binding{} Jokers",
                     "{C:inactive,s:0.8}({C:red,s:0.8}-1 {C:inactive,s:0.8}hand size)",
-                    "{s:0.8}Applies all previous Stakes",
-                },
+                    "{s:0.8}Applies all previous Stakes"
+                }
             }
         },
         Tag = {
