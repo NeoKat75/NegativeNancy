@@ -14,7 +14,8 @@ return {
                     "{C:enhanced}Editions{} on playing",
                     "cards are {C:green}randomized",
                     "when entering shop",
-                    "{s:0.85}Start run with {C:dark_edition,T:v_glow_up,s:0.85}#1#"
+                    "{s:0.85}Start run with",
+                    "{C:dark_edition,T:v_glow_up,s:0.85}#1# {s:0.85}and {C:dark_edition,T:v_illusion,s:0.85}#2#"
                 },
                 unlock = {
                     "Win a run with",

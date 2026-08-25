@@ -33,9 +33,12 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 1, y = 0 },
     unlocked = false,
-    config = { vouchers = { 'v_hone', 'v_glow_up' } },
+    config = { vouchers = { 'v_hone', 'v_glow_up', 'v_magic_trick', 'v_illusion' } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { localize{type = 'name_text', key = self.config.vouchers[2], set = 'Voucher'} } }
+        return { vars = {
+            localize{type = 'name_text', key = self.config.vouchers[2], set = 'Voucher'},
+            localize{type = 'name_text', key = self.config.vouchers[4], set = 'Voucher'}
+        } }
     end,
     calculate = function(self, back, context)
         if context.starting_shop then
