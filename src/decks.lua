@@ -180,18 +180,9 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 3, y = 0 },
     unlocked = false,
-    config = { joker_slot = -4, extra = { hsize = -1, joker = 'j_troubadour' } },
+    config = { joker_slot = -4, extra = { hsize = -1 } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.extra.hsize, localize{type = 'name_text', key = self.config.extra.joker, set = 'Joker'} } }
-    end,
-    apply = function(self, back)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                SMODS.add_card{key = self.config.extra.joker, no_edition = true}
-                play_sound('timpani')
-                return true
-            end
-        }))
+        return { vars = { self.config.extra.hsize } }
     end,
     calculate = function(self, back, context)
         if context.card_added and context.card.ability.set == "Joker" then
