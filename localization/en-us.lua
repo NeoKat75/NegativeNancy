@@ -646,7 +646,7 @@ return {
             ach_nancy_inabind = "In a Real Bind",
             ach_nancy_initiation = "The Elite Circles",
             ach_nancy_handsize = "Valued Handiwork",
-            ach_nancy_nancywin = "There's Achievements Too!",
+            ach_nancy_nancywin = "Nancy's Warm Welcome!",
             ach_nancy_emeraldwin = "The Crown Jewel",
             ach_nancy_challengewin = "Undefeatable",
             ach_nancy_alldeckswin = "Nancy's Pride and Joy",
@@ -673,6 +673,9 @@ return {
             nancy_downgrade = "Downgrade!",
             nancy_d6tag = "+1 D6 Tag",
             nancy_twisted = "Twisted!",
+            nancy_luck = "Luck",
+            nancy_lack = "Lack",
+            -- When cloned???
             nancy_usefuljoker_clone = "My clone???",
             -- When scoring
             nancy_usefuljoker_1 = "I'm helping!",

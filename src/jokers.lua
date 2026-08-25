@@ -909,7 +909,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local luck
-        if math.random(10) == 10 then luck = "Luck" else luck = "Lack" end
+        if math.random(10) == 10 then luck = localize("nancy_luck") else luck = localize("nancy_lack") end
         return { vars = { G.GAME.starting_params.discard_limit, luck } }
     end,
     in_pool = function(self, args)
