@@ -70,7 +70,12 @@ SMODS.Challenge {
     },
     rules = { custom = { { id = 'nancy_stairway' } } },
     restrictions = {
-        banned_cards = { { id = 'j_nancy_decorativejoker' } },
+        banned_cards = {
+            { id = 'j_nancy_stimuluscheque' },
+            { id = 'j_nancy_decorativejoker' },
+            { id = 'j_nancy_consolationprize' }
+        },
+        banned_tags = { { id = 'tag_nancy_shredder' } },
         banned_other = {
             { id = 'bl_nancy_desert', type = 'blind' },
             { id = 'bl_nancy_filter', type = 'blind' },
