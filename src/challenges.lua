@@ -100,11 +100,6 @@ SMODS.Challenge {
                 end
             end
         end
-        if context.setting_ability then
-            if not (context.other_card.edition and context.other_card.edition.key == "e_negative") then
-                SMODS.debuff_card(context.other_card, true, 'nancy_stairway')
-            end
-        end
     end
 }
 
