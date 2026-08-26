@@ -143,17 +143,17 @@ SMODS.Challenge {
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_streetart', eternal = true } },
     restrictions = { banned_cards = {
-        { id = 'j_stencil' }, { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' },
-        { id = 'j_steel_joker' }, { id = 'j_supernova' }, { id = 'j_runner' }, { id = 'j_blue_joker' },
-        { id = 'j_constellation' }, { id = 'j_green_joker' }, { id = 'j_red_card' }, { id = 'j_madness' },
-        { id = 'j_square' }, { id = 'j_vampire' }, { id = 'j_hologram' }, { id = 'j_obelisk' }, { id = 'j_erosion' },
-        { id = 'j_fortune_teller' }, { id = 'j_stone' }, { id = 'j_lucky_cat' }, { id = 'j_bull' }, { id = 'j_flash' },
-        { id = 'j_trousers' }, { id = 'j_castle' }, { id = 'j_campfire' }, { id = 'j_swashbuckler' },
-        { id = 'j_throwback' }, { id = 'j_glass' }, { id = 'j_wee' }, { id = 'j_hit_the_road' }, { id = 'j_shoot_the_moon' },
-        { id = 'j_baron' }, { id = 'j_bootstraps' }, { id = 'j_nancy_countjokula' }, { id = 'j_nancy_frugaljoker' },
-        { id = 'j_nancy_keepsakes' }, { id = 'j_nancy_postmodernjoker' }, { id = 'j_nancy_deepocean' },
-        { id = 'j_nancy_slotmachine' }, { id = 'j_nancy_packofbuffoons' }, { id = 'j_nancy_decorativejoker' },
-        { id = 'j_caino' }, { id = 'j_yorick' }
+        { id = 'j_runner' }, { id = 'j_blue_joker' }, { id = 'j_square' }, { id = 'j_stone' }, { id = 'j_bull' },
+        { id = 'j_castle' }, { id = 'j_wee' }, { id = 'j_nancy_keepsakes' }, { id = 'j_nancy_postmodernjoker' },
+        { id = 'j_nancy_deepocean' },
+        { id = 'j_ceremonial' }, { id = 'j_abstract' }, { id = 'j_ride_the_bus' }, { id = 'j_green_joker' },
+        { id = 'j_red_card' }, { id = 'j_erosion' }, { id = 'j_fortune_teller' }, { id = 'j_flash' }, { id = 'j_trousers' },
+        { id = 'j_swashbuckler' }, { id = 'j_bootstraps' }, { id = 'j_nancy_frugaljoker' }, { id = 'j_nancy_slotmachine' },
+        { id = 'j_nancy_packofbuffoons' }, { id = 'j_nancy_decorativejoker' },
+        { id = 'j_stencil' }, { id = 'j_steel_joker' }, { id = 'j_constellation' }, { id = 'j_madness' },
+        { id = 'j_vampire' }, { id = 'j_hologram' }, { id = 'j_obelisk' }, { id = 'j_lucky_cat' },
+        { id = 'j_campfire' }, { id = 'j_throwback' }, { id = 'j_glass' }, { id = 'j_hit_the_road' },
+        { id = 'j_nancy_countjokula' }, { id = 'j_caino' }, { id = 'j_yorick' }
     } }
 }
 
