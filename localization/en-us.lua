@@ -648,7 +648,7 @@ return {
             ach_nancy_handsize = "Valued Handiwork",
             ach_nancy_nancywin = "Nancy's Warm Welcome!",
             ach_nancy_emeraldwin = "The Crown Jewel",
-            ach_nancy_challengewin = "Undefeatable",
+            ach_nancy_challengewin = "Nancy's Rising Star",
             ach_nancy_alldeckswin = "Nancy's Pride and Joy",
             ach_nancy_allchallengeswin = "Nancy's Big Favorite!"
         },
