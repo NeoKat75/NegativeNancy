@@ -1,0 +1,19 @@
+[manifest]
+version = "0.1.0"
+priority = 0
+
+
+## TEMPORARY fix for debuffs being overwritten until smods fixes it
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+new_ability.debuff_sources = {}
+'''
+position = "at"
+payload = '''
+new_ability.debuff_sources = self.ability.debuff_sources or {}
+'''
+match_indent = true
