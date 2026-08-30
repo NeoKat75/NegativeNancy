@@ -116,7 +116,6 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval then
-            local joker = context.blueprint_card or card
             G.E_MANAGER:add_event(Event({
                 func = function()
                     -- Table of non-editioned cards
@@ -131,13 +130,13 @@ SMODS.Joker {
                         local _card = pseudorandom_element(targets, "nancy_laminator")
                         local edition = poll_edition("nancy_laminator", nil, nil, true)
                         _card:set_edition(edition, true)
-                        _card:juice_up()
                         SMODS.recalc_debuff(_card)
-                        joker:juice_up()
+                        _card:juice_up()
                     end
                     return true
                 end
             }))
+            return { message = localize('nancy_laminator') }
         end
     end
 }

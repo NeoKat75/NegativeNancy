@@ -675,6 +675,7 @@ return {
             nancy_twisted = "Twisted!",
             nancy_luck = "Luck",
             nancy_lack = "Lack",
+            nancy_laminator = "Laminated!",
             -- When cloned???
             nancy_usefuljoker_clone = "My clone???",
             -- When scoring
