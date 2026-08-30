@@ -106,7 +106,7 @@ SMODS.Challenge {
 SMODS.Challenge {
     key = 'printing',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' } },
+    jokers = { { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' } },
     rules = { custom = { { id = 'nancy_printing' } } },
     restrictions = {
         banned_cards = {

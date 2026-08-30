@@ -324,7 +324,7 @@ return {
             j_nancy_laminator = {
                 name = "Laminator",
                 text = {
-                    "When round begins,",
+                    "When round ends,",
                     "apply a random {C:enhanced}Edition{} to",
                     "a random card {C:attention}in hand"
                 }

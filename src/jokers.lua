@@ -115,7 +115,7 @@ SMODS.Joker {
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     calculate = function(self, card, context)
-        if context.first_hand_drawn then
+        if context.end_of_round and context.main_eval then
             local joker = context.blueprint_card or card
             G.E_MANAGER:add_event(Event({
                 func = function()
