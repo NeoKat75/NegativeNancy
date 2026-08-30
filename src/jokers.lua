@@ -130,13 +130,13 @@ SMODS.Joker {
                         local _card = pseudorandom_element(targets, "nancy_laminator")
                         local edition = poll_edition("nancy_laminator", nil, nil, true)
                         _card:set_edition(edition, true)
-                        SMODS.recalc_debuff(_card)
                         _card:juice_up()
+                        SMODS.recalc_debuff(_card)
                     end
                     return true
                 end
             }))
-            return { message = localize('nancy_laminator') }
+            return { message = "", colour = G.C.CLEAR }
         end
     end
 }
