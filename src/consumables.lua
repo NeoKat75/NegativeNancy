@@ -255,9 +255,12 @@ SMODS.Consumable {
     config = { extra = { hsize = -1 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        return { vars = { card.ability.extra.hsize } }
+        return { vars = { (G.GAME.nancy_flood or card.ability.extra.hsize) } }
     end,
     use = function(self, card, area, copier)
+        -- Scaling init
+        G.GAME.nancy_flood = G.GAME.nancy_flood or card.ability.extra.hsize
+        -- The thing
         local targets = {}
         for _, _card in ipairs(G.hand.cards or {}) do
             if _card.config.center.key == "c_base" and not _card.edition then
@@ -270,11 +273,15 @@ SMODS.Consumable {
             func = function()
                 play_sound('tarot1')
                 card:juice_up(0.3, 0.5)
-                G.hand:change_size(card.ability.extra.hsize)
+                -- Accounting for scaling happening before event
+                G.hand:change_size(G.GAME.nancy_flood + 1)
                 NegaNancy.makenegatives(targets)
                 return true
             end
         }))
+        -- Scaling update
+        G.GAME.nancy_flood = G.GAME.nancy_flood + card.ability.extra.hsize
+        -- Yeah
         delay(0.5)
     end,
     can_use = function(self, card)

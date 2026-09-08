@@ -487,7 +487,7 @@ return {
                 text = {
                     {
                         "Apply {C:dark_edition}Negative{} {C:enhanced}Edition",
-                        "to all {C:enhanced}unenhanced",
+                        "to all {C:attention}unenhanced",
                         "cards in your hand"
                     },
                     {
@@ -500,7 +500,7 @@ return {
                 text = {
                     "Apply a random",
                     "{C:enhanced}Enhancement{} to",
-                    "each {C:enhanced}unenhanced",
+                    "each {C:attention}unenhanced",
                     "card in hand"
                 }
             },
