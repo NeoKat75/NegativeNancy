@@ -308,7 +308,7 @@ return {
             j_nancy_keepsakes = {
                 name = "Keepsakes",
                 text = {
-                    "{C:chips}+#1#{} Chips for each {C:attention}unique{} card in",
+                    "{C:chips}+#1#{} Chip for each {C:attention}unique{} card in",
                     "your {C:attention}full deck{}, including {C:enhanced}modifiers",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
                 }
@@ -399,7 +399,7 @@ return {
             j_nancy_windowshopping = {
                 name = "Window Shopping",
                 text = {
-                    "Adds {C:attention}double{} your current",
+                    "Adds your current",
                     "{C:attention}hand size{} to Mult"
                 }
             },

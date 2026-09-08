@@ -15,12 +15,11 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = true,
-    config = { extra = { times = 2 }, },
     calculate = function(self, card, context)
         -- When joker is scored
         if context.joker_main then
-            -- Give hand size * 'times' var as mult
-            return { mult = G.hand.config.card_limit * card.ability.extra.times }
+            -- Give hand size as mult
+            return { mult = G.hand.config.card_limit }
         end
     end
 }
@@ -274,7 +273,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = true,
-    config = { extra = { chips = 2 }, },
+    config = { extra = { chips = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'nancy_modifiers', set = 'Other' }
         if G.playing_cards and #G.playing_cards > 0 then
