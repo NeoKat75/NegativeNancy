@@ -877,7 +877,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 7,
     discovered = true,
-    config = { extra = { gain = 3 }, },
+    config = { extra = { gain = 2 }, },
     loc_vars = function(self, info_queue, card)
         local mult = 0
         if G.GAME.nancy_jokerlist then mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain end
