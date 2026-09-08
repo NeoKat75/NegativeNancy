@@ -340,10 +340,9 @@ return {
                 name = "Stairwell",
                 text = {
                     {
-                        "Sell this Joker to",
-                        "apply {C:dark_edition}Negative{} {C:enhanced}Edition",
-                        "to {C:attention}#1#{} random cards",
-                        "held {C:attention}in hand"
+                        "Sell this Joker to apply",
+                        "{C:dark_edition}Negative{} {C:enhanced}Edition{} to {C:attention}#1#{} random",
+                        "{C:attention}unenhanced{} cards {C:attention}in hand"
                     },
                     {
                         "Amount increases",

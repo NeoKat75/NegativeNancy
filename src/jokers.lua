@@ -501,7 +501,7 @@ SMODS.Joker {
     nancy_binding_incompat = true,
     cost = 8,
     discovered = true,
-    config = { extra = { amount = 2, growth = 1 }, },
+    config = { extra = { amount = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.amount, card.ability.extra.growth } }
@@ -521,11 +521,11 @@ SMODS.Joker {
             juice_card_until(card, eval, true)
         end
         -- Doing the thing
-        if G.hand and G.hand.cards and context.selling_self then
-            -- Put non-editioned cards in a table
+        if G.hand and G.hand.cards and context.selling_self and card.ability.extra.amount > 0 then
+            -- Put non-editioned non-enhanced cards in a table
             local targets = {}
             for _, _card in ipairs(G.hand.cards) do
-                if not _card.edition then
+                if not _card.edition and _card.config.center.key == "c_base" then
                     targets[#targets + 1] = _card
                 end
             end
