@@ -305,10 +305,10 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if G.hand and G.hand.cards and context.selling_self then
-            -- Put non-editioned cards in a table
+            -- Put non-editioned non-enhanced cards in a table
             local targets = {}
             for _, _card in ipairs(G.hand.cards) do
-                if not _card.edition then
+                if not _card.edition and _card.config.center.key == "c_base" then
                     targets[#targets + 1] = _card
                 end
             end
