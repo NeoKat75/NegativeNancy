@@ -23,7 +23,7 @@ SMODS.Tag {
     atlas = "tags",
     pos = { x = 1, y = 0 },
     discovered = true,
-    config = { money = 4 },
+    config = { money = 3 },
     loc_vars = function(self, info_queue, tag)
         local count = 0
         for _, _card in ipairs(G.playing_cards or {}) do
