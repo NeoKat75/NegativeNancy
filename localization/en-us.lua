@@ -11,11 +11,9 @@ return {
             b_nancy_twister = {
                 name = "Twister Deck",
                 text = {
-                    "{C:enhanced}Editions{} on playing",
-                    "cards are {C:green}randomized",
-                    "when entering shop",
-                    "{s:0.85}Start run with",
-                    "{C:dark_edition,T:v_glow_up,s:0.85}#1# {s:0.85}and {C:dark_edition,T:v_illusion,s:0.85}#2#"
+                    "{C:enhanced}Enhancements{} on cards",
+                    "are {C:green}randomized",
+                    "when entering shop"
                 },
                 unlock = {
                     "Win a run with",
@@ -674,7 +672,6 @@ return {
             nancy_twisted = "Twisted!",
             nancy_luck = "Luck",
             nancy_lack = "Lack",
-            nancy_laminator = "Laminated!",
             -- When cloned???
             nancy_usefuljoker_clone = "My clone???",
             -- When scoring

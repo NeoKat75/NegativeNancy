@@ -33,24 +33,16 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 1, y = 0 },
     unlocked = false,
-    config = { vouchers = { 'v_hone', 'v_glow_up', 'v_magic_trick', 'v_illusion' } },
-    loc_vars = function(self, info_queue, back)
-        return { vars = {
-            localize{type = 'name_text', key = self.config.vouchers[2], set = 'Voucher'},
-            localize{type = 'name_text', key = self.config.vouchers[4], set = 'Voucher'}
-        } }
-    end,
     calculate = function(self, back, context)
         if context.starting_shop then
             local targets = {}
             for _, _card in ipairs(G.playing_cards or {}) do
-                if _card.edition then targets[#targets+1] = _card end
+                if _card.config.center.key ~= "c_base" then targets[#targets+1] = _card end
             end
             if next(targets) then
-                local edipool = SMODS.get_clean_pool('Edition')
                 for _, _card in ipairs(targets) do
-                    local edi = pseudorandom_element(edipool, 'nancy_twisterdeck'..G.GAME.round_resets.ante)
-                    _card:set_edition(edi, true, true)
+                    local enh = SMODS.poll_enhancement{guaranteed = true}
+                    _card:set_ability(enh)
                 end
                 G.E_MANAGER:add_event(Event({
                     func = function()
