@@ -39,7 +39,7 @@ return {
                 text = {
                     "{C:legendary,E:1}Unlimited{} Joker slots",
                     "{C:red}#1#{} hand size for",
-                    "every {C:attention}#2#{} owned Jokers"
+                    "every {C:attention}#2#{} Jokers owned"
                 },
                 unlock = {
                     "Win a run with",
