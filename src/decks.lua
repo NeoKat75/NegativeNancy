@@ -175,20 +175,37 @@ SMODS.Back {
     atlas = "decks",
     pos = { x = 3, y = 0 },
     unlocked = false,
-    config = { joker_slot = -4, extra = { hsize = -1 } },
+    config = { joker_slot = -4, extra = { hsize = -1, jimbos = 2, penalty = 0, newpenalty = 0 } },
     loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.extra.hsize } }
+        return { vars = { self.config.extra.hsize, self.config.extra.jimbos } }
+    end,
+    apply = function(self, back)
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size
     end,
     calculate = function(self, back, context)
-        if context.card_added and context.card.ability.set == "Joker" then
-            G.jokers:change_size(1)
-            G.hand:change_size(self.config.extra.hsize)
+        if (context.card_added and context.card.ability.set == "Joker")
+            or ((context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker")
+        then
+            -- #G.jokers.cards updates after this code runs, so gotta account for it
+            local jokers
+            if context.card_added and context.card.ability.set == "Joker" then
+                G.jokers:change_size(1)
+                jokers = #G.jokers.cards + 1
+            end
+            if (context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker" then
+                G.jokers:change_size(-1)
+                jokers = #G.jokers.cards - 1
+            end
+            --
+            G.GAME.selected_back.effect.config.extra.newpenalty = G.GAME.selected_back.effect.config.extra.hsize * math.floor(jokers / G.GAME.selected_back.effect.config.extra.jimbos)
+            if G.GAME.selected_back.effect.config.extra.newpenalty ~= G.GAME.selected_back.effect.config.extra.penalty then
+                local delta = -(G.GAME.selected_back.effect.config.extra.penalty - G.GAME.selected_back.effect.config.extra.newpenalty)
+                G.hand:change_size(delta)
+                G.GAME.selected_back.effect.config.extra.penalty = G.GAME.selected_back.effect.config.extra.newpenalty
+            end
+            --
+            G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
         end
-        if (context.joker_type_destroyed or context.selling_card) and context.card.ability.set == "Joker" then
-            G.jokers:change_size(-1)
-            G.hand:change_size(-self.config.extra.hsize)
-        end
-        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end,
     locked_loc_vars = function(self, info_queue, back)
         local other_name = localize('k_unknown')
