@@ -37,9 +37,10 @@ SMODS.Challenge {
         { id = 'nancy_showcase_1' },
         { id = 'nancy_showcase_2' }
     } },
-    restrictions = { banned_cards = {
-        { id = 'j_luchador' }, { id = 'j_chicot' }, { id = 'v_hieroglyph' }, { id = 'v_petroglyph' }
-    } },
+    restrictions = {
+        banned_cards = { { id = 'j_luchador' }, { id = 'j_chicot' }, { id = 'v_hieroglyph' }, { id = 'v_directors_cut' } },
+        banned_tags = { { id = 'tag_boss' } }
+    },
     apply = function(self)
         for k, v in pairs(G.P_BLINDS) do
             if not v.original_mod and v.key ~= 'bl_small' and v.key ~= 'bl_big' then
