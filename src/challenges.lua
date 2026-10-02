@@ -47,6 +47,9 @@ SMODS.Challenge {
                 G.GAME.banned_keys[v.key] = true
             end
         end
+    end,
+    unlocked = function(self)
+        return true
     end
 }
 
