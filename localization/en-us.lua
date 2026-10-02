@@ -146,7 +146,7 @@ return {
                         "{C:dark_edition}Negative{} cards count in scoring",
                     },
                     {
-                        "{C:inactive}(Try it in the {C:nancy_emerald}Victory Lap {C:inactive}challenge!)"
+                        "{C:inactive}(Try it in the {C:nancy_emerald}#1# {C:inactive}challenge!)"
                     }
                 }
             },

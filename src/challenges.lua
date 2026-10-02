@@ -61,6 +61,9 @@ SMODS.Challenge {
                 G.GAME.banned_keys[v.key] = true
             end
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -103,13 +106,16 @@ SMODS.Challenge {
                 end
             end
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
 SMODS.Challenge {
     key = 'printing',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_nancy_laminator' }, { id = 'j_nancy_laminator' } },
+    jokers = { { id = 'j_certificate' }, { id = 'j_nancy_laminator' } },
     rules = { custom = { { id = 'nancy_printing' } } },
     restrictions = {
         banned_cards = {
@@ -126,6 +132,9 @@ SMODS.Challenge {
         if context.setting_ability and context.other_card.playing_card and context.new ~= 'c_base' then
             context.other_card:set_ability('c_base')
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -133,7 +142,10 @@ SMODS.Challenge {
     key = 'reroll',
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_onthehouse' } },
-    rules = { modifiers = { { id = 'reroll_cost', value = 50 } } }
+    rules = { modifiers = { { id = 'reroll_cost', value = 50 } } },
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
+    end
 }
 
 SMODS.Challenge {
@@ -152,7 +164,10 @@ SMODS.Challenge {
         { id = 'j_vampire' }, { id = 'j_hologram' }, { id = 'j_obelisk' }, { id = 'j_lucky_cat' },
         { id = 'j_campfire' }, { id = 'j_throwback' }, { id = 'j_glass' }, { id = 'j_hit_the_road' },
         { id = 'j_nancy_countjokula' }, { id = 'j_caino' }, { id = 'j_yorick' }
-    } }
+    } },
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
+    end
 }
 
 SMODS.Challenge {
@@ -180,6 +195,9 @@ SMODS.Challenge {
                 SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
             end
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -206,6 +224,9 @@ SMODS.Challenge {
                 debuff_source = deck
             }
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -269,6 +290,9 @@ SMODS.Challenge {
                 SMODS.calculate_effect({message = self.config.extra, delay = 3}, G.deck)
             end
         end
+    end,
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -290,5 +314,13 @@ SMODS.Challenge {
         end
         G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
         SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
+    end,
+    unlocked = function(self)
+        for _, ch in pairs(G.CHALLENGES) do
+            if ch.original_mod and ch.original_mod.id == 'nancy' and ch.id ~= "c_nancy_victory"
+                and not G.PROFILES[G.SETTINGS.profile].challenge_progress.completed[ch.id]
+            then return false end
+        end
+        return true
     end
 }
