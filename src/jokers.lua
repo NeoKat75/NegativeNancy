@@ -1176,7 +1176,6 @@ SMODS.Joker {
     end
 }
 
---[[
 -- Exposure Therapy
 SMODS.Joker {
     key = "exposuretherapy",
@@ -1189,49 +1188,13 @@ SMODS.Joker {
     discovered = true,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-    end,
-    calculate = function(self, card, context)
-        if (context.nancy_exposuretherapy or (context.open_booster and context.booster.draw_hand))
-            and not context.blueprint
+        if G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_victory"]
+            or next(SMODS.find_card("j_nancy_exposuretherapy"))
         then
-            local targets = {}
-            for i = #G.deck.cards, 1, -1 do
-                local _card = G.deck.cards[i]
-                if _card.edition and _card.edition.key == 'e_negative' then
-                    table.insert(targets, _card)
-                    table.remove(G.deck.cards, i)
-                end
-            end
-            for _, _card in ipairs(targets) do
-                table.insert(G.deck.cards, #G.deck.cards, _card)
-            end
-            if next(targets) then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('gong', 0.94, 0.5)
-                        play_sound('gong', 0.94*1.5, 0.5)
-                        return true
-                    end
-                }))
-                return { message = localize("nancy_exposed") }
-            end
+            return { key = "j_nancy_exposuretherapy_notip" }
+        else
+            return { key = "j_nancy_exposuretherapy_yestip" }
         end
-    end
-}
-]]
-
--- Exposure Therapy
-SMODS.Joker {
-    key = "exposuretherapy",
-    atlas = "jokers",
-    pos = { x = 2, y = 5 },
-    soul_pos = { x = 2, y = 6 },
-    rarity = 4,
-    blueprint_compat = false,
-    cost = 20,
-    discovered = true,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
     calculate = function(self, card, context)
         if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then

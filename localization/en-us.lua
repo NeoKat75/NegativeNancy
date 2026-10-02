@@ -53,7 +53,7 @@ return {
                     "After defeating",
                     "each {C:attention}Boss Blind{}, a",
                     "random Joker becomes",
-                    "{C:dark_edition}Negative{} & {V:1}Rental"
+                    "{C:dark_edition,T_set:Edition,T:e_negative}Negative{} & {V:1,T_set:Other,T_vars:3,T:rental}Rental"
                 },
                 unlock = {
                     "Win a run with",
@@ -131,11 +131,23 @@ return {
         Edition={},
         Enhanced={},
         Joker = {
-            j_nancy_exposuretherapy = {
+            j_nancy_exposuretherapy_notip = {
                 name = "Exposure Therapy",
                 text = {
                     "All {C:attention}played{} and held {C:attention}in hand",
                     "{C:dark_edition}Negative{} cards count in scoring"
+                }
+            },
+            j_nancy_exposuretherapy_yestip = {
+                name = "Exposure Therapy",
+                text = {
+                    {
+                        "All {C:attention}played{} and held {C:attention}in hand",
+                        "{C:dark_edition}Negative{} cards count in scoring",
+                    },
+                    {
+                        "{C:inactive}(Try it in the {C:nancy_emerald}Victory Lap {C:inactive}challenge!)"
+                    }
                 }
             },
             j_nancy_streetart = {
@@ -747,8 +759,7 @@ return {
             ch_c_nancy_groceries = { "Only {C:attention}shopping{}-adjacent Jokers can spawn" },
             ch_c_nancy_stairway = { "Non-{C:dark_edition}Negative{} playing cards are {C:red}debuffed" },
             ch_c_nancy_printing = { "Cards cannot have {C:enhanced}Enhancements" },
-            -- TODO: add stake tooltip when it's fixed
-            ch_c_nancy_victory_1 = { "{C:nancy_emerald}Emerald Stake{} and below are applied" },
+            ch_c_nancy_victory_1 = { "{C:nancy_emerald,T_set:Stake,T:stake_nancy_emerald}Emerald Stake{} and below are applied" },
             ch_c_nancy_victory_2 = { "{C:blind,T_set:Blind,T:bl_nancy_final_sun}Tourmaline Sun{} will be the {C:attention}Showdown Blind" },
             ch_c_nancy_lowp_1 = { "Chips scored {C:attention}above{} the score requirement" },
             ch_c_nancy_lowp_2 = { "are {C:attention}added{} to the next Blind's score requirement" },
