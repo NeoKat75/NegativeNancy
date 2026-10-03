@@ -1,4 +1,4 @@
----@diagnostic disable: duplicate-set-field
+---@diagnostic disable: duplicate-set-field, lowercase-global
 
 -- Allow negative cards in standard packs and from Illusion
 -- save the orig function (no executing)
