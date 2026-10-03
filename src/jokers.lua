@@ -1189,7 +1189,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local tip = localize("k_unknown")
-        if SMODS.challenge_is_unlocked("c_nancy_victory") then
+        if SMODS.challenge_is_unlocked(SMODS.Challenges.c_nancy_victory) then
             tip = localize("c_nancy_victory", "challenge_names")
         end
         if G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_victory"]
