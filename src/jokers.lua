@@ -14,7 +14,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
-    discovered = true,
+    discovered = false,
     calculate = function(self, card, context)
         -- When joker is scored
         if context.joker_main then
@@ -32,7 +32,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    discovered = true,
+    discovered = false,
     config = { extra = { payout = 1 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.payout } }
@@ -67,7 +67,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 7,
-    discovered = true,
+    discovered = false,
     config = { extra = { xmult = 1, gain = 0.01, loss = 0.02 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult, card.ability.extra.gain, card.ability.extra.loss } }
@@ -106,7 +106,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 7,
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_foil
         info_queue[#info_queue + 1] = G.P_CENTERS.e_holo
@@ -149,7 +149,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 7,
-    discovered = true,
+    discovered = false,
     config = { extra = { gain = 2, mult = 0 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -187,7 +187,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    discovered = true,
+    discovered = false,
     config = { extra = { amount = 2, tally = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         if G.ACHIEVEMENTS and G.ACHIEVEMENTS.ach_nancy_secrettag and G.ACHIEVEMENTS.ach_nancy_secrettag.earned then
@@ -272,7 +272,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    discovered = true,
+    discovered = false,
     config = { extra = { chips = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'nancy_modifiers', set = 'Other' }
@@ -326,7 +326,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
-    discovered = true,
+    discovered = false,
     config = { extra = { percard = 10 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -366,7 +366,7 @@ SMODS.Joker {
     blueprint_compat = true,
     eternal_compat = false,
     cost = 3,
-    discovered = true,
+    discovered = false,
     config = { extra = { limit = 25, reduction = 2 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.limit, card.ability.extra.reduction } }
@@ -418,7 +418,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 8,
-    discovered = true,
+    discovered = false,
     config = { extra = { chips = 0, gain = 20 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -462,7 +462,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     cost = 9,
-    discovered = true,
+    discovered = false,
     config = { extra = { odds = 2, retriggers = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -500,7 +500,7 @@ SMODS.Joker {
     eternal_compat = false,
     nancy_binding_incompat = true,
     cost = 8,
-    discovered = true,
+    discovered = false,
     config = { extra = { amount = 0, growth = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -556,7 +556,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     cost = 8,
-    discovered = true,
+    discovered = false,
     config = { extra = { xmult = 4, active = false }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -603,7 +603,7 @@ SMODS.Joker {
     blueprint_compat = false,
     eternal_compat = false,
     cost = 8,
-    discovered = true,
+    discovered = false,
     config = { extra = { size = 1 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -651,7 +651,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 6,
-    discovered = true,
+    discovered = false,
     config = { extra = { used = false, wiggling = false }, },
     calculate = function(self, card, context)
         -- When hand is drawn and you got da cards
@@ -699,7 +699,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
-    discovered = true,
+    discovered = false,
     config = { extra = { levels = 1 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels } }
@@ -722,7 +722,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 7,
-    discovered = true,
+    discovered = false,
     config = { extra = { gain = 7, mult = 0, sevens = {} }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
@@ -783,7 +783,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = false,
     cost = 9,
-    discovered = true,
+    discovered = false,
     config = { extra = { money = 6, cards = 0, reset = false }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -837,7 +837,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    discovered = true,
+    discovered = false,
     config = { extra = { dollars = 2, cards = 1 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
@@ -876,7 +876,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 7,
-    discovered = true,
+    discovered = false,
     config = { extra = { gain = 2 }, },
     loc_vars = function(self, info_queue, card)
         local mult = 0
@@ -903,7 +903,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 7,
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local luck
@@ -951,51 +951,49 @@ SMODS.Joker {
     end
 }
 
--- Street Art
+-- Exposure Therapy
 SMODS.Joker {
-    key = "streetart",
+    key = "exposuretherapy",
     atlas = "jokers",
-    pos = { x = 2, y = 4 },
-    rarity = 3,
-    blueprint_compat = true,
-    perishable_compat = false,
-    cost = 8,
+    pos = { x = 2, y = 5 },
+    soul_pos = { x = 2, y = 6 },
+    rarity = 4,
+    blueprint_compat = false,
+    cost = 20,
     discovered = true,
-    config = { extra = { chips = 0, mult = 0, donezo = false }, },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
+        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
+        local tip = localize("k_unknown")
+        if SMODS.challenge_is_unlocked(SMODS.Challenges.c_nancy_victory) then
+            tip = localize("c_nancy_victory", "challenge_names")
+        end
+        if G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_victory"]
+            or next(SMODS.find_card("j_nancy_exposuretherapy"))
+        then
+            return { key = "j_nancy_exposuretherapy_notip" }
+        else
+            return { key = "j_nancy_exposuretherapy_yestip", vars = { tip } }
+        end
     end,
     calculate = function(self, card, context)
-        -- Upgrade when The Arm delevels your poker hand
-        if context.before -- and not context.blueprint (var 'donezo' accounts for blueprint for correct message display)
-            and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
-        then
-            if not card.ability.extra.donezo then
-                card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
-                card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
-                SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
+        if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
+            return { add_to_hand = true }
+        end
+        if context.press_play then
+            local yes = false
+            for _, _card in ipairs(G.hand.cards) do
+                if _card.edition and _card.edition.key == "e_negative" then yes = true; break end
             end
-            card.ability.extra.donezo = true
-        end
-        -- Delevel your poker hand and upgrade
-        if context.before and G.GAME.hands[context.scoring_name].level > 1 then
-            local joker = context.blueprint_card or card
-            return {
-                func = function()
-                    SMODS.upgrade_poker_hands({hands = {context.scoring_name}, level_up = -1, from = joker})
-                    card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
-                    card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
-                    SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
-                end
-            }
-        end
-        -- Do the thing
-        if context.joker_main then
-            card.ability.extra.donezo = false
-            return {
-                chips = card.ability.extra.chips,
-                mult = card.ability.extra.mult
-            }
+            if yes then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('gong', 0.94, 0.5)
+                        play_sound('gong', 0.94*1.5, 0.5)
+                        return true
+                    end
+                }))
+                return { message = localize("nancy_exposed") }
+            end
         end
     end
 }
@@ -1008,7 +1006,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    discovered = true,
+    discovered = false,
     config = { extra = { money = 2 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
@@ -1056,7 +1054,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 2,
-    discovered = true,
+    discovered = false,
     add_to_deck = function(self, card, from_debuff)
         -- Equalize cost and sell value (doesn't account for editions...)
         card.ability.extra_value = math.ceil(self.cost / 2)
@@ -1112,7 +1110,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 4,
-    discovered = true,
+    discovered = false,
     config = { extra = { mult = 3 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
@@ -1146,7 +1144,7 @@ SMODS.Joker {
     blueprint_compat = false,
     eternal_compat = false,
     cost = 7,
-    discovered = true,
+    discovered = false,
     config = { extra = { slots = 3, odds = 3 }, },
     loc_vars = function(self, info_queue, card)
         -- Function that return the odds after the game affects them
@@ -1176,49 +1174,51 @@ SMODS.Joker {
     end
 }
 
--- Exposure Therapy
+-- Street Art
 SMODS.Joker {
-    key = "exposuretherapy",
+    key = "streetart",
     atlas = "jokers",
-    pos = { x = 2, y = 5 },
-    soul_pos = { x = 2, y = 6 },
-    rarity = 4,
-    blueprint_compat = false,
-    cost = 20,
-    discovered = true,
+    pos = { x = 2, y = 4 },
+    rarity = 3,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 8,
+    discovered = false,
+    config = { extra = { chips = 0, mult = 0, donezo = false }, },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
-        local tip = localize("k_unknown")
-        if SMODS.challenge_is_unlocked(SMODS.Challenges.c_nancy_victory) then
-            tip = localize("c_nancy_victory", "challenge_names")
-        end
-        if G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_victory"]
-            or next(SMODS.find_card("j_nancy_exposuretherapy"))
-        then
-            return { key = "j_nancy_exposuretherapy_notip" }
-        else
-            return { key = "j_nancy_exposuretherapy_yestip", vars = { tip } }
-        end
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
-            return { add_to_hand = true }
+        -- Upgrade when The Arm delevels your poker hand
+        if context.before -- and not context.blueprint (var 'donezo' accounts for blueprint for correct message display)
+            and G.GAME.blind and G.GAME.blind.config.blind.key == "bl_arm" and G.GAME.blind.triggered
+        then
+            if not card.ability.extra.donezo then
+                card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
+            end
+            card.ability.extra.donezo = true
         end
-        if context.press_play then
-            local yes = false
-            for _, _card in ipairs(G.hand.cards) do
-                if _card.edition and _card.edition.key == "e_negative" then yes = true; break end
-            end
-            if yes then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('gong', 0.94, 0.5)
-                        play_sound('gong', 0.94*1.5, 0.5)
-                        return true
-                    end
-                }))
-                return { message = localize("nancy_exposed") }
-            end
+        -- Delevel your poker hand and upgrade
+        if context.before and G.GAME.hands[context.scoring_name].level > 1 then
+            local joker = context.blueprint_card or card
+            return {
+                func = function()
+                    SMODS.upgrade_poker_hands({hands = {context.scoring_name}, level_up = -1, from = joker})
+                    card.ability.extra.chips = card.ability.extra.chips + G.GAME.hands[context.scoring_name].l_chips
+                    card.ability.extra.mult = card.ability.extra.mult + G.GAME.hands[context.scoring_name].l_mult
+                    SMODS.calculate_effect({message = localize('k_upgrade_ex')}, card)
+                end
+            }
+        end
+        -- Do the thing
+        if context.joker_main then
+            card.ability.extra.donezo = false
+            return {
+                chips = card.ability.extra.chips,
+                mult = card.ability.extra.mult
+            }
         end
     end
 }
@@ -1231,7 +1231,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 8,
-    discovered = true,
+    discovered = false,
     config = { extra = { fullhouse = false, wiggling = false }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_d_six', set = 'Tag' }
@@ -1284,7 +1284,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     cost = 8,
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
     end,
