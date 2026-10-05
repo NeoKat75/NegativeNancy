@@ -746,7 +746,59 @@ return {
         },
         poker_hand_descriptions={},
         poker_hands={},
-        quips={},
+        quips = {
+            nancy_quips_win_1 = {
+                "Excellent",
+                "performance,",
+                "young one!"
+            },
+            nancy_quips_win_2 = {
+                "Oh, you just",
+                "make me so proud!"
+            },
+            nancy_quips_win_3 = {
+                "Brings a tear to",
+                "my wrinkly eye..."
+            },
+            nancy_quips_win_4 = {
+                "And wouldn't",
+                "you know it?",
+                "Just as planned!"
+            },
+            nancy_quips_win_5 = {
+                "They call me",
+                "'Negative', but",
+                "I'm a believer",
+                "at heart!"
+            },
+            nancy_quips_loss_1 = {
+                "Dubious plays,",
+                "and at your grade?",
+                "Unacceptable!"
+            },
+            nancy_quips_loss_2 = {
+                "The national",
+                "pride and shame,",
+                "everyone!"
+            },
+            nancy_quips_loss_3 = {
+                "These wrinkles",
+                "under my eyes?",
+                "Your fault."
+            },
+            nancy_quips_loss_4 = {
+                "Were you planning",
+                "your moves on a",
+                "piece of toilet paper?",
+                "Ho ho ho!"
+            },
+            nancy_quips_loss_5 = {
+                "They call me",
+                "'Negative', and",
+                "I see I'm right",
+                "to be so!"
+            },
+        },
         ranks={},
         suits_plural={},
         suits_singular={},

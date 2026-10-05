@@ -72,3 +72,5 @@ assert(SMODS.load_file("src/blinds.lua"))()
 
 assert(SMODS.load_file("src/challenges.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
+
+assert(SMODS.load_file("src/quips.lua"))()
