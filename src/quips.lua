@@ -18,7 +18,7 @@ SMODS.JimboQuip {
     },
     filter = function(self, type)
         if (G.GAME and G.GAME.challenge and string.sub(G.GAME.challenge, 1, 7) == "c_nancy")
-            or (G.GAME and G.GAME.selected_back and string.sub(G.GAME.selected_back.effect.config.key, 1, 7) == "b_nancy")
+            or (G.GAME and G.GAME.selected_back and string.sub(G.GAME.selected_back.effect.center.key, 1, 7) == "b_nancy")
         then
             if type == 'win' then
                 self.extra.text_key = self.key..'_win_'..math.random(1,5)
