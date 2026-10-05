@@ -15,7 +15,7 @@ SMODS.Blind {
     key = "desert",
     atlas = "blinds",
     pos = { x = 0, y = 0 },
-    discovered = true,
+    discovered = false,
     boss = { min = 3 },
     boss_colour = HEX("ab7b27"),
     calculate = function(self, blind, context)
@@ -32,7 +32,7 @@ SMODS.Blind {
     key = "filter",
     atlas = "blinds",
     pos = { x = 0, y = 1 },
-    discovered = true,
+    discovered = false,
     boss = { min = 3 },
     boss_colour = HEX("007aad"),
     calculate = function(self, blind, context)
@@ -59,7 +59,7 @@ SMODS.Blind {
     key = "purse",
     atlas = "blinds",
     pos = { x = 0, y = 2 },
-    discovered = true,
+    discovered = false,
     boss = { min = 3 },
     boss_colour = HEX("a000a0")
     -- Functionality handled in a CardArea:shuffle() hook
@@ -70,7 +70,7 @@ SMODS.Blind {
     key = "dam",
     atlas = "blinds",
     pos = { x = 0, y = 3 },
-    discovered = true,
+    discovered = false,
     boss = { min = 1 },
     boss_colour = HEX("0092c7"),
     config = { extra = { inc = 0, base = 0 } },
@@ -103,7 +103,7 @@ SMODS.Blind {
     key = "crowd",
     atlas = "blinds",
     pos = { x = 0, y = 4 },
-    discovered = true,
+    discovered = false,
     boss = { min = 1 },
     boss_colour = HEX("1d6d00"),
     calculate = function(self, blind, context)
@@ -124,7 +124,7 @@ SMODS.Blind {
     key = "wrench",
     atlas = "blinds",
     pos = { x = 0, y = 5 },
-    discovered = true,
+    discovered = false,
     boss = { min = 5 },
     boss_colour = HEX("bb3100"),
     config = { extra = { odds = 4, wiggle = false } },
@@ -165,7 +165,7 @@ SMODS.Blind {
     key = "file",
     atlas = "blinds",
     pos = { x = 0, y = 6 },
-    discovered = true,
+    discovered = false,
     boss = { min = 5 },
     boss_colour = HEX("730082"),
     calculate = function(self, blind, context)
@@ -206,7 +206,7 @@ SMODS.Blind {
     key = "final_sun",
     atlas = "blinds",
     pos = { x = 0, y = 7 },
-    discovered = true,
+    discovered = false,
     boss = { showdown = true },
     boss_colour = HEX("4d4d4d"),
     dollars = 8,

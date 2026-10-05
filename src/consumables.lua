@@ -10,7 +10,7 @@ SMODS.Atlas {
 SMODS.Consumable {
     key = 'downpour',
     set = 'Tarot',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 0, y = 0 },
     config = { extra = { max_highlighted = 1 } },
@@ -63,7 +63,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'trainee',
     set = 'Tarot',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 1, y = 0 },
     config = { extra = { max_highlighted = 2, min_highlighted = 2 } },
@@ -174,7 +174,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'offering',
     set = 'Tarot',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 2, y = 0 },
     config = { extra = { max_highlighted = 1 } },
@@ -249,7 +249,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'flood',
     set = 'Spectral',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 0, y = 1 },
     config = { extra = { hsize = -1 } },
@@ -298,7 +298,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'mastery',
     set = 'Spectral',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 1, y = 1 },
     -- Partially from Vanilla Remade's Sigil
@@ -373,7 +373,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'sacrifice',
     set = 'Spectral',
-    discovered = true,
+    discovered = false,
     atlas = "consumables",
     pos = { x = 2, y = 1 },
     config = { extra = { scaling = 2 } },

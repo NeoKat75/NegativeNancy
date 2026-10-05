@@ -11,7 +11,7 @@ SMODS.Voucher {
     key = 'scarf',
     atlas = 'vouchers',
     pos = { x = 0, y = 0 },
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
@@ -45,7 +45,7 @@ SMODS.Voucher {
     key = 'purse',
     atlas = 'vouchers',
     pos = { x = 1, y = 0 },
-    discovered = true,
+    discovered = false,
     requires = { 'v_nancy_scarf' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }

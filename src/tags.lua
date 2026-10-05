@@ -22,7 +22,7 @@ SMODS.Tag {
     key = "accolades",
     atlas = "tags",
     pos = { x = 1, y = 0 },
-    discovered = true,
+    discovered = false,
     config = { money = 3 },
     loc_vars = function(self, info_queue, tag)
         local count = 0
@@ -63,7 +63,7 @@ SMODS.Tag {
     key = "priority",
     atlas = "tags",
     pos = { x = 2, y = 0 },
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, tag)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
     end,
@@ -102,7 +102,7 @@ SMODS.Tag {
     key = "shredder",
     atlas = "tags",
     pos = { x = 3, y = 0 },
-    discovered = true,
+    discovered = false,
     loc_vars = function(self, info_queue, tag)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
     end,
