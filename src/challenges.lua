@@ -178,6 +178,9 @@ SMODS.Challenge {
     button_colour = HEX('BF00BF'),
     rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
     config = { extra = 0 },
+    apply = function(self)
+        self.config.extra = 0
+    end,
     calculate = function(self, context)
         if context.first_hand_drawn and self.config.extra > 0 then
             G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
@@ -193,9 +196,9 @@ SMODS.Challenge {
             self.config.extra = G.GAME.chips - G.GAME.blind.chips
             if self.config.extra < 0 then self.config.extra = 0 end
             if G.deck and next(G.deck.cards) then
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck.cards[1])
+                SMODS.calculate_effect({message = '+'..number_format(self.config.extra), delay = 3}, G.deck.cards[1])
             else
-                SMODS.calculate_effect({message = '+'..tostring(self.config.extra), delay = 3}, G.deck)
+                SMODS.calculate_effect({message = '+'..number_format(self.config.extra), delay = 3}, G.deck)
             end
         end
     end,
