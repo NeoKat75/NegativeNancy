@@ -177,13 +177,12 @@ SMODS.Challenge {
     key = 'lowp',
     button_colour = HEX('BF00BF'),
     rules = { custom = { { id = 'nancy_lowp_1' }, { id = 'nancy_lowp_2' } } },
-    config = { extra = 0 },
     apply = function(self)
-        self.config.extra = 0
+        G.GAME.nancy_lowp_score = 0
     end,
     calculate = function(self, context)
-        if context.first_hand_drawn and self.config.extra > 0 then
-            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + self.config.extra)
+        if context.first_hand_drawn and G.GAME.nancy_lowp_score > 0 then
+            G.GAME.blind.chips = math.floor(G.GAME.blind.chips + G.GAME.nancy_lowp_score)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             NegaNancy.wiggle_blind()
             if G.deck and next(G.deck.cards) then
@@ -193,12 +192,12 @@ SMODS.Challenge {
             end
         end
         if context.end_of_round and context.main_eval then
-            self.config.extra = G.GAME.chips - G.GAME.blind.chips
-            if self.config.extra < 0 then self.config.extra = 0 end
+            G.GAME.nancy_lowp_score = G.GAME.chips - G.GAME.blind.chips
+            if G.GAME.nancy_lowp_score < 0 then G.GAME.nancy_lowp_score = 0 end
             if G.deck and next(G.deck.cards) then
-                SMODS.calculate_effect({message = '+'..number_format(self.config.extra), delay = 3}, G.deck.cards[1])
+                SMODS.calculate_effect({message = '+'..number_format(G.GAME.nancy_lowp_score), delay = 3}, G.deck.cards[1])
             else
-                SMODS.calculate_effect({message = '+'..number_format(self.config.extra), delay = 3}, G.deck)
+                SMODS.calculate_effect({message = '+'..number_format(G.GAME.nancy_lowp_score), delay = 3}, G.deck)
             end
         end
     end,
