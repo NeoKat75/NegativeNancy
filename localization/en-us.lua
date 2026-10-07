@@ -636,7 +636,7 @@ return {
         achievement_descriptions = {
             ach_nancy_secrettag = "Obtain the Secret Tag",
             ach_nancy_lowerreq = { "Defeat a Blind by lowering", "the score requirement" },
-            ach_nancy_scoredeck = { "Score every card", "in your deck in one hand" },
+            ach_nancy_scoredeck = { "Score at least 22 cards", "in one hand" },
             ach_nancy_qolstrush = "Upgrade the Straight Flush with Quality of Life",
             ach_nancy_inabind = { "Win against a Blind while", "having 5 Binding Jokers" },
             ach_nancy_initiation = "Become worthy of Initiation",
