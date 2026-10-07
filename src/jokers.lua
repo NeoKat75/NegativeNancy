@@ -327,7 +327,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 4,
     discovered = false,
-    config = { extra = { percard = 10 }, },
+    config = { extra = { percard = 15 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         local negacards = 0
