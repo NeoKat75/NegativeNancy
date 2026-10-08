@@ -59,9 +59,9 @@ SMODS.Consumable {
     end
 }
 
--- The Trainee
+-- The Primer
 SMODS.Consumable {
-    key = 'trainee',
+    key = 'primer',
     set = 'Tarot',
     discovered = false,
     atlas = "consumables",

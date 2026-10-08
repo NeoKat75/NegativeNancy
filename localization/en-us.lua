@@ -585,8 +585,8 @@ return {
                     }
                 }
             },
-            c_nancy_trainee = {
-                name = "The Trainee",
+            c_nancy_primer = {
+                name = "The Primer",
                 text = {
                     {
                         "Select {C:attention}#1#{} cards, give the {C:attention}left",
