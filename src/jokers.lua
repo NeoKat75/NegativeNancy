@@ -838,7 +838,7 @@ SMODS.Joker {
     blueprint_compat = true,
     cost = 5,
     discovered = false,
-    config = { extra = { dollars = 2, cards = 1 }, },
+    config = { extra = { dollars = 3, cards = 1 }, },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollars, card.ability.extra.cards } }
     end,
