@@ -591,7 +591,7 @@ return {
                     {
                         "Select {C:attention}#1#{} cards, give the {C:attention}left",
                         "card the {C:attention}right{} card's",
-                        "{C:enhanced}modifiers{} where {C:attention}applicable"
+                        "{C:enhanced}modifiers{} without override"
                     },
                     {
                         "Permanently {C:red}debuffs",
