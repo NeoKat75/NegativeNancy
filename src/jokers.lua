@@ -6,6 +6,15 @@ SMODS.Atlas {
     py = 95
 }
 
+-- Exorcist atlas
+SMODS.Atlas {
+    key = "exorcist",
+    path = "exorcist.png",
+    atlas_table = "STATE_ATLAS",
+    px = 71,
+    py = 95
+}
+
 -- Window Shopping
 SMODS.Joker {
     key = "windowshopping",
@@ -551,8 +560,18 @@ SMODS.Joker {
 -- Exorcist
 SMODS.Joker {
     key = "exorcist",
-    atlas = "jokers",
-    pos = { x = 3, y = 2 },
+    atlas = "exorcist",
+    sprite_args = {
+        default_state = "inactive",
+        states = {
+            inactive = {
+                start_pos = { x = 0, y = 0 }
+            },
+            active = {
+                start_pos = { x = 1, y = 0 }
+            },
+        },
+    },
     rarity = 3,
     blueprint_compat = true,
     cost = 8,
@@ -578,14 +597,24 @@ SMODS.Joker {
             for _, _card in ipairs(context.removed) do
                 if _card.edition and _card.edition.key == "e_negative" then
                     card.ability.extra.active = true
-                    return { message = localize{type = "variable", key = 'loyalty_active'} }
+                    return {
+                        message = localize{type = "variable", key = 'loyalty_active'},
+                        func = function()
+                            card:set_sprite_state("active")
+                        end
+                    }
                 end
             end
         end
         -- Reset after beating boss blind if active
         if context.ante_change and context.ante_end and not context.blueprint and card.ability.extra.active then
             card.ability.extra.active = false
-            return { message = localize('k_reset') }
+            return {
+                message = localize('k_reset'),
+                func = function()
+                    card:set_sprite_state("inactive")
+                end
+            }
         end
         -- Score if active
         if context.joker_main and card.ability.extra.active then

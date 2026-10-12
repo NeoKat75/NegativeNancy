@@ -204,8 +204,8 @@ SMODS.Back {
                 G.GAME.selected_back.effect.config.extra.penalty = G.GAME.selected_back.effect.config.extra.newpenalty
             end
             --
-            G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
         end
+        G.GAME.nancy_crumpledslots = G.GAME.starting_params.hand_size + G.hand.config.card_limits.mod
     end,
     locked_loc_vars = function(self, info_queue, back)
         local other_name = localize('k_unknown')
