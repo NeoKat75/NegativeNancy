@@ -600,7 +600,12 @@ SMODS.Joker {
                     return {
                         message = localize{type = "variable", key = 'loyalty_active'},
                         func = function()
-                            card:set_sprite_state("active")
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    card:set_sprite_state("active")
+                                    return true
+                                end
+                            }))
                         end
                     }
                 end
@@ -612,7 +617,12 @@ SMODS.Joker {
             return {
                 message = localize('k_reset'),
                 func = function()
-                    card:set_sprite_state("inactive")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card:set_sprite_state("inactive")
+                            return true
+                        end
+                    }))
                 end
             }
         end
