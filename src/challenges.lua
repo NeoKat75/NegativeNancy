@@ -319,8 +319,10 @@ SMODS.Challenge {
                 G.GAME.banned_keys[v.key] = true
             end
         end
-        G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
-        SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
+        if G.GAME.stake ~= G.P_STAKES.stake_nancy_emerald.order then
+            G.GAME.stake = G.P_STAKES.stake_nancy_emerald.order
+            SMODS.setup_stake(G.P_STAKES.stake_nancy_emerald.order)
+        end
     end,
     unlocked = function(self)
         for _, ch in pairs(G.CHALLENGES) do
