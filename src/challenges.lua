@@ -80,9 +80,8 @@ SMODS.Challenge {
     rules = { custom = { { id = 'nancy_stairway' } } },
     restrictions = {
         banned_cards = {
-            { id = 'j_nancy_stimuluscheque' },
-            { id = 'j_nancy_decorativejoker' },
-            { id = 'j_nancy_consolationprize' }
+            { id = 'j_matador' }, { id = 'j_nancy_stimuluscheque' },
+            { id = 'j_nancy_decorativejoker' }, { id = 'j_nancy_consolationprize' }
         },
         banned_tags = { { id = 'tag_nancy_shredder' } },
         banned_other = {
@@ -241,10 +240,13 @@ SMODS.Challenge {
     jokers = { { id = 'j_joker' } },
     deck = { type = 'Challenge Deck', edition = 'negative' },
     rules = { custom = { { id = 'nancy_dance' } } },
-    restrictions = { banned_other = {
-        { id = 'bl_mouth', type = 'blind' },
-        { id = 'bl_nancy_purse', type = 'blind' }
-    } },
+    restrictions = {
+        banned_other = { { id = 'bl_mouth', type = 'blind' }, { id = 'bl_nancy_purse', type = 'blind' } },
+        banned_cards = {
+            { id = 'j_nancy_windowshopping' }, { id = 'j_nancy_countjokula' }, { id = 'j_nancy_frugaljoker' },
+            { id = 'j_nancy_deepocean' }, { id = 'j_nancy_lackofthedraw' }
+        }
+    },
     config = { extra = "High Card" },
     apply = function(self)
         G.E_MANAGER:add_event(Event({
