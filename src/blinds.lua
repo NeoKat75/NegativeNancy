@@ -127,7 +127,7 @@ SMODS.Blind {
     discovered = false,
     boss = { min = 5 },
     boss_colour = HEX("bb3100"),
-    config = { extra = { odds = 4, wiggle = false } },
+    config = { extra = { odds = 3, wiggle = false } },
     loc_vars = function(self)
         local num, denom = SMODS.get_probability_vars(self, 1, self.config.extra.odds, 'nancy_wrench')
         return { vars = { num, denom } }
