@@ -311,7 +311,7 @@ return {
                 name = "Frugal Joker",
                 text = {
                     "This Joker gains {C:mult}+#1#{} Mult when",
-                    "a {C:dark_edition}Negative{} card is {C:attention}discarded",
+                    "a {C:dark_edition}Negative{} card is {C:red}discarded",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
