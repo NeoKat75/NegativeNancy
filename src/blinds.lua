@@ -108,7 +108,7 @@ SMODS.Blind {
     boss_colour = HEX("1d6d00"),
     calculate = function(self, blind, context)
         if not blind.disabled then
-            if context.individual and context.cardarea == 'unscored' and context.other_card.ability then
+            if context.individual and context.cardarea == 'unscored' and context.other_card.area == G.play and context.other_card.ability then
                 context.other_card.ability.nancy_crowd = true
             end
             if context.stay_flipped and context.other_card.ability and context.other_card.ability.nancy_crowd then
