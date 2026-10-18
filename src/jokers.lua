@@ -1018,7 +1018,7 @@ SMODS.Joker {
         if context.modify_scoring_hand and context.other_card.edition and context.other_card.edition.key == "e_negative" then
             return { add_to_hand = true }
         end
-        if context.press_play then
+        if context.before then
             local yes = false
             for _, _card in ipairs(G.hand.cards) do
                 if _card.edition and _card.edition.key == "e_negative" then yes = true; break end
