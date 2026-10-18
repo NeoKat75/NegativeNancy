@@ -29,14 +29,6 @@ SMODS.Voucher {
                 table.insert(G.deck.cards, #G.deck.cards, _card)
             end
         end
-    end,
-    in_pool = function(self, args)
-        for _, _card in ipairs(G.playing_cards or {}) do
-            if _card.edition and _card.edition.key == "e_negative" then
-                return true
-            end
-        end
-        return false
     end
 }
 
