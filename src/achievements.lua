@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-field
+
 SMODS.Achievement {
     key = 'nancywin',
     bypass_all_unlocked = true,
