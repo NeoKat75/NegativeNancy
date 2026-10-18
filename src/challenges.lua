@@ -309,7 +309,7 @@ SMODS.Challenge {
     key = 'victory',
     button_colour = HEX('BF00BF'),
     jokers = {
-        { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' }, { id = 'j_nancy_negativenancy' }
+        { id = 'j_nancy_exposuretherapy', eternal = true }, { id = 'j_nancy_negativenancy' }
     },
     consumeables = { { id = 'c_nancy_mastery' } },
     -- vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
