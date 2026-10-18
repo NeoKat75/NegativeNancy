@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-field
+
 SMODS.ObjectType {
     key = "nancy_groceries",
     default = "j_nancy_usefuljoker",
@@ -310,7 +312,7 @@ SMODS.Challenge {
         { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' }, { id = 'j_nancy_negativenancy' }
     },
     consumeables = { { id = 'c_nancy_mastery' } },
-    vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
+    -- vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
     rules = { custom = {
         { id = 'nancy_victory_1' },
         { id = 'nancy_victory_2' }
