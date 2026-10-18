@@ -428,7 +428,7 @@ SMODS.Joker {
     perishable_compat = false,
     cost = 8,
     discovered = false,
-    config = { extra = { chips = 0, gain = 30 }, },
+    config = { extra = { chips = 0, gain = 32 }, },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
         return { vars = { card.ability.extra.gain, card.ability.extra.chips } }
