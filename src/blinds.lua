@@ -77,7 +77,7 @@ SMODS.Blind {
     calculate = function(self, blind, context)
         if context.setting_blind then
             blind.effect.extra.base = blind.chips
-            blind.effect.extra.inc = math.ceil(blind.chips / 100) -- 1% of base requirement
+            blind.effect.extra.inc = math.ceil(blind.chips / 50) -- 2% of base requirement
         end
         if not blind.disabled then
             if context.hand_drawn then

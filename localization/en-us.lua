@@ -89,7 +89,7 @@ return {
                 name = "The Dam",
                 text = {
                     "Score requirement",
-                    "increases by 1%",
+                    "increases by 2%",
                     "per card drawn"
                 }
             },
