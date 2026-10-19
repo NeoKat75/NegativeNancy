@@ -40,7 +40,7 @@ SMODS.Joker {
     pos = { x = 1, y = 0 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 5,
+    cost = 4,
     discovered = false,
     config = { extra = { payout = 1 }, },
     loc_vars = function(self, info_queue, card)
@@ -875,7 +875,7 @@ SMODS.Joker {
     pos = { x = 4, y = 3 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 5,
+    cost = 6,
     discovered = false,
     config = { extra = { dollars = 3, cards = 1 }, },
     loc_vars = function(self, info_queue, card)
