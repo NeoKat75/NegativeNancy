@@ -334,7 +334,7 @@ SMODS.Joker {
     pos = { x = 3, y = 1 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    cost = 5,
     discovered = false,
     config = { extra = { percard = 15 }, },
     loc_vars = function(self, info_queue, card)
@@ -574,7 +574,7 @@ SMODS.Joker {
     },
     rarity = 3,
     blueprint_compat = true,
-    cost = 8,
+    cost = 7,
     discovered = false,
     config = { extra = { xmult = 4, active = false }, },
     loc_vars = function(self, info_queue, card)
@@ -737,7 +737,7 @@ SMODS.Joker {
     pos = { x = 1, y = 3 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    cost = 3,
     discovered = false,
     config = { extra = { levels = 1 }, },
     loc_vars = function(self, info_queue, card)
@@ -821,7 +821,7 @@ SMODS.Joker {
     pos = { x = 3, y = 3 },
     rarity = 3,
     blueprint_compat = false,
-    cost = 9,
+    cost = 8,
     discovered = false,
     config = { extra = { money = 6, cards = 0, reset = false }, },
     loc_vars = function(self, info_queue, card)
@@ -941,7 +941,7 @@ SMODS.Joker {
     pos = { x = 1, y = 4 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 7,
+    cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'e_negative_playing_card', set = 'Edition', config = { extra = 1 } }
@@ -1044,7 +1044,7 @@ SMODS.Joker {
     pos = { x = 3, y = 4 },
     rarity = 1,
     blueprint_compat = true,
-    cost = 5,
+    cost = 4,
     discovered = false,
     config = { extra = { money = 2 }, },
     loc_vars = function(self, info_queue, card)
@@ -1221,7 +1221,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     perishable_compat = false,
-    cost = 8,
+    cost = 9,
     discovered = false,
     config = { extra = { chips = 0, mult = 0, donezo = false }, },
     loc_vars = function(self, info_queue, card)
@@ -1269,7 +1269,7 @@ SMODS.Joker {
     pos = { x = 3, y = 5 },
     rarity = 2,
     blueprint_compat = true,
-    cost = 8,
+    cost = 6,
     discovered = false,
     config = { extra = { fullhouse = false, wiggling = false }, },
     loc_vars = function(self, info_queue, card)
@@ -1322,7 +1322,7 @@ SMODS.Joker {
     pos = { x = 4, y = 5 },
     rarity = 3,
     blueprint_compat = true,
-    cost = 8,
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
