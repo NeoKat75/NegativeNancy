@@ -107,7 +107,8 @@ SMODS.Challenge {
 SMODS.Challenge {
     key = 'starstruck',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_astronomer' } },
+    jokers = { { id = 'j_astronomer', edition = 'negative' } },
+    vouchers = { { id = "v_planet_merchant" } },
     rules = { custom = { { id = 'nancy_starstruck_1' }, { id = 'nancy_starstruck_2' } } },
     calculate = function(self, context)
         -- When selecting hand
@@ -304,7 +305,7 @@ SMODS.Challenge {
 SMODS.Challenge {
     key = 'victory',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true }, { id = 'j_nancy_negativenancy' } },
+    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true, edition = 'negative' }, { id = 'j_nancy_negativenancy' } },
     consumeables = { { id = 'c_nancy_mastery' } },
     rules = { custom = { { id = 'nancy_victory_1' }, { id = 'nancy_victory_2' } } },
     apply = function(self)
