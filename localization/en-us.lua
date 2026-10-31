@@ -672,7 +672,8 @@ return {
             c_nancy_lowp = "Low% Run",
             c_nancy_dance = "Dance Floor",
             c_nancy_high = "High Waves",
-            c_nancy_reroll = "Coupon Fraud"
+            c_nancy_reroll = "Coupon Fraud",
+            c_nancy_starstruck = "Star-struck"
         },
         collabs={},
         dictionary = {
@@ -816,7 +817,9 @@ return {
             ch_c_nancy_lowp_1 = { "Chips scored {C:attention}above{} the score requirement" },
             ch_c_nancy_lowp_2 = { "are {C:attention}added{} to the next Blind's score requirement" },
             ch_c_nancy_dance = { "Only one {C:green}random {C:attention}poker hand{} is allowed each round" },
-            ch_c_nancy_high = { "Only {C:attention}High Card{} is allowed" }
+            ch_c_nancy_high = { "Only {C:attention}High Card{} is allowed" },
+            ch_c_nancy_starstruck_1 = { "The amount of times each {C:attention}poker hand{} can be played" },
+            ch_c_nancy_starstruck_2 = { "is {C:red}capped{} at the {C:attention}poker hand{}'s current level" }
         }
     }
 }

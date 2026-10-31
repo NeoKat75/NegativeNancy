@@ -1,40 +1,9 @@
 ---@diagnostic disable: undefined-field
 
-SMODS.ObjectType {
-    key = "nancy_groceries",
-    default = "j_nancy_usefuljoker",
-    cards = {
-        j_nancy_usefuljoker = true,
-        j_gros_michel = true,
-        j_egg = true,
-        j_ice_cream = true,
-        j_cavendish = true,
-        j_turtle_bean = true,
-        j_diet_cola = true,
-        j_popcorn = true,
-        j_ramen = true,
-        j_selzer = true,
-        j_credit_card = true,
-        j_loyalty_card = true,
-        j_burglar = true,
-        j_todo_list = true,
-        j_vagabond = true,
-        j_gift = true,
-        j_trousers = true,
-        j_flower_pot = true,
-        j_nancy_windowshopping = true,
-        j_nancy_returnpolicy = true,
-        j_nancy_expiredcoupon = true,
-        j_nancy_decorativejoker = true,
-        j_nancy_snacktray = true,
-        j_nancy_onthehouse = true
-    }
-}
-
 SMODS.Challenge {
     key = 'showcase',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_nancy_negativenancy' } },
+    jokers = { { id = 'j_nancy_negativenancy' }, { id = 'j_nancy_usefuljoker' } },
     rules = { custom = {
         { id = 'nancy_showcase_1' },
         { id = 'nancy_showcase_2' }
@@ -52,23 +21,6 @@ SMODS.Challenge {
     end,
     unlocked = function(self)
         return true
-    end
-}
-
-SMODS.Challenge {
-    key = 'groceries',
-    button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_nancy_usefuljoker', eternal = true } },
-    rules = { custom = { { id = 'nancy_groceries' } } },
-    apply = function(self)
-        for k, v in pairs(G.P_CENTERS) do
-            if v.set == "Joker" and v.rarity ~= 4 and not (v.pools or {}).nancy_groceries then
-                G.GAME.banned_keys[v.key] = true
-            end
-        end
-    end,
-    unlocked = function(self)
-        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
 }
 
@@ -147,6 +99,50 @@ SMODS.Challenge {
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_onthehouse' } },
     rules = { modifiers = { { id = 'reroll_cost', value = 50 } } },
+    unlocked = function(self)
+        return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
+    end
+}
+
+SMODS.Challenge {
+    key = 'starstruck',
+    button_colour = HEX('BF00BF'),
+    jokers = { { id = 'j_astronomer' } },
+    rules = { custom = { { id = 'nancy_starstruck_1' }, { id = 'nancy_starstruck_2' } } },
+    calculate = function(self, context)
+        -- When selecting hand
+        if context.debuff_hand and context.check and G.GAME.hands
+            and G.GAME.hands[context.scoring_name].played >= G.GAME.hands[context.scoring_name].level
+        then
+            local deck
+            if G.deck and next(G.deck.cards) then
+                deck = G.deck.cards[1]
+            else
+                deck = G.deck
+            end
+            return {
+                debuff = true,
+                debuff_text = context.scoring_name.." cannot be played!",
+                debuff_source = deck
+            }
+        end
+        -- When playing hand, the amount played already went up
+        if context.debuff_hand and not context.check and G.GAME.hands
+            and G.GAME.hands[context.scoring_name].played > G.GAME.hands[context.scoring_name].level
+        then
+            local deck
+            if G.deck and next(G.deck.cards) then
+                deck = G.deck.cards[1]
+            else
+                deck = G.deck
+            end
+            return {
+                debuff = true,
+                debuff_text = context.scoring_name.." cannot be played!",
+                debuff_source = deck
+            }
+        end
+    end,
     unlocked = function(self)
         return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
@@ -308,15 +304,9 @@ SMODS.Challenge {
 SMODS.Challenge {
     key = 'victory',
     button_colour = HEX('BF00BF'),
-    jokers = {
-        { id = 'j_nancy_exposuretherapy', eternal = true }, { id = 'j_nancy_negativenancy' }
-    },
+    jokers = { { id = 'j_nancy_exposuretherapy', eternal = true }, { id = 'j_nancy_negativenancy' } },
     consumeables = { { id = 'c_nancy_mastery' } },
-    -- vouchers = { { id = 'v_nancy_scarf' }, { id = 'v_nancy_purse' } },
-    rules = { custom = {
-        { id = 'nancy_victory_1' },
-        { id = 'nancy_victory_2' }
-    } },
+    rules = { custom = { { id = 'nancy_victory_1' }, { id = 'nancy_victory_2' } } },
     apply = function(self)
         for k, v in pairs(G.P_BLINDS) do
             if not v.original_mod and string.sub(v.key, 1, 8) == "bl_final" then
