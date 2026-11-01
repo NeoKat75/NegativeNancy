@@ -132,7 +132,9 @@ SMODS.Challenge {
     jokers = { { id = 'j_astronomer', perishable = true } },
     vouchers = { { id = "v_planet_merchant" } },
     rules = { custom = { { id = 'nancy_starstruck_1' }, { id = 'nancy_starstruck_2' } } },
-    restrictions = { banned_cards = { { id = 'j_constellation' }, { id = 'j_satellite' }, { id = 'j_astronomer'} } },
+    restrictions = { banned_cards = {
+        { id = 'j_constellation' }, { id = 'j_satellite' }, { id = 'j_astronomer'}, { id = 'v_telescope' }
+    } },
     calculate = function(self, context)
         -- When selecting hand
         if context.debuff_hand and context.check and G.GAME.hands
