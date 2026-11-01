@@ -1,0 +1,38 @@
+[manifest]
+version = "0.1.0"
+priority = 0
+
+
+## Support for Perishable in challenges
+
+
+## In the menu
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''
+if v.pinned then card.pinned = true end
+'''
+position = "after"
+payload = '''
+if v.perishable then card:set_perishable(true) end
+'''
+match_indent = true
+
+
+## In-game
+
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+if v.pinned then _joker.pinned = true end
+'''
+position = "after"
+payload = '''
+if v.perishable then _joker:set_perishable(true) end
+'''
+match_indent = true
