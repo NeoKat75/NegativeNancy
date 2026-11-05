@@ -99,7 +99,10 @@ SMODS.Challenge {
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_onthehouse', edition = 'negative' } },
     rules = { modifiers = { { id = 'reroll_cost', value = 50 } } },
-    restrictions = { banned_cards = { { id = 'v_reroll_surplus' } } },
+    restrictions = {
+        banned_cards = { { id = 'j_chaos' }, { id = 'v_reroll_surplus' } },
+        banned_tags = { { id = 'tag_d_six' } }
+    },
     unlocked = function(self)
         return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
@@ -214,8 +217,7 @@ SMODS.Challenge {
     jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
     rules = { custom = { { id = 'nancy_high' } } },
     restrictions = { banned_other = {
-        { id = 'bl_mouth', type = 'blind' },
-        { id = 'bl_nancy_crowd', type = 'blind' }
+        { id = 'bl_mouth', type = 'blind' }, { id = 'bl_nancy_crowd', type = 'blind' }
     } },
     calculate = function(self, context)
         if context.debuff_hand and context.scoring_name ~= "High Card" then
