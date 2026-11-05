@@ -99,6 +99,7 @@ SMODS.Challenge {
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_nancy_onthehouse', edition = 'negative' } },
     rules = { modifiers = { { id = 'reroll_cost', value = 50 } } },
+    restrictions = { banned_cards = { { id = 'v_reroll_surplus' } } },
     unlocked = function(self)
         return G.PROFILES[G.SETTINGS.profile].challenge_progress.completed["c_nancy_showcase"]
     end
