@@ -234,10 +234,16 @@ return {
             j_nancy_pumpdump = {
                 name = "Pump & Dump",
                 text = {
-                    "At end of round, earn {C:money}$#1#",
-                    "per {C:dark_edition}Negative{} playing card",
-                    "{C:red}destroyed{} this run",
-                    "{C:inactive}(Currently {C:money}$#2#{C:inactive})"
+                    {
+                        "Earn {C:money}$#2#{} at the",
+                        "end of each round"
+                    },
+                    {
+                        "Payout increases",
+                        "by {C:money}$#1#{} when a",
+                        "{C:dark_edition}Negative{} playing card",
+                        "is {C:red}destroyed"
+                    }
                 }
             },
             j_nancy_deepocean = {
