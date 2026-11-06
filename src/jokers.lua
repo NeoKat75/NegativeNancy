@@ -884,8 +884,21 @@ SMODS.Joker {
     calculate = function(self, card, context)
         -- Before scoring
         if context.before then
+            -- Accounting for Exposure Therapy cuz it increases context.scoring_hand but not context.full_hand
+            local difference
+            if next(SMODS.find_card("j_nancy_exposuretherapy")) then
+                local negatives = 0
+                for _, _card in ipairs(G.hand.cards or {}) do
+                    if _card.edition and _card.edition.key == "e_negative" then
+                        negatives = negatives + 1
+                    end
+                end
+                difference = #context.full_hand - (#context.scoring_hand - negatives)
+            else
+                difference = #context.full_hand - #context.scoring_hand
+            end
             -- If unscored cards = 'cards' variable
-            if #context.full_hand - #context.scoring_hand == card.ability.extra.cards then
+            if difference == card.ability.extra.cards then
                 -- Gives money in 'dollars' variable using the money buffer
                 G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
                 return {
