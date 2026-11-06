@@ -214,7 +214,7 @@ SMODS.Challenge {
 SMODS.Challenge {
     key = 'high',
     button_colour = HEX('BF00BF'),
-    jokers = { { id = 'j_splash', eternal = true }, { id = 'j_joker' }, },
+    jokers = { { id = 'j_splash', eternal = true, edition = 'negative' }, { id = 'j_joker' }, },
     rules = { custom = { { id = 'nancy_high' } } },
     restrictions = { banned_other = {
         { id = 'bl_mouth', type = 'blind' }, { id = 'bl_nancy_crowd', type = 'blind' }
