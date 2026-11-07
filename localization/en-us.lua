@@ -235,8 +235,8 @@ return {
                 name = "Pump & Dump",
                 text = {
                     {
-                        "Earn {C:money}$#2#{} at the",
-                        "end of each round"
+                        "Earn {C:money}$#2#{} at",
+                        "end of round"
                     },
                     {
                         "Payout increases",
