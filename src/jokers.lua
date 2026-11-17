@@ -939,10 +939,10 @@ SMODS.Joker {
         if context.joker_main and G.GAME.nancy_jokerlist then
             return { mult = NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain }
         end
-        if context.card_added and context.card.ability.set == "Joker"
+        if context.card_added and context.card.ability.set == "Joker" and not context.blueprint
             and G.GAME.nancy_jokerlist and not G.GAME.nancy_jokerlist[context.card.config.center.key]
         then
-            return { message = localize('k_upgrade_ex') }
+            return { message = localize{type = 'variable',key = 'a_mult',vars = { (NegaNancy.tablelength(G.GAME.nancy_jokerlist) * card.ability.extra.gain) + card.ability.extra.gain } } }
         end
     end
 }
