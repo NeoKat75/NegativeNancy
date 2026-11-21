@@ -24,3 +24,25 @@ end
 if v.ability.nancy_tempest then v.ability.nancy_tempest = nil end
 '''
 match_indent = true
+
+
+## Burnt Joker fix
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''
+local text,disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+'''
+position = "at"
+payload = '''
+local text
+local disp_text
+if next(G.hand.highlighted) then
+    text,disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+else
+    text,disp_text = G.FUNCS.get_poker_hand_info(context.full_hand)
+end
+'''
+match_indent = true
