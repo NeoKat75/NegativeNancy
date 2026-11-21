@@ -70,7 +70,7 @@ SMODS.Achievement {
     unlock_condition = function(self, args)
         if args.type == 'win_deck' then
             for _, deck in
-                pairs{'b_nancy_nancy', 'b_nancy_twister', 'b_nancy_hoarder', 'b_nancy_chaotic', 'b_nancy_crumpled'}
+                pairs{'b_nancy_nancy', 'b_nancy_tempest', 'b_nancy_hoarder', 'b_nancy_chaotic', 'b_nancy_crumpled'}
             do
                 if get_deck_win_stake(deck) == 0 then return false end
             end
