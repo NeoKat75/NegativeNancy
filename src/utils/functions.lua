@@ -1,5 +1,49 @@
 ---@diagnostic disable: need-check-nil
 
+---@param targets table table of cards
+---- Tempest Deck functionality (modified vanilla discard function)
+function NegaNancy.discard_from_unscored(targets)
+    inc_career_stat('c_cards_discarded', #targets)
+    SMODS.calculate_context({pre_discard = true, full_hand = targets})
+    local cards = {}
+    local destroyed_cards = {}
+
+    for i=1, #targets do
+        targets[i]:calculate_seal({discard = true, other_card = targets[i]})
+        local removed = false
+        local effects = {}
+        SMODS.calculate_context({discard = true, other_card = targets[i], full_hand = targets, ignore_other_debuff = true}, effects)
+        SMODS.trigger_effects(effects)
+        for _, eval in pairs(effects) do
+            if type(eval) == 'table' then
+                for key, eval2 in pairs(eval) do
+                    if key == 'remove' or (type(eval2) == 'table' and eval2.remove) then removed = true end
+                end
+            end
+        end
+        table.insert(cards, targets[i])
+        if removed then
+            destroyed_cards[#destroyed_cards + 1] = targets[i]
+            if SMODS.shatters(targets[i]) then
+                targets[i]:shatter()
+            else
+                targets[i]:start_dissolve()
+            end
+        else
+            targets[i].ability.discarded = true
+            draw_card(G.play, G.discard, i*100/#targets, 'down', false, targets[i])
+        end
+    end
+
+    if destroyed_cards[1] then
+        SMODS.calculate_context({remove_playing_cards = true, removed = destroyed_cards})
+    end
+
+    G.GAME.round_scores.cards_discarded.amt = G.GAME.round_scores.cards_discarded.amt + #cards
+    check_for_unlock({type = 'discard_custom', cards = cards})
+    G.GAME.current_round.discards_used = G.GAME.current_round.discards_used + 1
+end
+
 ---- SMODS.juice_up_blind() if it was good (has sounds now)
 function NegaNancy.wiggle_blind()
     local ui_elem = G.HUD_blind:get_UIE_by_ID('HUD_blind_debuff')

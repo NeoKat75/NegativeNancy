@@ -27,31 +27,24 @@ SMODS.Back {
     end
 }
 
--- Twister Deck
+-- Tempest Deck
 SMODS.Back {
-    key = "twister",
+    key = "tempest",
     atlas = "decks",
     pos = { x = 1, y = 0 },
     unlocked = false,
+    config = { extra = { targets = {} } },
     calculate = function(self, back, context)
-        if context.starting_shop then
-            local targets = {}
-            for _, _card in ipairs(G.playing_cards or {}) do
-                if _card.config.center.key ~= "c_base" then targets[#targets+1] = _card end
-            end
-            if next(targets) then
-                for _, _card in ipairs(targets) do
-                    local enh = SMODS.poll_enhancement{guaranteed = true}
-                    _card:set_ability(enh)
+        if context.before then
+            G.GAME.selected_back.effect.config.extra.targets = {}
+            for _, _card in ipairs(context.full_hand) do
+                if not NegaNancy.isintable(context.scoring_hand, _card) then
+                    _card.ability.nancy_tempest = true
+                    G.GAME.selected_back.effect.config.extra.targets[#G.GAME.selected_back.effect.config.extra.targets+1] = _card
                 end
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('gong', 0.94, 0.5)
-                        play_sound('gong', 0.94*1.5, 0.5)
-                        return true
-                    end
-                }))
-                return { message = localize('nancy_twisted') }
+            end
+            if next(G.GAME.selected_back.effect.config.extra.targets) then
+                NegaNancy.discard_from_unscored(G.GAME.selected_back.effect.config.extra.targets)
             end
         end
     end,

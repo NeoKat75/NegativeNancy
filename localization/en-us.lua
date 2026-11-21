@@ -8,12 +8,11 @@ return {
                     "{C:dark_edition,T:j_nancy_negativenancy}#1#"
                 }
             },
-            b_nancy_twister = {
-                name = "Twister Deck",
+            b_nancy_tempest = {
+                name = "Tempest Deck",
                 text = {
-                    "{C:enhanced}Enhancements{} on cards",
-                    "are {C:green}randomized",
-                    "when entering shop"
+                    "Unscored cards are",
+                    "{C:red}discarded{} when played"
                 },
                 unlock = {
                     "Win a run with",
@@ -60,7 +59,7 @@ return {
                     "{C:enhanced}#1#",
                     "on any difficulty"
                 }
-            }
+            },
         },
         Blind = {
             bl_nancy_desert = {

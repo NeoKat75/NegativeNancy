@@ -1,0 +1,26 @@
+[manifest]
+version = "0.1.0"
+priority = 0
+
+
+## Tempest Deck implementation (don't draw affected cards from G.play to G.discard a second time)
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = '''
+if (not v.shattered) and (not v.destroyed) then
+    draw_card(G.play,G.discard, it*100/play_count,'down', false, v)
+    it = it + 1
+end
+'''
+position = "at"
+payload = '''
+if (not v.shattered) and (not v.destroyed) and (not v.ability.nancy_tempest) then
+    draw_card(G.play,G.discard, it*100/play_count,'down', false, v)
+    it = it + 1
+end
+if v.ability.nancy_tempest then v.ability.nancy_tempest = nil end
+'''
+match_indent = true
