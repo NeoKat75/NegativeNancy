@@ -243,6 +243,7 @@ SMODS.Challenge {
     key = 'dance',
     button_colour = HEX('BF00BF'),
     jokers = { { id = 'j_joker' } },
+    consumeables = { { id = 'c_world' }, { id = 'c_strength' } },
     deck = { type = 'Challenge Deck', edition = 'negative' },
     rules = { custom = { { id = 'nancy_dance' } } },
     restrictions = {
@@ -254,6 +255,9 @@ SMODS.Challenge {
     },
     config = { extra = "High Card" },
     apply = function(self)
+        G.GAME.hands['Five of a Kind'].visible = true
+        G.GAME.hands['Flush House'].visible = true
+        G.GAME.hands['Flush Five'].visible = true
         G.E_MANAGER:add_event(Event({
             func = function()
                 local _poker_hands = {}
