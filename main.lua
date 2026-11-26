@@ -37,7 +37,7 @@ function NegaNancy.calculate(self, context)
         end
     end
     -- Shredder Tag
-    if (context.hand_drawn or context.other_drawn) and next(G.GAME.tags) then
+    if (context.end_of_round and not context.game_over and context.main_eval) and next(G.GAME.tags) then
         for _, tag in ipairs(G.GAME.tags) do
             if tag:apply_to_run{type = 'nancy_shredder'} then break end
         end
@@ -45,7 +45,7 @@ function NegaNancy.calculate(self, context)
     -- Velvet Dreams achievement
     if context.after and #context.scoring_hand >= 22 then check_for_unlock{type = "nancy_scoredeck"} end
     -- In a Real Bind achievement
-    if context.end_of_round and context.main_eval then
+    if context.end_of_round and not context.game_over and context.main_eval then
         local count = 0
         for _, joker in ipairs(G.jokers.cards) do
             if joker.ability.nancy_binding then count = count + 1 end

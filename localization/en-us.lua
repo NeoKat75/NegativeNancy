@@ -570,8 +570,8 @@ return {
                 name = "Shredder Tag",
                 text = {
                     "{C:red}Destroys{} all {C:red}debuffed",
-                    "cards {C:attention}in hand{} when",
-                    "at least one is drawn"
+                    "cards held {C:attention}in hand",
+                    "at end of next round"
                 }
             }
         },

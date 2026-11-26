@@ -107,7 +107,7 @@ SMODS.Tag {
         info_queue[#info_queue + 1] = { key = 'debuffed_playing_card', set = 'Other' }
     end,
     apply = function(self, tag, context)
-        if context.type == 'nancy_shredder' and not G.CONTROLLER.locks.nancy_makenegatives then
+        if context.type == 'nancy_shredder' then
             local targets = {}
             for _, _card in ipairs(G.hand.cards) do
                 if _card.debuff then targets[#targets+1] = _card end
