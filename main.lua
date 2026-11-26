@@ -37,7 +37,7 @@ function NegaNancy.calculate(self, context)
         end
     end
     -- Shredder Tag
-    if (context.end_of_round and not context.game_over and context.main_eval) and next(G.GAME.tags) then
+    if (context.after and (G.GAME.chips + SMODS.last_hand_score) >= G.GAME.blind.chips) and next(G.GAME.tags) then
         for _, tag in ipairs(G.GAME.tags) do
             if tag:apply_to_run{type = 'nancy_shredder'} then break end
         end
